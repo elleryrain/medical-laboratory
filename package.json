@@ -1,4 +1,7 @@
 {
   "name": "medical-laboratory",
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "nx": "20.6.0"
+  }
 }
