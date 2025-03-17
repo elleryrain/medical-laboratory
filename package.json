@@ -1,0 +1,12 @@
+{
+  "name": "@medical-laboratory/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@nx/js": "20.6.0",
+    "@nx/workspace": "20.6.0",
+    "nx": "20.6.0"
+  },
+  "packageManager": "yarn@4.7.0"
+}
