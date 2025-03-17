@@ -1,0 +1,413 @@
+openapi: 3.0.4
+
+info:
+  title: medical laboratory docs
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /api/login:
+    post:
+      summary: 'вход в личный кабинет'
+      description: 'вход в личный кабинет'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginData'
+      responses:
+        200:
+          description: 'успешный вход в личный кабинет'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        403:
+          description: 'нахуй пошёл'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - access denied
+
+  /api/profile/daily-tasks:
+    get:
+      summary: 'получение всех задач на день'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyTask'
+  /api/profile:
+    get:
+      summary: 'получение основной информации о профиле'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+
+  /api/knowledge:
+    get:
+      summary: 'получение всей базовой информации о базе знаний'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  doctorsCount:
+                    type: number
+                  technicalCount:
+                    type: number
+                  typeWorkCount:
+                    type: number
+                  categoryTechnicalscount:
+                    type: number
+  /api/knowledge/doctors:
+    get:
+      summary: 'получение информации о докторах'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Doctor'
+
+  /api/knowledge/technicals:
+    get:
+      summary: 'получение информации о техниках'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Technical'
+
+  /api/knowledge/type-works:
+    get:
+      summary: 'получние информации о всех типах работы'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TypeWork'
+    post:
+      responses:
+        200:
+          description: ''
+
+  /api/knowledge/category-technicals:
+    get:
+      summary: 'получение все информации о категориях техников'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryTechnicals'
+
+  /api/storage:
+    get:
+      summary: получение всей информации о складе
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StorageItem'
+  /api/salary:
+    get:
+      summary: 'получение всех заплат рабочих'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PayrollData'
+
+components:
+  schemas:
+    LoginData:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    Profile:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        surname:
+          type: string
+        role:
+          type: string
+      required:
+        - id
+        - name
+        - surname
+        - role
+    MedicalService:
+      type: object
+      properties:
+        id:
+          type: number
+        patient:
+          type: string
+        technitian:
+          type: string
+        typeWork:
+          type: string
+        fittingTimesArray:
+          type: array
+          items:
+            type: string
+        deadlineTime:
+          type: string
+      required:
+        - id
+        - patient
+        - technitian
+        - typeWork
+        - fittingTimesArray
+        - deadlineTime
+    CourierService:
+      type: object
+      properties:
+        id:
+          type: string
+        typeService:
+          type: string
+          enum:
+            - bring
+            - take
+        courierName:
+          type: string
+        deliveryPoint:
+          type: string
+        datetime:
+          type: string
+        price:
+          type: string
+        paymentStatus:
+          type: boolean
+      required:
+        - id
+        - typeService
+        - courierName
+        - deliveryPoint
+        - datetime
+        - price
+        - paymentStatus
+
+    DailyTask:
+      type: object
+      properties:
+        id:
+          type: number
+        time:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - time
+        - name
+
+    Doctor:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        surname:
+          type: string
+        middleName:
+          type: string
+        clinic:
+          type: string
+        address:
+          type: string
+      required:
+        - id
+        - name
+        - surname
+        - middleName
+        - clinic
+        - address
+
+    Technical:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: number
+        surname:
+          type: number
+        middleName:
+          type: number
+        avatype:
+          type: string
+      required:
+        - id
+        - name
+        - surname
+        - middleName
+
+    StepTypeWork:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        material:
+          type: string
+        materialCost:
+          type: string
+        fullCost:
+          type: number
+      required:
+        - id
+        - name
+        - material
+        - materialCost
+        - fullCost
+
+    TypeWork:
+      type: object
+      properties:
+        id:
+          type: number
+        typeProsthetics:
+          type: string
+          enum:
+            - removable
+            - non-removable
+        steps:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/StepTypeWork'
+        photo:
+          type: string
+      required:
+        - id
+        - typeProsthetics
+        - steps
+        - photo
+
+    CategoryTechnicals:
+      type: object
+      properties:
+        id:
+          type: number
+        categoryNumber:
+          type: number
+        technicians:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technical'
+        typesWork:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypeWork'
+      required:
+        - id
+        - categoryNumber
+        - technicians
+        - typesWork
+
+    StorageItem:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        complectCount:
+          type: number
+        freeCount:
+          type: number
+        fullCount:
+          type: number
+        usedCount:
+          type: number
+    WorkDay:
+      type: object
+      properties:
+        id:
+          type: number
+        earnings:
+          type: number
+    ExtendedWorkDay:
+      allOf:
+        - $ref: '#/components/schemas/WorkDay'
+    PayrollData:
+      allOf:
+        - $ref: '#/components/schemas/Profile'
+        - type: object
+          properties:
+            finishedServices:
+              type: number
+            nonWorkDays:
+              type: number
+            missedDeadlines:
+              type: number
+            workDaysInfo:
+              type: array
+              items:
+                $ref: '#/components/schemas/WorkDay'
+            workingRate:
+              type: number
+            pieceRate:
+              type: number
+            salary:
+              type: number
