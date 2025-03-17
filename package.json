@@ -4,9 +4,14 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@nestjs/schematics": "^10.0.1",
     "@nx/js": "20.6.0",
+    "@nx/nest": "20.6.0",
     "@nx/workspace": "20.6.0",
     "nx": "20.6.0"
   },
+  "workspaces": [
+    "."
+  ],
   "packageManager": "yarn@4.7.0"
 }
