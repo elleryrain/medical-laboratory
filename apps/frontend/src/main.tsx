@@ -1,13 +1,11 @@
 import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import App from './app/app';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './components/router/Router';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-
-root.render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} future={{ v7_startTransition: true, }}/>
   </StrictMode>
 );
