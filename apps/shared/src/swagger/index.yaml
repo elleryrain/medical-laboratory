@@ -274,6 +274,8 @@ components:
           type: string
         address:
           type: string
+        avatar:
+          type: string
       required:
         - id
         - name

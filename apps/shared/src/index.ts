@@ -1,1 +1,1 @@
-export * from './lib/shared';
+export * as schema from './lib/drizzle/schema';
