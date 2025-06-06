@@ -11,6 +11,8 @@ paths:
   /api/login:
     post:
       summary: 'вход в личный кабинет'
+      tags:
+        - login
       description: 'вход в личный кабинет'
       requestBody:
         required: true
@@ -43,6 +45,8 @@ paths:
   /api/profile/daily-tasks:
     get:
       summary: 'получение всех задач на день'
+      tags:
+        - daily-tasks
       responses:
         200:
           description: ''
@@ -55,6 +59,8 @@ paths:
   /api/profile:
     get:
       summary: 'получение основной информации о профиле'
+      tags:
+        - profile
       responses:
         200:
           description: ''
@@ -66,6 +72,8 @@ paths:
   /api/knowledge:
     get:
       summary: 'получение всей базовой информации о базе знаний'
+      tags:
+        - knowledge
       responses:
         200:
           description: ''
@@ -85,6 +93,8 @@ paths:
   /api/knowledge/doctors:
     get:
       summary: 'получение информации о докторах'
+      tags:
+        - doctors
       responses:
         200:
           description: ''
@@ -98,6 +108,8 @@ paths:
   /api/knowledge/technicals:
     get:
       summary: 'получение информации о техниках'
+      tags:
+        - technicals
       responses:
         200:
           description: ''
@@ -108,9 +120,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Technical'
 
-  /api/knowledge/type-works:
+  /api/knowledge/type-works:  
     get:
       summary: 'получние информации о всех типах работы'
+      tags:
+        - type-works
       responses:
         200:
           description: ''
@@ -128,6 +142,8 @@ paths:
   /api/knowledge/category-technicals:
     get:
       summary: 'получение все информации о категориях техников'
+      tags:
+        - category-technicals
       responses:
         200:
           description: ''
@@ -141,6 +157,8 @@ paths:
   /api/storage:
     get:
       summary: получение всей информации о складе
+      tags:
+        - storage
       responses:
         200:
           description: ''
@@ -153,6 +171,8 @@ paths:
   /api/salary:
     get:
       summary: 'получение всех заплат рабочих'
+      tags:
+        - salary
       responses:
         200:
           description: ''
@@ -288,11 +308,11 @@ components:
         id:
           type: number
         name:
-          type: number
+          type: string
         surname:
-          type: number
+          type: string
         middleName:
-          type: number
+          type: string
         avatype:
           type: string
       required:
