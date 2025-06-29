@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import styled from "styled-components"
 import ArrowDown from "@img/ArrowDown.svg?react"
 
 interface CustomSelectProps {
@@ -7,50 +6,6 @@ interface CustomSelectProps {
     placeholder?: string
     onSelect?: (option: string) => void
 }
-
-const SelectContainer = styled.div`
-    position: relative;
-    width: 100%;
-`
-
-const SelectedOption = styled.div<{ $isPlaceholder: boolean }>`
-    background: #333333;
-    border-radius: 15px;
-    height: 71px;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: ${(props) => (props.$isPlaceholder ? "#B9B9B9" : "white")};
-    font-size: 24px;
-    cursor: pointer;
-    user-select: none;
-`
-
-const OptionList = styled.ul`
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    background: #333333;
-    border-radius: 15px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 1;
-`
-
-const OptionItem = styled.li`
-    padding: 16px 24px;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-
-    &:hover {
-        background: #444444;
-    }
-`
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, placeholder = "Выберите", onSelect }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -65,21 +20,29 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, placeholder = "В�
     }
 
     return (
-        <SelectContainer>
-            <SelectedOption $isPlaceholder={!selectedOption} onClick={toggleDropdown}>
-                {selectedOption || placeholder}
-                <ArrowDown/>
-            </SelectedOption>
+        <div className="relative w-full">
+            <div
+                className={`flex items-center justify-between text-2xl px-6 h-[71px] bg-[#333333] rounded-[15px] cursor-pointer select-none 
+                    ${selectedOption ? "text-white" : "text-[#B9B9B9]"}`}
+                onClick={toggleDropdown}
+            >
+                <span>{selectedOption || placeholder}</span>
+                <ArrowDown className="w-6 h-6" />
+            </div>
             {isOpen && (
-                <OptionList>
+                <ul className="absolute top-full w-full bg-[#333333] rounded-[15px] list-none p-0 m-0 max-h-[200px] overflow-y-auto z-[1]">
                     {options.map((option, index) => (
-                        <OptionItem key={index} onClick={() => handleOptionSelect(option)}>
+                        <li
+                            key={index}
+                            className="px-6 py-4 text-white text-2xl cursor-pointer hover:bg-[#444444]"
+                            onClick={() => handleOptionSelect(option)}
+                        >
                             {option}
-                        </OptionItem>
+                        </li>
                     ))}
-                </OptionList>
+                </ul>
             )}
-        </SelectContainer>
+        </div>
     )
 }
 

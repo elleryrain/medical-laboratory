@@ -1,18 +1,21 @@
-import styled from "styled-components"
-import { InWorkFilter } from "./InWorkFilter"
-import { InWorkCard } from "./InWorkCard"
-
-const InWorkStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
-`
+import { useState } from "react";
+import { CardViewSwitcher } from "@/components/cardViewSwitcher/CardViewSwitcher";
+import { Filter } from "./filter/Filter";
 
 export function InWork() {
-	return (
-		<InWorkStyled>
-            <InWorkFilter title={'В работе'} />
-            <InWorkCard />        
-		</InWorkStyled>
-	)
+
+    const [isGridView, setIsGridView] = useState(true)
+
+    return (
+        <div className="flex gap-[40px] text-white w-full">
+            <div className="flex justify-between w-full">
+                <h2 className="text-[40px] font-medium">В работе</h2>
+                <Filter />
+                <CardViewSwitcher isGridView={isGridView} setIsGridView={setIsGridView}/>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    )
 }

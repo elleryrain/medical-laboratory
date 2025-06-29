@@ -6,7 +6,12 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "jsxImportSource": "@emotion/react",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@img/*": ["src/assets/img/*"]
+    }
   },
   "files": [],
   "include": [],

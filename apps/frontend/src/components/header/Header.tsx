@@ -1,42 +1,21 @@
-import styled from "styled-components"
-import Logo from '@img/Logo.svg?react'
-import { Search } from "./search/Search"
-import { Calendar } from "./calendar/Calendar"
-import { Notify } from "./notify/Notify"
-import { Profile } from "./profile/Profile"
-
-const HeaderStyled = styled.div`
-    display: flex;
-    justify-content: center;
-    padding-top: 70px;
-    margin: 0 50px 0 46px;
-`
-
-const HeaderContainerLogoStyled = styled.div`
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1;
-`
-
-const HeaderContainerStyled = styled.div`
-    display: flex;
-    gap: 40px;
-    width: 100%;
-`
+import Logo from '@img/Logo.svg?react';
+import { Calendar } from './calendar/Calendar';
+import { Notify } from './notify/Notify';
+import { Profile } from './profile/Profile';
+import { SearchHeader } from './searchHeader/searchHeader';
 
 export function Header() {
     return (
-        <HeaderStyled>
-            <HeaderContainerStyled>
-                <HeaderContainerLogoStyled>
+        <div className="flex justify-center pt-[70px] mr-[50px] ml-[46px]">
+            <div className="flex gap-10 w-full">
+                <div className="flex items-start gap-5 flex-1">
                     <Logo />
-                    <Search />
-                </HeaderContainerLogoStyled>
+                    <SearchHeader />
+                </div>
                 <Calendar />
                 <Notify />
                 <Profile firstName="Екатерина" lastName="Смирнова" role="Администратор" imgUrl="/image/1.jpg" />
-            </HeaderContainerStyled>
-        </HeaderStyled>
-    )
+            </div>
+        </div>
+    );
 }

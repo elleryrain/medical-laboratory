@@ -1,19 +1,63 @@
+@import 'tailwindcss';
 @font-face {
   font-family: "Montserrat";
-  src: url("/src/assets/fonts/Montserrat-VariableFont_wght.ttf");
+  src: url("/src/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
-#root,
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: Montserrat, sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
   background-color: black;
+}
+
+/* Кастомные стили Tailwind */
+
+/* Кастомизация скроллбара для DropdownMenu */
+
+/* WebKit (Chrome, Edge, Safari) */
+.custom-scrollbar-ddm::-webkit-scrollbar {
+    width: 3px; /* Ширина скроллбара (ползунок) */
+}
+
+.custom-scrollbar-ddm::-webkit-scrollbar-track {
+    background: transparent; /* Прозрачный трек */
+    margin: 15px 0; /* Отступ сверху/снизу 15px */
+}
+
+.custom-scrollbar-ddm::-webkit-scrollbar-thumb {
+    background: #848484; /* Цвет ползунка */
+    border-radius: 100px; /* Максимальное закругление */
+}
+
+/* Отключаем изменение цвета при наведении */
+.custom-scrollbar-ddm::-webkit-scrollbar-thumb:hover {
+    background: #848484; /* Тот же цвет, без изменений */
+}
+
+/* Убираем стрелки в WebKit */
+.custom-scrollbar-ddm::-moz-scrollbar-button:decrement,
+.custom-scrollbar-ddm::-moz-scrollbar-button:increment,
+.custom-scrollbar-ddm::-webkit-scrollbar-button:decrement,
+.custom-scrollbar-ddm::-webkit-scrollbar-button:increment,
+.custom-scrollbar-ddm::-moz-scrollbar-button, 
+.custom-scrollbar-ddm::-webkit-scrollbar-button {
+    display: none !important; /* Полное удаление стрелок */
+    width: 0;
+    height: 0;
+    visibility: collapse !important;
+}
+
+/* Firefox */
+.custom-scrollbar-ddm {
+    scrollbar-width: thin; /* Тонкий скроллбар (~3px) */
+    scrollbar-color: #848484 transparent; /* Ползунок #848484, прозрачный трек */
+    scrollbar-gutter: stable; /* Стабильная позиция скроллбара */
+    scroll-margin: 15px 0; /* Отступ сверху/снизу 15px */
+    scroll-padding: 15px 0; /* Отступ сверху/снизу 15px */
+    
 }

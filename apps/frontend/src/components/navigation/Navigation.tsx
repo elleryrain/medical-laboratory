@@ -1,12 +1,5 @@
-import styled from "styled-components";
 import { routes } from "../../config/routes";
 import { NavItem } from "./navItem/NavItem";
-
-const NavigationStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-`;
 
 const NavItems = [
     { svgUrl: "/src/assets/img/HomeIcon.svg", route: routes.main },
@@ -19,10 +12,10 @@ const NavItems = [
 
 export function Navigation() {
     return (
-        <NavigationStyled>
+        <div className="flex flex-col gap-[25px]">
             {NavItems.map(({ svgUrl, route }) => (
                 <NavItem key={route} svgUrl={svgUrl} route={route} />
             ))}
-        </NavigationStyled>
+        </div>
     )
 }
