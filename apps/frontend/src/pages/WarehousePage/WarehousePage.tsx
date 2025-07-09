@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useStore } from "../../store/WarehousePageStore"
+import { useWarehouseStore } from '@/store/WarehousePageStore';
 import { useState } from "react"
 import ArrowUp from "@img/ArrowUp.svg?react"
 import ArrowDown from "@img/ArrowDown.svg?react"
@@ -120,7 +120,7 @@ const OpenCardButton = styled.div`
 `
 
 export function WarehousePage() {
-    const warehouseStore = useStore()
+    const warehouseStore = useWarehouseStore()
 
     const [openCards, setOpenCards] = useState<Record<number, boolean>>({})
 

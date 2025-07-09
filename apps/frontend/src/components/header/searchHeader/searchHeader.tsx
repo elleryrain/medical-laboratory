@@ -29,26 +29,26 @@ interface Section {
 }
 
 export function SearchHeader() {
-    const {
-        searchQuery,
-        setSearchQuery,
-        isDropdownOpen,
-        dropdownRef,
-        enhancedSections,
-        handleSelect,
-        toggleShowAll,
-    } = useFilter({
-        categories: ['tasks', 'doctors', 'patients', 'techniques', 'employees', 'warehouse'],
-    });
+    // const {
+    //     searchQuery,
+    //     setSearchQuery,
+    //     isDropdownOpen,
+    //     dropdownRef,
+    //     enhancedSections,
+    //     handleSelect,
+    //     toggleShowAll,
+    // } = useFilter({
+    //     categories: ['tasks', 'doctors', 'patients', 'techniques', 'employees', 'warehouse'],
+    // });
 
     return (
         <div className="relative flex-1">
             <Search
                 className="h-[70px]"
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
+                // searchQuery={searchQuery}
+                // setSearchQuery={setSearchQuery}
             />
-            {isDropdownOpen && (
+            {/* {isDropdownOpen && (
                 <DropdownMenu
                     ref={dropdownRef}
                     className="absolute top-full left-0 w-full max-h-[800px] overflow-y-auto z-10 mt-[10px]"
@@ -101,7 +101,7 @@ export function SearchHeader() {
                         <div className="p-2">Ничего не найдено</div>
                     )}
                 </DropdownMenu>
-            )}
+            )} */}
         </div>
     );
 }

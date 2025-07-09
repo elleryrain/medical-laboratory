@@ -1,4 +1,4 @@
-import { useStore } from "../../store/StaffPageStore"
+import { useStaffStore } from '@/store/StaffPageStore';
 import ArrowUp from "@img/ArrowUp.svg?react"
 import ArrowDown from "@img/ArrowDown.svg?react"
 import { useState } from "react"
@@ -120,8 +120,8 @@ const OpenCardInfoButton = styled.div`
 `
 
 export function CategoryTechniquesPageCard() {
-    const CategoryTechniques = useStore((state) => state.categoryTechniques)
-    const Techniques = useStore((state) => state.techniques)
+    const CategoryTechniques = useStaffStore((state) => state.categoryTechniques)
+    const Techniques = useStaffStore((state) => state.techniques)
 
     const [openCards, setOpenCards] = useState<Record<number, boolean>>({})
 

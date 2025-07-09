@@ -5,7 +5,7 @@ import Plus from "@img/plus.svg?react"
 import DragPoints from "@img/DragPoints.svg?react"
 import DeleteRedCircle from "@img/DeleteRedCircle.svg?react"
 import { AddTypesWorkSelect } from "./AddTypesWorkSelect"
-import { useStore } from "../../../store/WarehousePageStore"
+import { useWarehouseStore } from '@/store/WarehousePageStore';
 import { DndContext, closestCenter } from "@dnd-kit/core"
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
@@ -313,7 +313,7 @@ function SortableStageItem({
 export function AddTypesWork({ toggleModal }: { toggleModal: () => void }) {
     const [isRemovable, setIsRemovable] = useState(true)
     const [stagesOfWork, setStagesOfWork] = useState<{ id: string }[]>([{ id: "stage-1" }])
-    const wareHouseItems = useStore((state) => state.items)
+    const wareHouseItems = useWarehouseStore((state) => state.items)
     const priceInputs = [
         { name: "Итоговая цена", placeholder: "Цена" },
         { name: "Материал", placeholder: "Цена" },

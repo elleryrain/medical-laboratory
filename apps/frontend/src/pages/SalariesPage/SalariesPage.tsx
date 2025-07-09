@@ -1,82 +1,50 @@
-import styled from "styled-components";
-import Plus from '@img/Plus.svg?react'
+import { Button } from "@/components/button/Button";
+import { useSalariesStore } from "@/store/SalariesPageStore";
 import { SalariesPageCard } from "./SalariesPageCard";
+import { useStaffStore } from "@/store/StaffPageStore";
 
-const SalariesPageStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    width: 100%;
-    margin-right: 50px;
-`
+export const SalariesPage = () => {
+    const salariesStore = useSalariesStore();
+    const { techniques, categoryTechniques } = useStaffStore((state) => state);
 
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const HeaderNameMonthContainer = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 30px;
-`
-
-const HeaderName = styled.span`
-    color: white;
-    font-size: 40px;
-    font-weight: 500;
-`
-
-const HeaderMonth = styled.span`
-    color: white;
-    font-size: 24px;
-    font-weight: 400;
-    padding: 10px 20px;
-    background: #2D2D2D;
-    border-radius: 1000px;
-    cursor: pointer;
-`
-
-const HeaderButton = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 24px;
-    font-weight: 500;
-    background: white;
-    padding: 10px 20px 10px 10px;
-    border-radius: 1000px;
-    cursor: pointer;
-`
-
-const HeaderImg = styled.div`
-    height: 50px;
-    width: 50px;
-    border-radius: 1000px;
-    background: #DCDCDC;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-
-export function SalariesPage() {
-    const currentMonth = new Date().toLocaleString('ru-RU', { month: 'long' }).replace(/^./, (char) => char.toUpperCase())
     return (
-        <SalariesPageStyled>
-            <Header>
-                <HeaderNameMonthContainer>
-                    <HeaderName>Зарплаты</HeaderName>
-                    <HeaderMonth>{currentMonth}</HeaderMonth>
-                </HeaderNameMonthContainer>
-                <HeaderButton>
-                    <HeaderImg>
-                        <Plus stroke="#000000" />
-                    </HeaderImg>
-                    Настроить зарплаты
-                </HeaderButton>
-            </Header>
-            <SalariesPageCard />
-        </SalariesPageStyled>
-    )
-}
+        <div className="flex flex-col text-white w-full mr-[50px] gap-10">
+            <div className="flex justify-between">
+                <div className="flex gap-[30px] items-center">
+                    <h1 className="text-[40px] font-medium">Зарплаты</h1>
+                    <p className="text-2xl font-normal bg-[#2D2D2D] rounded-full py-2.5 px-5 cursor-pointer">
+                        {new Date().toLocaleDateString("ru-RU", { month: "long" })}
+                    </p>
+                </div>
+                    <Button title="Настроить зарплаты" theme="addButton" onClick={() => { console.log("Кнопка Настроить зарплаты") }} />
+            </div>
+            <div className="flex flex-wrap gap-7.5">
+                {salariesStore.employees.map((employee) => {
+                    const technique = techniques.find((t) => t.id === employee.techniqueId);
+                    const category = technique
+                        ? categoryTechniques.find((c) => c.id === technique.categoryId)?.nameCategory
+                        : "Не указана";
+                    const employeeSalaryStatus = salariesStore.salaryStatus.filter((s) => s.employeeId === employee.id);
+
+                    return (
+                        <div key={employee.id}>
+                            <SalariesPageCard
+                                imgUrl={technique?.imgUrl || "/image/default.png"}
+                                firstname={technique?.firstName || "Неизвестно"}
+                                lastname={technique?.lastName || "Неизвестно"}
+                                middlename={technique?.middleName || "Неизвестно"}
+                                category={category || "Не указана"}
+                                fixedSalary={employee.fixedSalary}
+                                bonuses={employee.fixedSalary * 0.1}
+                                penalties={salariesStore.penalties.find((p) => p.employeeId === employee.id)?.amount || 0}
+                                techniqueId={employee.techniqueId}
+                                salaryStatus={employeeSalaryStatus}
+                                employeeId={employee.id}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+};

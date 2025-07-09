@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useStore } from "../../store/StaffPageStore"
+import { useStaffStore } from '@/store/StaffPageStore';
 import ArrowDown from "@img/ArrowDown.svg?react"
 import ArrowUp from "@img/ArrowUp.svg?react"
 import Edit from "@img/Edit.svg?react"
@@ -138,9 +138,9 @@ const CardNameInput = styled.textarea`
 
 export function DoctorsPageCard() {
 
-    const Doctors = useStore((state) => state.doctors)
-    const updateDoctor = useStore((state) => state.updateDoctor);
-    const removeDoctor = useStore((state) => state.removeDoctor);
+    const Doctors = useStaffStore((state) => state.doctors)
+    const updateDoctor = useStaffStore((state) => state.updateDoctor);
+    const removeDoctor = useStaffStore((state) => state.removeDoctor);
 
     const [openCardStates, setOpenCardStates] = useState<{ [key: number]: boolean }>({});
     const [editCardStates, setEditCardStates] = useState<{ [key: number]: boolean }>({});

@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFuzzySearch } from '@/hooks/useFuzzySearch';
 
-// Типы
 export interface SearchResult {
     id: number;
     name: string;
@@ -40,13 +39,11 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
-    // Используем хук для поиска
     const sections = useFuzzySearch({
         query: searchQuery,
         categories,
     });
 
-    // Закрытие DropdownMenu при клике вне
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -61,7 +58,6 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [searchQuery]);
 
-    // Обновление видимости DropdownMenu
     useEffect(() => {
         const isQueryEmpty = !searchQuery.trim();
         if (isDropdownOpen !== !isQueryEmpty) {
@@ -69,7 +65,6 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
         }
     }, [searchQuery, isDropdownOpen]);
 
-    // Обработка выбора элемента
     const handleSelect = useCallback(
         (result: SearchResult) => {
             if (!selectedPeople.some((person) => person.id === result.id && person.type === result.type)) {
@@ -85,7 +80,6 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
         [selectedPeople, onFilterChange]
     );
 
-    // Удаление элемента из фильтра
     const handleRemove = useCallback(
         (person: SearchResult) => {
             const newSelected = selectedPeople.filter(
@@ -99,7 +93,6 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
         [selectedPeople, onFilterChange]
     );
 
-    // Переключение "Показать ещё"
     const toggleShowAll = useCallback((sectionTitle: string) => {
         setSectionToggles((prev) => ({
             ...prev,
@@ -107,7 +100,6 @@ export function useFilter({ categories, onFilterChange }: UseFilterProps) {
         }));
     }, []);
 
-    // Объединяем sections с локальным showAll
     const enhancedSections = sections.map((section) => ({
         ...section,
         showAll: sectionToggles[section.title] || false,

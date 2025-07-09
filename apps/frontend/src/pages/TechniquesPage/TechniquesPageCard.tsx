@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useStore } from "../../store/StaffPageStore";
+import { useStaffStore } from '@/store/StaffPageStore';
 import { useState } from "react";
 import Edit from "@img/Edit.svg?react"
 import DeleteTrash from "@img/DeleteTrash.svg?react"
@@ -85,9 +85,9 @@ const DeleteButton = styled.div`
 
 export function TechniquesPageCard() {
 
-    const Techniques = useStore((state) => state.techniques)
-    const updateTechnique = useStore((state) => state.updateTechnique)
-    const removeTechnique = useStore((state) => state.removeTechnique)
+    const Techniques = useStaffStore((state) => state.techniques)
+    const updateTechnique = useStaffStore((state) => state.updateTechnique)
+    const removeTechnique = useStaffStore((state) => state.removeTechnique)
 
     const [editStates, setEditStates] = useState<{ [key: number]: boolean }>({})
 

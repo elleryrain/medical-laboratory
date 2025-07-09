@@ -2,14 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import { transliterate } from 'transliteration';
 
-// Импорты сторов
-import { useStore as useStaffStore } from '@/store/StaffPageStore';
-import { useStore as useInWorkStore } from '@/store/InWorkCardStore';
-import { useStore as useSalariesStore } from '@/store/SalariesPageStore';
-import useTaskStore from '@/store/TaskScheduleStore';
-import { useStore as useWarehouseStore } from '@/store/WarehousePageStore';
+import { useStaffStore } from '@/store/StaffPageStore';
+import { useInWorkCardStore } from '@/store/InWorkCardStore';
+import { useSalariesStore } from '@/store/SalariesPageStore';
+import { useTaskStore } from '@/store/TaskScheduleStore';
+import { useWarehouseStore } from '@/store/WarehousePageStore';
 
-// Типы
 interface SearchResult {
     id: number;
     name: string;
@@ -20,6 +18,12 @@ interface SearchResult {
     time?: string;
 }
 
+export interface Section {
+    title: string;
+    results: SearchResult[];
+    showAll: boolean;
+}
+
 type SearchCategory = 'tasks' | 'doctors' | 'patients' | 'techniques' | 'employees' | 'warehouse';
 
 interface UseFuzzySearchProps {
@@ -27,7 +31,6 @@ interface UseFuzzySearchProps {
     categories: SearchCategory[];
 }
 
-// Раскладка клавиатуры для обратного поиска
 const keyboardMap: Record<string, string> = {
     ',': 'б', j: 'о', h: 'р', t: 'е', v: 'м', c: 'с', r: 'к', b: 'и', q: 'й',
     f: 'а', k: 'п', g: 'у', l: 'д', d: 'в', u: 'г', i: 'ш', o: 'щ', p: 'з',
@@ -46,22 +49,22 @@ const reverseKeyboardLayout = (input: string): string => {
 export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
     const [sections, setSections] = useState<Section[]>([]);
 
-    // Получаем данные из сторов
     const staffState = useStaffStore();
-    const inWorkState = useInWorkStore();
+    const inWorkState = useInWorkCardStore();
     const salariesState = useSalariesStore();
     const taskState = useTaskStore();
     const warehouseState = useWarehouseStore();
 
-    // Мемоизируем данные, чтобы не вызывать useEffect лишний раз
-    const searchData = useMemo(() => ({
-        doctors: staffState.doctors,
-        techniques: staffState.techniques,
-        patients: inWorkState.Patient,
-        employees: salariesState.employees,
-        tasks: taskState.tasks,
-        items: warehouseState.items,
-    }), [
+    const searchData = useMemo(() => {
+        return {
+            doctors: staffState.doctors,
+            techniques: staffState.techniques,
+            patients: inWorkState.Patient,
+            employees: salariesState.employees,
+            tasks: taskState.tasks,
+            items: warehouseState.items,
+        };
+    }, [
         staffState.doctors,
         staffState.techniques,
         inWorkState.Patient,
@@ -85,14 +88,13 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
 
         const fuseOptions = {
             threshold: 0.3,
-            keys: ['name'] as const,
+            keys: ['name'],
             ignoreLocation: true,
             minMatchCharLength: 2,
         };
 
         const resultsByCategory: Partial<Record<SearchCategory, SearchResult[]>> = {};
 
-        // Функция для общего поиска
         const performSearch = <T extends { id: number; name: string }>(
             category: SearchCategory,
             data: T[],
@@ -116,7 +118,6 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
             resultsByCategory[category] = Array.from(results);
         };
 
-        // Подготовка данных перед поиском
         const taskData = useMemo(() =>
             searchData.tasks.map(t => ({
                 id: t.id,
@@ -180,7 +181,6 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
             [searchData.items]
         );
 
-        // Выполняем поиск по категориям
         performSearch('tasks', taskData, { type: 'task', route: '/tasks' });
         performSearch('doctors', doctorData, { type: 'doctor', route: '/doctors' });
         performSearch('patients', patientData, { type: 'patient', route: '/patients' });
@@ -188,7 +188,6 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
         performSearch('employees', employeeData, { type: 'employee', route: '/employees' });
         performSearch('warehouse', warehouseData, { type: 'warehouse', route: '/warehouse' });
 
-        // Заголовки секций
         const sectionMap: Record<SearchCategory, string> = {
             tasks: 'Задачи',
             doctors: 'Врачи',
@@ -198,7 +197,6 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
             warehouse: 'Склад',
         };
 
-        // Обновляем секции
         setSections(
             categories
                 .map(category => ({
@@ -211,11 +209,4 @@ export function useFuzzySearch({ query, categories }: UseFuzzySearchProps) {
     }, [query, categories, searchData]);
 
     return sections;
-}
-
-// Дополнительные типы
-interface Section {
-    title: string;
-    results: SearchResult[];
-    showAll: boolean;
 }

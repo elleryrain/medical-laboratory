@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useStore } from "../../store/StaffPageStore"
+import { useStaffStore } from '@/store/StaffPageStore';
 import ArrowLink from "@img/ArrowLinkStaff.svg?react"
 import { useNavigate } from "react-router-dom"
 
@@ -52,7 +52,7 @@ const StaffPageButton = styled.div`
 
 export function StaffPageCard() {
 
-    const categoryStaffPage = useStore((state) => state.categoryStaffPage)
+    const categoryStaffPage = useStaffStore((state) => state.categoryStaffPage)
     const navigate = useNavigate()
     return (
         <StaffPageCardStyled>

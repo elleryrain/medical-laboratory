@@ -2,81 +2,81 @@ import { create } from "zustand";
 import { routes } from "../config/routes";
 
 type CategoryStaffPage = {
-    id: number,
-    nameCategory: string,
-    counterCategory: number,
-    nameSubcategory: string,
-    route: string
-}
+    id: number;
+    nameCategory: string;
+    counterCategory: number;
+    nameSubcategory: string;
+    route: string;
+};
 
 type Doctors = {
-    id: number,
-    firstName: string,
-    lastName: string,
-    middleName: string,
-    nameClinic: string,
-    address: string,
-    imgUrl: string,
-    categoryId: number
-}
+    id: number;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    nameClinic: string;
+    address: string;
+    imgUrl: string;
+    categoryId: number;
+};
 
 type Techniques = {
-    id: number,
-    firstName: string,
-    lastName: string,
-    middleName: string,
-    imgUrl: string,
-    categoryId: number
-}
+    id: number;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    imgUrl: string;
+    categoryId: number;
+};
 
 type TypesWork = {
-    id: number,
-    typesProsthetics: string,
-    nameTypeWork: string,
-    imgUrl: string,
-    stages: TypesWorkStages[]
-}
+    id: number;
+    typesProsthetics: string;
+    nameTypeWork: string;
+    imgUrl: string;
+    stages: TypesWorkStages[];
+};
 
 type TypesWorkStages = {
-    id: number,
-    nameTypeWorkStage: string,
-    nameMaterial: string,
-    pricePiece: number,
-    namePiece?: string,
-    priceMaterial: number,
-    totalPrice: number,
-    typeWorkId: number
-}
+    id: number;
+    nameTypeWorkStage: string;
+    nameMaterial: string;
+    pricePiece: number;
+    namePiece?: string;
+    priceMaterial: number;
+    totalPrice: number;
+    typeWorkId: number;
+};
 
 type CategoryTechniques = {
-    id: number,
-    nameCategory: string,
-    techniques: Techniques[]
-}
+    id: number;
+    nameCategory: string;
+    techniques: Techniques[];
+};
 
-export type Store = {
-    categoryStaffPage: CategoryStaffPage[],
-    doctors: Doctors[],
-    techniques: Techniques[],
-    typesWork: TypesWork[],
-    typesWorkStages: TypesWorkStages[],
-    categoryTechniques: CategoryTechniques[],
-    addDoctor: (doctor: Doctors) => void,
-    addTechnique: (technique: Techniques) => void,
-    addTypeWork: (typeWork: TypesWork) => void,
-    addTypeWorkStage: (typeWorkStage: TypesWorkStages) => void,
-    addCategoryTechnique: (category: CategoryTechniques) => void,
-    removeDoctor: (id: number) => void,
-    removeTechnique: (id: number) => void,
-    removeTypeWork: (id: number) => void,
-    removeTypeWorkStage: (id: number) => void,
-    removeCategoryTechnique: (id: number) => void,
-    updateDoctor: (doctor: Doctors) => void,
-    updateTechnique: (technique: Techniques) => void,
-    updateTypeWork: (typeWork: TypesWork) => void,
-    updateTypeWorkStage: (stage: TypesWorkStages) => void,
-    updateCategoryTechnique: (category: CategoryTechniques) => void,
-}
+export type StaffStore = {
+    categoryStaffPage: CategoryStaffPage[];
+    doctors: Doctors[];
+    techniques: Techniques[];
+    typesWork: TypesWork[];
+    typesWorkStages: TypesWorkStages[];
+    categoryTechniques: CategoryTechniques[];
+    addDoctor: (doctor: Doctors) => void;
+    addTechnique: (technique: Techniques) => void;
+    addTypeWork: (typeWork: TypesWork) => void;
+    addTypeWorkStage: (typeWorkStage: TypesWorkStages) => void;
+    addCategoryTechnique: (category: CategoryTechniques) => void;
+    removeDoctor: (id: number) => void;
+    removeTechnique: (id: number) => void;
+    removeTypeWork: (id: number) => void;
+    removeTypeWorkStage: (id: number) => void;
+    removeCategoryTechnique: (id: number) => void;
+    updateDoctor: (doctor: Doctors) => void;
+    updateTechnique: (technique: Techniques) => void;
+    updateTypeWork: (typeWork: TypesWork) => void;
+    updateTypeWorkStage: (stage: TypesWorkStages) => void;
+    updateCategoryTechnique: (category: CategoryTechniques) => void;
+};
 
 const initialCategoryStaffPage: CategoryStaffPage[] = [
     { id: 0, nameCategory: "Врачи", counterCategory: 17, nameSubcategory: "Специалисты", route: routes.doctors },
@@ -97,36 +97,34 @@ const initialDoctors: Doctors[] = [
 const initialTechniques: Techniques[] = [
     { id: 0, firstName: "Николай", lastName: "Боремский", middleName: "Владимирович", imgUrl: "/image/2.png", categoryId: 0 },
     { id: 1, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 0 },
-    { id: 2, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 1 },
-    { id: 3, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 1 },
-    { id: 4, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 2 },
-    { id: 5, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 2 },
-    { id: 6, firstName: "Мария", lastName: "Дарвиш", middleName: "Владимировна", imgUrl: "/image/2.png", categoryId: 2 },
+    // Исключены техники с id 2-6
 ];
 
 const initialTypesWork: TypesWork[] = [
     { id: 0, typesProsthetics: "Несъемное", nameTypeWork: "Металло-керамическая коронка", imgUrl: "/image/3.png", stages: [] },
-    { id: 1, typesProsthetics: "Съемное", nameTypeWork: "Индивидуальная ложка под имплант", imgUrl: "/image/3.png", stages: [] },
+    { id: 1, typesProsthetics: "Съемное", nameTypeWork: "Ацеталовый бюгельный протез", imgUrl: "/image/3.png", stages: [] },
+    { id: 2, typesProsthetics: "Съемное", nameTypeWork: "Индивидуальная ложка под имплант", imgUrl: "/image/3.png", stages: [] },
 ];
 
 const initialTypesWorkStages: TypesWorkStages[] = [
     { id: 0, nameTypeWorkStage: "Гипсовка", nameMaterial: "Циркониевый диск", pricePiece: 232, namePiece: "коронка", priceMaterial: 120, totalPrice: 780, typeWorkId: 0 },
     { id: 1, nameTypeWorkStage: "Каркас", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 320, totalPrice: 1280, typeWorkId: 0 },
     { id: 2, nameTypeWorkStage: "Грунт", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 80, totalPrice: 340, typeWorkId: 0 },
-    { id: 3, nameTypeWorkStage: "Нанесение", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 100, totalPrice: 420, typeWorkId: 0 },
-    { id: 4, nameTypeWorkStage: "Гипсовка", nameMaterial: "Циркониевый диск", pricePiece: 232, namePiece: "коронка", priceMaterial: 120, totalPrice: 780, typeWorkId: 1 },
-    { id: 5, nameTypeWorkStage: "Каркас", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 320, totalPrice: 1280, typeWorkId: 1 },
-    { id: 6, nameTypeWorkStage: "Грунт", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 80, totalPrice: 340, typeWorkId: 1 },
-    { id: 7, nameTypeWorkStage: "Нанесение", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 100, totalPrice: 420, typeWorkId: 1 },
+    { id: 3, nameTypeWorkStage: "Гипсовка", nameMaterial: "Циркониевый диск", pricePiece: 232, namePiece: "коронка", priceMaterial: 120, totalPrice: 780, typeWorkId: 1 },
+    { id: 4, nameTypeWorkStage: "Каркас", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 320, totalPrice: 1280, typeWorkId: 1 },
+    { id: 5, nameTypeWorkStage: "Грунт", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 80, totalPrice: 340, typeWorkId: 1 },
+    { id: 6, nameTypeWorkStage: "Гипсовка", nameMaterial: "Циркониевый диск", pricePiece: 232, namePiece: "коронка", priceMaterial: 120, totalPrice: 780, typeWorkId: 2 },
+    { id: 7, nameTypeWorkStage: "Каркас", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 320, totalPrice: 1280, typeWorkId: 2 },
+    { id: 8, nameTypeWorkStage: "Грунт", nameMaterial: "Нет", pricePiece: 0, priceMaterial: 80, totalPrice: 340, typeWorkId: 2 },
 ];
 
 const initialCategoryTechniques: CategoryTechniques[] = [
-    { id: 0, nameCategory: "1 категория", techniques: [] },
+    { id: 0, nameCategory: "1 категория", techniques: initialTechniques.filter(t => t.categoryId === 0) },
     { id: 1, nameCategory: "2 категория", techniques: [] },
     { id: 2, nameCategory: "3 категория", techniques: [] },
 ];
 
-export const useStore = create<Store>((set) => ({
+export const useStaffStore = create<StaffStore>((set) => ({
     categoryStaffPage: initialCategoryStaffPage,
     doctors: initialDoctors,
     techniques: initialTechniques,
@@ -161,4 +159,4 @@ export const useStore = create<Store>((set) => ({
     updateCategoryTechnique: (category) => set((state) => ({
         categoryTechniques: state.categoryTechniques.map(c => c.id === category.id ? category : c)
     })),
-}));
+}))

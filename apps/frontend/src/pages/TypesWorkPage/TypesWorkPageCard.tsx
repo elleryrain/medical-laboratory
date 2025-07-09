@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useStore } from "../../store/StaffPageStore";
+import { useStaffStore } from '@/store/StaffPageStore';
 import ArrowUp from "@img/ArrowUp.svg?react"
 import ArrowDown from "@img/ArrowDown.svg?react"
 import { useState } from "react";
@@ -169,8 +169,8 @@ const TotalPrice = styled.span`
 `
 
 export function TypesWorkPageCard() {
-    const typesWork = useStore((state) => state.typesWork)
-    const typesWorkStages = useStore((state) => state.typesWorkStages)
+    const typesWork = useStaffStore((state) => state.typesWork)
+    const typesWorkStages = useStaffStore((state) => state.typesWorkStages)
 
     const [openCards, setOpenCards] = useState<Record<number, boolean>>({})
 

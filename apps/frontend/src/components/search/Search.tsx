@@ -1,8 +1,8 @@
 import SearchSvg from '@img/search.svg?react';
 
 interface SearchProps {
-    searchQuery: string;
-    setSearchQuery: (query: string) => void;
+    searchQuery?: string;
+    setSearchQuery?: (query: string) => void;
     className?: string;
     backgroundColor?: string;
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import useStore from "../../../store/TaskScheduleStore"
+import { useTaskStore } from "@/store/TaskScheduleStore"
 import CheckArrow from "@img/CheckArrow.svg?react"
 import TaskLine from "@img/TaskLine.svg?react"
 
@@ -86,7 +86,7 @@ const TaskCompletedButton = styled.div<{ $isCompleted: boolean, $isActive: boole
 `
 
 export function TaskScheduleList() {
-    const { tasks } = useStore()
+    const { tasks } = useTaskStore()
     const currentTime = new Date().getHours() * 60 + new Date().getMinutes() 
 
     // Функция для нахождения задачи, которая включает текущее время
@@ -124,7 +124,7 @@ export function TaskScheduleList() {
                         <TaskTimeLineContainer key={index}>
                             <TaskTimeContainer>
                                 <TaskTime>{task.time}</TaskTime>
-                                <TaskCompletedButton onClick={() => useStore.getState().toggleTaskCompletion(task.id)} $isCompleted={task.isCompleted} $isActive={taskTimeInMinutes <= currentTime}>
+                                <TaskCompletedButton onClick={() => useTaskStore.getState().toggleTaskCompletion(task.id)} $isCompleted={task.isCompleted} $isActive={taskTimeInMinutes <= currentTime}>
                                     {task.isCompleted ? <CheckArrow stroke="black" height="17px" width="17px" /> : ""}
                                 </TaskCompletedButton>
                             </TaskTimeContainer>

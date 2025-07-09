@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Delete from "@img/Delete.svg?react";
 import Plus from "@img/plus.svg?react";
-import { useStore } from "../../../store/StaffPageStore";
+import { useStaffStore } from '@/store/StaffPageStore';
 import { useState } from "react";
 
 const AddCategoryTechniquesStyled = styled.div`
@@ -233,9 +233,9 @@ const SubmitButton = styled.div`
 
 export function AddCategoryTechniques({ toggleModal }: { toggleModal: () => void }) {
 
-    const techniques = useStore(state => state.techniques)
-    const typesWork = useStore(state => state.typesWork)
-    const typesWorkStages = useStore(state => state.typesWorkStages)
+    const techniques = useStaffStore(state => state.techniques)
+    const typesWork = useStaffStore(state => state.typesWork)
+    const typesWorkStages = useStaffStore(state => state.typesWorkStages)
 
     const [count, setCount] = useState(1)
 
