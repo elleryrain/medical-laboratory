@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import Ellipse from "@img/CouriersCardEllipse.svg?react"
-import Clipboard from "@img/Clipboard.svg?react"
-import Check from "@img/CheckArrow.svg?react"
+import Ellipse from "@svg/CouriersCardEllipse.svg?react"
+import Clipboard from "@svg/Clipboard.svg?react"
+import Check from "@svg/CheckArrow.svg?react"
 import { useState } from "react"
 
 const CouriersOrderCardStyled = styled.div`

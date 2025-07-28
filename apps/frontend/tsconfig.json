@@ -10,7 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@img/*": ["src/assets/img/*"]
+      "@svg/*": ["src/assets/img/*"],
+      "@img/*": ["public/image/*"],
     }
   },
   "files": [],

@@ -1,13 +1,13 @@
 import React, { useState } from "react"
-import ArrowDown from "@img/ArrowDown.svg?react"
+import ArrowDown from "@svg/ArrowDown.svg?react"
 
-interface CustomSelectProps {
+interface ICustomSelectProps {
     options: string[]
     placeholder?: string
     onSelect?: (option: string) => void
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ options, placeholder = "Выберите", onSelect }) => {
+const CustomSelect: React.FC<ICustomSelectProps> = ({ options, placeholder = "Выберите", onSelect }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedOption, setSelectedOption] = useState<string>("")
 

@@ -1,4 +1,4 @@
-import NotifySvg from '@img/Notification.svg?react'
+import NotifySvg from '@svg/Notification.svg?react'
 
 export function Notify() {
 

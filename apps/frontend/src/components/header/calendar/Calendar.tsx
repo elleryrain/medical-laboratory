@@ -1,4 +1,4 @@
-import CalendarSvg from '@img/Calendar.svg?react'
+import CalendarSvg from '@svg/Calendar.svg?react'
 
 export function Calendar() {
 

@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import { useStaffStore } from '@/store/StaffPageStore';
-import ArrowDown from "@img/ArrowDown.svg?react"
-import ArrowUp from "@img/ArrowUp.svg?react"
-import Edit from "@img/Edit.svg?react"
-import DeleteTrash from "@img/DeleteTrash.svg?react"
-import CheckArrow from "@img/CheckArrow.svg?react"
+import ArrowDown from "@svg/ArrowDown.svg?react"
+import ArrowUp from "@svg/ArrowUp.svg?react"
+import Edit from "@svg/Edit.svg?react"
+import DeleteTrash from "@svg/DeleteTrash.svg?react"
+import CheckArrow from "@svg/CheckArrow.svg?react"
 import { useState } from "react"
 
 const DoctorsPageCardStyled = styled.div`

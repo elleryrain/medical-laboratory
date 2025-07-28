@@ -1,4 +1,4 @@
-import Arrow from "@img/StatusArrowUp.svg?react"
+import Arrow from "@svg/StatusArrowUp.svg?react"
 import { FC } from "react"
 import styled from "styled-components"
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import ArrowDown from "@img/ArrowDown.svg?react"
+import ArrowDown from "@svg/ArrowDown.svg?react"
 
 interface CustomSelectProps {
     options: string[]

@@ -6,7 +6,7 @@ type Employee = {
   fixedSalary: number;
 };
 
-type Penalties = {
+export type Penalties = {
   id: number;
   title: string;
   date: string;
@@ -28,6 +28,8 @@ export type SalariesStore = {
   salaryStatus: SalaryStatus[];
   setSalaryStatus: (status: SalaryStatus[]) => void;
   addSalaryStatus: (status: SalaryStatus) => void;
+  setPenalties: (penalties: Penalties[]) => void;
+  addPenalties: (penalty: Penalties) => void;
 };
 
 const initialEmployees: Employee[] = [
@@ -37,7 +39,7 @@ const initialEmployees: Employee[] = [
 
 const initialPenalties: Penalties[] = [
   { id: 0, title: "Penalty 1", date: "01.07.2025", time: "10:00", employeeId: 0, amount: 500 },
-  { id: 1, title: "Penalty 2", date: "05.07.2025", time: "14:00", employeeId: 1, amount: 750 },
+  { id: 1, title: "Penalty 2", date: "05.07.2025", time: "14:00", employeeId: 0, amount: 750 },
 ];
 
 const initialSalaryStatus: SalaryStatus[] = [
@@ -52,5 +54,10 @@ export const useSalariesStore = create<SalariesStore>((set) => ({
   addSalaryStatus: (status) =>
     set((state) => ({
       salaryStatus: [...state.salaryStatus, status],
+    })),
+  setPenalties: (penalties) => set({ penalties: penalties }),
+  addPenalties: (penalty) =>
+    set((state) => ({
+      penalties: [...state.penalties, penalty],
     })),
 }));

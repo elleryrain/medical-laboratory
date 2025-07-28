@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { useWarehouseStore } from '@/store/WarehousePageStore';
 import { useState } from "react"
-import ArrowUp from "@img/ArrowUp.svg?react"
-import ArrowDown from "@img/ArrowDown.svg?react"
+import ArrowUp from "@svg/ArrowUp.svg?react"
+import ArrowDown from "@svg/ArrowDown.svg?react"
 
 const WarehousePageStyled = styled.div`
     display: grid;

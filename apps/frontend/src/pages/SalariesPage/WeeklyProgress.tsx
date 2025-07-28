@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useInWorkCardStore } from "@/store/InWorkCardStore";
-import ArrowLeft from "@img/ArrowLeftNoTail.svg?react";
+import ArrowLeft from "@svg/ArrowLeftNoTail.svg?react";
 
 // Тип для данных по дню
 interface DayData {

@@ -1,9 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
-import Delete from "@img/Delete.svg?react"
-import Plus from "@img/plus.svg?react"
-import DragPoints from "@img/DragPoints.svg?react"
-import DeleteRedCircle from "@img/DeleteRedCircle.svg?react"
+import Delete from "@svg/Delete.svg?react"
+import Plus from "@svg/plus.svg?react"
+import DragPoints from "@svg/DragPoints.svg?react"
+import DeleteRedCircle from "@svg/DeleteRedCircle.svg?react"
 import { AddTypesWorkSelect } from "./AddTypesWorkSelect"
 import { useWarehouseStore } from '@/store/WarehousePageStore';
 import { DndContext, closestCenter } from "@dnd-kit/core"

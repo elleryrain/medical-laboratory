@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Plus from "@img/plus.svg?react"
+import Plus from "@svg/plus.svg?react"
 import { StatusItem } from "./StatusItem"
 
 const OrdersStatusStyled = styled.div`

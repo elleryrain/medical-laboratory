@@ -1,6 +1,6 @@
 import { Search } from '@/components/search/Search';
 import { DropdownMenu } from '@/components/dropdownMenu/DropdownMenu';
-import DeleteSvg from '@img/DeleteBold.svg?react';
+import DeleteSvg from '@svg/DeleteBold.svg?react';
 import { useFilter } from '@/hooks/useFilter';
 
 interface SearchResult {

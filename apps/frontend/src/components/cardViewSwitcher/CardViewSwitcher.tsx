@@ -1,5 +1,5 @@
-import GridViewIcon from "@img/GridViewIcon.svg?react";
-import ListViewIcon from "@img/ListViewIcon.svg?react";
+import GridViewIcon from "@svg/GridViewIcon.svg?react";
+import ListViewIcon from "@svg/ListViewIcon.svg?react";
 
 interface ICardViewSwitcherProps {
     isGridView: boolean

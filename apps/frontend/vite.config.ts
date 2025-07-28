@@ -27,7 +27,8 @@ export default defineConfig(() => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@img": path.resolve(__dirname, "./src/assets/img/"),
+      "@svg": path.resolve(__dirname, "./src/assets/img"),
+      "@img": path.resolve(__dirname, "./public/image"),
     },
   },
 

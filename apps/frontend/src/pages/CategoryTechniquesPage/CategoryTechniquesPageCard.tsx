@@ -1,6 +1,6 @@
 import { useStaffStore } from '@/store/StaffPageStore';
-import ArrowUp from "@img/ArrowUp.svg?react"
-import ArrowDown from "@img/ArrowDown.svg?react"
+import ArrowUp from "@svg/ArrowUp.svg?react"
+import ArrowDown from "@svg/ArrowDown.svg?react"
 import { useState } from "react"
 import styled from "styled-components"
 

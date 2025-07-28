@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useStaffStore } from '@/store/StaffPageStore';
-import ArrowLink from "@img/ArrowLinkStaff.svg?react"
+import ArrowLink from "@svg/ArrowLinkStaff.svg?react"
 import { useNavigate } from "react-router-dom"
 
 const StaffPageCardStyled = styled.div`

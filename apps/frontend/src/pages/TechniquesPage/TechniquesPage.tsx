@@ -1,6 +1,6 @@
 import { routes } from "../../config/routes";
-import ArrowLeft from "@img/ArrowLeft.svg?react"
-import Plus from "@img/plus.svg?react"
+import ArrowLeft from "@svg/ArrowLeft.svg?react"
+import Plus from "@svg/plus.svg?react"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { TechniquesPageCard } from "./TechniquesPageCard";

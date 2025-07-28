@@ -1,9 +1,9 @@
-import ProfileIcon from "@img/ProfileIcon.svg?react"
-import Lock from "@img/Lock.svg?react"
-import EyeOpenIcon from "@img/EyeOpenIcon.svg?react"
-import EyeCloseIcon from "@img/EyeCloseIcon.svg?react"
-import BackgroundLeftRight from "@img/BackgroundLeftRightAuth.svg?react"
-import BackgroundTop from "@img/BackgroundTopAuth.svg?react"
+import ProfileIcon from "@svg/ProfileIcon.svg?react"
+import Lock from "@svg/Lock.svg?react"
+import EyeOpenIcon from "@svg/EyeOpenIcon.svg?react"
+import EyeCloseIcon from "@svg/EyeCloseIcon.svg?react"
+import BackgroundLeftRight from "@svg/BackgroundLeftRightAuth.svg?react"
+import BackgroundTop from "@svg/BackgroundTopAuth.svg?react"
 import { useState } from "react"
 
 export const AuthPage = () => {

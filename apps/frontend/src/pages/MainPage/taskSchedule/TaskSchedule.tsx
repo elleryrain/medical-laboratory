@@ -1,4 +1,4 @@
-import Plus from "@img/plus.svg?react"
+import Plus from "@svg/plus.svg?react"
 import styled from "styled-components"
 import { TaskScheduleList } from "./TaskScheduleList"
 

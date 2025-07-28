@@ -1,4 +1,4 @@
-import SearchSvg from '@img/search.svg?react';
+import SearchSvg from '@svg/search.svg?react';
 
 interface SearchProps {
     searchQuery?: string;

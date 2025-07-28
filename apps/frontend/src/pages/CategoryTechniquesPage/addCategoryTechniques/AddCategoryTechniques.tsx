@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Delete from "@img/Delete.svg?react";
-import Plus from "@img/plus.svg?react";
+import Delete from "@svg/Delete.svg?react";
+import Plus from "@svg/plus.svg?react";
 import { useStaffStore } from '@/store/StaffPageStore';
 import { useState } from "react";
 

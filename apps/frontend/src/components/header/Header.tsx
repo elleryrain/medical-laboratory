@@ -1,4 +1,4 @@
-import Logo from '@img/Logo.svg?react';
+import Logo from '@svg/Logo.svg?react';
 import { Calendar } from './calendar/Calendar';
 import { Notify } from './notify/Notify';
 import { Profile } from './profile/Profile';

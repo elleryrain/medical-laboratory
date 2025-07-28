@@ -1,18 +1,32 @@
-import Plus from "@img/plus.svg?react";
+import Plus from "@svg/plus.svg?react";
+import React from "react";
 
 interface IButtonProps {
     title: string;
     theme?: string;
     onClick?: () => void;
-    leftIcon?: string;
-    rightIcon?: string;
     className?: string;
+    children?: React.ReactNode;
 }
 
 export const Button = (props: IButtonProps) => {
     const getThemeStyles = () => {
         const baseStyles = {
             showIcon: true,
+            text: {
+                color: "#000000",
+                fontWeight: "500",
+            },
+            button: {
+                backgroundColor: "#FFFFFF",
+                padding: "13px 30px",
+                gap: "20px",
+            },
+            icon: {
+                plusBackground: "#DCDCDC",
+                plusFill: "#000000",
+                plusStroke: "#000000",
+            },
         };
 
         switch (props.theme) {
@@ -26,9 +40,8 @@ export const Button = (props: IButtonProps) => {
                     },
                     button: {
                         backgroundColor: "#BDFF67",
-                        padding: "13px 30px 13px 30px",
+                        padding: "13px 30px",
                     },
-                    icon: {},
                 };
             case "salaryPaid":
                 return {
@@ -41,13 +54,13 @@ export const Button = (props: IButtonProps) => {
                     button: {
                         backgroundColor: "transparent",
                         border: "2px solid #BDFF67",
-                        padding: "13px 30px 13px 30px",
+                        padding: "13px 30px",
                     },
-                    icon: {},
                 };
             case "addButton":
                 return {
                     ...baseStyles,
+                    showIcon: true,
                     text: {
                         color: "#000000",
                         fontSize: "24px",
@@ -56,55 +69,50 @@ export const Button = (props: IButtonProps) => {
                     button: {
                         backgroundColor: "#FFFFFF",
                         gap: "20px",
-                        padding: "10px 20px 10px 10px"
+                        padding: "10px 20px 10px 10px",
                     },
                     icon: {
                         plusBackground: "#DCDCDC",
                         plusFill: "#000000",
                         plusStroke: "#000000",
                     },
+                };
+            case "lineButton":
+                return {
+                    ...baseStyles,
+                    showIcon: true,
+                    text: {
+                        color: "#FFFFFF",
+                        fontWeight: "500",
+                    },
+                    button: {
+                        backgroundColor: "transparent",
+                        border: "2px dashed #d2d2d2",
+                        padding: "0",
+                    },
+                    icon: {
+                        plusFill: "white",
+                        plusStroke: "white",
+                    }
                 };
             case "default":
             default:
-                return {
-                    ...baseStyles,
-                    text: {
-                        color: "#000000",
-                    },
-                    button: {
-                        backgroundColor: "#FFFFFF",
-                    },
-                    icon: {
-                        plusBackground: "#DCDCDC",
-                        plusFill: "#000000",
-                        plusStroke: "#000000",
-                    },
-                };
+                return baseStyles;
         }
     };
 
     const themeStyles = getThemeStyles();
-    const hasCustomIcon = props.leftIcon || props.rightIcon;
-    const showDefaultIcon = themeStyles.showIcon && !hasCustomIcon;
 
     return (
         <div
-            className={`flex items-center justify-center rounded-full cursor-pointer h-full w-fit ${props.className || ""}`}
+            className={`flex items-center justify-center cursor-pointer w-fit ${props.className || ""}`}
             style={{
                 ...themeStyles.button,
                 transition: "all 0.3s ease",
             }}
             onClick={props.onClick}
         >
-            {props.leftIcon && (
-                <img
-                    src={props.leftIcon}
-                    alt="Left icon"
-                    className="w-[32px] h-[32px] rounded-full"
-                    style={{ transition: "all 0.3s ease" }}
-                />
-            )}
-            {showDefaultIcon && (
+            {themeStyles.showIcon && (
                 <div
                     className="flex items-center justify-center p-[9px] rounded-full"
                     style={{
@@ -122,23 +130,18 @@ export const Button = (props: IButtonProps) => {
                     />
                 </div>
             )}
-            <h1
-                className="text-2xl"
-                style={{
-                    ...themeStyles.text,
-                    transition: "all 0.3s ease",
-                }}
-            >
-                {props.title}
-            </h1>
-            {props.rightIcon && (
-                <img
-                    src={props.rightIcon}
-                    alt="Right icon"
-                    className="w-[32px] h-[32px] rounded-full"
-                    style={{ transition: "all 0.3s ease" }}
-                />
-            )}
+            <div className="flex items-center gap-2">
+                {props.children && <div>{props.children}</div>}
+                <h1
+                    className="text-2xl"
+                    style={{
+                        ...themeStyles.text,
+                        transition: "all 0.3s ease",
+                    }}
+                >
+                    {props.title}
+                </h1>
+            </div>
         </div>
     );
 };

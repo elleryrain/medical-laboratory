@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useTaskStore } from "@/store/TaskScheduleStore"
-import CheckArrow from "@img/CheckArrow.svg?react"
-import TaskLine from "@img/TaskLine.svg?react"
+import CheckArrow from "@svg/CheckArrow.svg?react"
+import TaskLine from "@svg/TaskLine.svg?react"
 
 const TaskScheduleListStyled = styled.div`
     display: flex;
