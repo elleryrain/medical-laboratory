@@ -13,9 +13,12 @@ export class UserRepository {
   }
 
   async findOne(id: number) {
-    return [
-      this.db.select().from(usersTable).where(eq(usersTable.id, id)).limit(1),
-    ];
+    const [user] = await this.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.id, id))
+      .limit(1);
+    return user;
   }
 
   async findByEmail(email: string) {

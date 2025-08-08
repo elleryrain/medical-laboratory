@@ -18,4 +18,15 @@ export class UserService {
   async getUserByEmail(email: string) {
     return await this.userRepository.findByEmail(email);
   }
+
+  async getUserById(id: number) {
+    const user = await this.userRepository.findOne(id);
+    return user;
+  }
+
+  async getShortUserById(id: number) {
+    const user = await this.userRepository.findOne(id);
+    const { email, middleName, name, role, surname } = user;
+    return { id, email, middleName, name, role, surname };
+  }
 }

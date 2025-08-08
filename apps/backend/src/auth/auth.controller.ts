@@ -29,7 +29,6 @@ export class AuthController {
     const user = await this.userService.create(newUserData);
     const payload = {
       id: user.id,
-      email,
     };
     const token = this.jwtService.sign(payload);
     return { accessToken: token };

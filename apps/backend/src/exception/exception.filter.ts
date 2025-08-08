@@ -13,9 +13,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<FastifyReply>();
+    const reply = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
-
     const status =
       exception instanceof HttpException ? exception.getStatus() : 500;
 
@@ -29,7 +28,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof Error ? exception.stack : '',
     );
 
-    response.status(status).send({
+    reply.status(status).send({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
