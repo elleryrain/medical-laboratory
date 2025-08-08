@@ -1,8 +1,8 @@
-import { defineConfig } from 'orval'
+import { defineConfig } from 'orval';
 
 export default defineConfig({
   main: {
-    input: {target:'apps/shared/src/swagger/index.yaml'},
+    input: 'apps/shared/src/swagger/index.yaml',
     output: {
       target: 'apps/frontend/src/api/generated',
       schemas: 'apps/frontend/src/api/generated/model',
@@ -18,14 +18,4 @@ export default defineConfig({
       },
     },
   },
-  zod: {
-    input: 'apps/shared/src/swagger/index.yaml',
-    output: {
-      target: 'apps/shared/src/api/zod',
-      schemas: 'apps/shared/src/api/model',
-      prettier: true,
-      client: 'zod',
-      mode: 'tags-split',
-    },
-  },
-})
+});
