@@ -19,12 +19,16 @@ export class UserRepository {
   }
 
   async findByEmail(email: string) {
-    return [
-      this.db
-        .select()
-        .from(usersTable)
-        .where(eq(usersTable.email, email))
-        .limit(1),
-    ];
+    const [user] = await this.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.email, email))
+      .limit(1);
+    return user;
+  }
+
+  async create(newUser: typeof usersTable.$inferInsert) {
+    const [user] = await this.db.insert(usersTable).values(newUser).returning();
+    return user;
   }
 }

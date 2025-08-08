@@ -5,6 +5,16 @@ module.exports = {
   output: {
     path: join(__dirname, '../../dist/apps/backend'),
   },
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: join(
+      __dirname,
+      '../../',
+      'cache',
+      'backend',
+      '.webpack_cache',
+    ),
+  },
   plugins: [
     new NxAppWebpackPlugin({
       target: 'node',

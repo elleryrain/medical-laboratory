@@ -20,7 +20,7 @@ export const usersTable = pgTable('users', {
   role: roleEnum(),
   middleName: varchar('middle_name', { length: 255 }).notNull(),
   hashedPassword: text('hashed_password').notNull(),
-  avatar: text('avatar').notNull(),
+  avatar: text('avatar'),
 });
 
 export const categoryTechniciansTable = pgTable('category_technicians', {
