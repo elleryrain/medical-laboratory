@@ -10,6 +10,7 @@ servers:
 paths:
   /api/auth/login:
     post:
+      operationId: loginUser
       summary: 'получение токена для входа в личный кабинет'
       tags:
         - login
@@ -43,6 +44,7 @@ paths:
                       - access denied
   /api/auth/register:
     post:
+      operationId: registerUser
       summary: 'регистрация'
       requestBody:
         content:
@@ -78,6 +80,7 @@ paths:
                     type: string
   /api/profile/daily-tasks:
     get:
+      operationId: getDailyTasks
       summary: 'получение всех задач на день'
       tags:
         - daily-tasks
@@ -92,6 +95,7 @@ paths:
                   $ref: '#/components/schemas/DailyTask'
   /api/profile:
     get:
+      operationId: getProfile
       summary: 'получение основной информации о профиле'
       tags:
         - profile
@@ -105,6 +109,7 @@ paths:
 
   /api/knowledge:
     get:
+      operationId: getKnowledgeSummary
       summary: 'получение всей базовой информации о базе знаний'
       tags:
         - knowledge
@@ -126,6 +131,7 @@ paths:
                     type: number
   /api/knowledge/doctors:
     get:
+      operationId: getDoctors
       summary: 'получение информации о докторах'
       tags:
         - doctors
@@ -141,6 +147,7 @@ paths:
 
   /api/knowledge/technicals:
     get:
+      operationId: getTechnicians
       summary: 'получение информации о техниках'
       tags:
         - technicals
@@ -156,6 +163,7 @@ paths:
 
   /api/knowledge/type-works:
     get:
+      operationId: getTypeWorks
       summary: 'получние информации о всех типах работы'
       tags:
         - type-works
@@ -169,12 +177,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/TypeWork'
     post:
+      operationId: createTypeWork
       responses:
         200:
           description: ''
 
   /api/knowledge/category-technicals:
     get:
+      operationId: getCategoryTechnicals
       summary: 'получение все информации о категориях техников'
       tags:
         - category-technicals
@@ -190,6 +200,7 @@ paths:
 
   /api/storage:
     get:
+      operationId: getStorageInfo
       summary: получение всей информации о складе
       tags:
         - storage
@@ -204,6 +215,7 @@ paths:
                   $ref: '#/components/schemas/StorageItem'
   /api/salary:
     get:
+      operationId: getPayrollData
       summary: 'получение всех заплат рабочих'
       tags:
         - salary
