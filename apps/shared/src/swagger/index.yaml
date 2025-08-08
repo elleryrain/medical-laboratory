@@ -5,12 +5,12 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:5000
+  - url: http://localhost:4500
 
 paths:
-  /api/login:
+  /api/auth/login:
     post:
-      summary: 'вход в личный кабинет'
+      summary: 'получение токена для входа в личный кабинет'
       tags:
         - login
       description: 'вход в личный кабинет'
@@ -41,7 +41,41 @@ paths:
                     type: string
                     enum:
                       - access denied
-
+  /api/auth/register:
+    post:
+      summary: 'регистрация'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+                middleName:
+                  type: string
+                surname:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - admin
+                    - technician
+        required: true
+      responses:
+        200:
+          description: 'регистрация пройдена успешно'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
   /api/profile/daily-tasks:
     get:
       summary: 'получение всех задач на день'
@@ -120,7 +154,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Technical'
 
-  /api/knowledge/type-works:  
+  /api/knowledge/type-works:
     get:
       summary: 'получние информации о всех типах работы'
       tags:

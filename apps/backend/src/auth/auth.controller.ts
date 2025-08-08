@@ -3,12 +3,14 @@ import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/auth.dto';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from './dto/user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly jwtService: JwtService,
   ) {}
 
   @Post('register')
@@ -25,7 +27,12 @@ export class AuthController {
       avatar,
     };
     const user = await this.userService.create(newUserData);
-    return user;
+    const payload = {
+      id: user.id,
+      email,
+    };
+    const token = this.jwtService.sign(payload);
+    return { accessToken: token };
   }
 
   @Post('login')

@@ -38,7 +38,7 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new ForbiddenException();
     }
-    const payload = { email, password };
+    const payload = { id: user.id, email };
     const token = this.jwtService.sign(payload);
     console.log(token);
     console.log(this.jwtService.verify(token));
