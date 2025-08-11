@@ -1,6 +1,6 @@
 // components/layout/MainLayout.tsx
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Header } from './components/header/Header';
 import { Navigation } from './components/navigation/Navigation';
 

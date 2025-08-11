@@ -5,7 +5,14 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["vite/client"]
+    "jsxImportSource": "@emotion/react",
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@svg/*": ["src/assets/img/*"],
+      "@img/*": ["public/image/*"]
+    }
   },
   "files": [],
   "include": [],
