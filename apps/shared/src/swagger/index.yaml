@@ -78,6 +78,34 @@ paths:
                 properties:
                   token:
                     type: string
+  /api/user/short:
+    post:
+      operationId: getShortUser
+      summary: 'получение короткой информации о пользователе'
+      responses:
+        200:
+          description: 'регистрация пройдена успешно'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  email:
+                    type: string
+                  middleName:
+                    type: string
+                  name:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - 'admin'
+                      - 'technician'
+                  surname:
+                    type: string
+
   /api/profile/daily-tasks:
     get:
       operationId: getDailyTasks
