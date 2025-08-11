@@ -21,10 +21,6 @@ async function bootstrap() {
   );
 
   app.enableCors();
-  app.register(require('@fastify/cors'), {
-    origin: '*',
-  });
-
   app.useGlobalFilters(new AllExceptionsFilter());
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 4500;
