@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nx run-many -t serve",
     "dev:backend": "nx serve backend",
-    "dev:frontend": "nx serve frontend",
+    "dev:frontend": "nx serve frontend --host 0.0.0.0",
     "db:generate": "npx drizzle-kit generate --schema=apps/backend/src/drizzle/schemas/schema.ts --out=apps/backend/src/drizzle/migrations --dialect=postgresql",
     "db:migrate": "npx drizzle-kit migrate --config=apps/backend/drizzle.config.ts"
   },
