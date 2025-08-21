@@ -11,6 +11,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+  await app.register(require('@fastify/cors'));
+
   const globalPrefix = 'api';
 
   app.useGlobalPipes(
@@ -20,12 +22,13 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    credentials: true,
-    allowedHeaders: '*',
-  });
+  // app.enableCors({
+  //   origin: '*',
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  //   credentials: true,
+  //   allowedHeaders: '*',
+  // });
+
   app.useGlobalFilters(new AllExceptionsFilter());
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 4500;
