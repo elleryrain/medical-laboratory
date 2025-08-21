@@ -353,6 +353,7 @@ paths:
 
   /api/places:
     get:
+      operationId: getAllPlaces
       summary: 'получение всех мест'
       tags:
         - place
