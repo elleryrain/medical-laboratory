@@ -46,6 +46,8 @@ paths:
     post:
       operationId: registerUser
       summary: 'регистрация'
+      tags:
+        - register
       requestBody:
         content:
           application/json:
@@ -82,6 +84,8 @@ paths:
     get:
       operationId: getShortUser
       summary: 'получение короткой информации о пользователе'
+      tags:
+        - user
       responses:
         200:
           description: 'регистрация пройдена успешно'
@@ -347,6 +351,25 @@ paths:
         404:
           description: 'Задача не найдена'
 
+  /api/places:
+    get:
+      summary: 'получение всех мест'
+      tags:
+        - place
+      responses:
+        200:
+          description: 'успешное получение всех мест'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
 components:
   schemas:
     LoginData:
