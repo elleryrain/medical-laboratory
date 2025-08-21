@@ -79,7 +79,7 @@ paths:
                   token:
                     type: string
   /api/user/short:
-    post:
+    get:
       operationId: getShortUser
       summary: 'получение короткой информации о пользователе'
       responses:

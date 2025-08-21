@@ -9,7 +9,7 @@ export const useAuth = () => {
       onSuccess: (data) => {
         setError(null);
         localStorage.setItem('accessToken', String(data.accessToken || ''));
-        // window.location.href = '/';
+        window.location.href = '/';
       },
       onError: (err: any) => {
         // Проверяем, является ли ошибка 403

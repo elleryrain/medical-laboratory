@@ -108,7 +108,7 @@ export const useRegisterUser = <TError = unknown, TContext = unknown>(
 export const getShortUser = (signal?: AbortSignal) => {
   return baseApiRequest<GetShortUser200>({
     url: `/api/user/short`,
-    method: 'POST',
+    method: 'GET',
     signal,
   });
 };
