@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CourierTaskModule } from '../courier-task/courier-task.module';
+import { PlacesModule } from '../places/places.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CourierTaskModule } from '../courier-task/courier-task.module';
       inject: [ConfigService],
     }),
     CourierTaskModule,
+    PlacesModule,
   ],
 })
 export class AppModule {}
