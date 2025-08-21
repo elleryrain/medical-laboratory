@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение всей информации о складе
  */
-export const getApiStorage = (signal?: AbortSignal) => {
+export const getStorageInfo = (signal?: AbortSignal) => {
   return baseApiRequest<StorageItem[]>({
     url: `/api/storage`,
     method: 'GET',
@@ -32,51 +32,51 @@ export const getApiStorage = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiStorageQueryKey = () => {
+export const getGetStorageInfoQueryKey = () => {
   return [`/api/storage`] as const;
 };
 
-export const getGetApiStorageQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiStorage>>,
+export const getGetStorageInfoQueryOptions = <
+  TData = Awaited<ReturnType<typeof getStorageInfo>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiStorage>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getStorageInfo>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiStorageQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetStorageInfoQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiStorage>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getStorageInfo>>> = ({
     signal,
-  }) => getApiStorage(signal);
+  }) => getStorageInfo(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiStorage>>,
+    Awaited<ReturnType<typeof getStorageInfo>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiStorageQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiStorage>>
+export type GetStorageInfoQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getStorageInfo>>
 >;
-export type GetApiStorageQueryError = unknown;
+export type GetStorageInfoQueryError = unknown;
 
-export function useGetApiStorage<
-  TData = Awaited<ReturnType<typeof getApiStorage>>,
+export function useGetStorageInfo<
+  TData = Awaited<ReturnType<typeof getStorageInfo>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiStorage>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getStorageInfo>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiStorage>>,
+          Awaited<ReturnType<typeof getStorageInfo>>,
           TError,
-          Awaited<ReturnType<typeof getApiStorage>>
+          Awaited<ReturnType<typeof getStorageInfo>>
         >,
         'initialData'
       >;
@@ -85,19 +85,19 @@ export function useGetApiStorage<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiStorage<
-  TData = Awaited<ReturnType<typeof getApiStorage>>,
+export function useGetStorageInfo<
+  TData = Awaited<ReturnType<typeof getStorageInfo>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiStorage>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getStorageInfo>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiStorage>>,
+          Awaited<ReturnType<typeof getStorageInfo>>,
           TError,
-          Awaited<ReturnType<typeof getApiStorage>>
+          Awaited<ReturnType<typeof getStorageInfo>>
         >,
         'initialData'
       >;
@@ -106,13 +106,13 @@ export function useGetApiStorage<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiStorage<
-  TData = Awaited<ReturnType<typeof getApiStorage>>,
+export function useGetStorageInfo<
+  TData = Awaited<ReturnType<typeof getStorageInfo>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiStorage>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getStorageInfo>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -123,20 +123,20 @@ export function useGetApiStorage<
  * @summary получение всей информации о складе
  */
 
-export function useGetApiStorage<
-  TData = Awaited<ReturnType<typeof getApiStorage>>,
+export function useGetStorageInfo<
+  TData = Awaited<ReturnType<typeof getStorageInfo>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiStorage>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getStorageInfo>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiStorageQueryOptions(options);
+  const queryOptions = getGetStorageInfoQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

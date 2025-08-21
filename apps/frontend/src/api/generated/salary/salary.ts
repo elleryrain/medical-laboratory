@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение всех заплат рабочих
  */
-export const getApiSalary = (signal?: AbortSignal) => {
+export const getPayrollData = (signal?: AbortSignal) => {
   return baseApiRequest<PayrollData[]>({
     url: `/api/salary`,
     method: 'GET',
@@ -32,51 +32,51 @@ export const getApiSalary = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiSalaryQueryKey = () => {
+export const getGetPayrollDataQueryKey = () => {
   return [`/api/salary`] as const;
 };
 
-export const getGetApiSalaryQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiSalary>>,
+export const getGetPayrollDataQueryOptions = <
+  TData = Awaited<ReturnType<typeof getPayrollData>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiSalary>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getPayrollData>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiSalaryQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetPayrollDataQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiSalary>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getPayrollData>>> = ({
     signal,
-  }) => getApiSalary(signal);
+  }) => getPayrollData(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiSalary>>,
+    Awaited<ReturnType<typeof getPayrollData>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiSalaryQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiSalary>>
+export type GetPayrollDataQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getPayrollData>>
 >;
-export type GetApiSalaryQueryError = unknown;
+export type GetPayrollDataQueryError = unknown;
 
-export function useGetApiSalary<
-  TData = Awaited<ReturnType<typeof getApiSalary>>,
+export function useGetPayrollData<
+  TData = Awaited<ReturnType<typeof getPayrollData>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiSalary>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getPayrollData>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiSalary>>,
+          Awaited<ReturnType<typeof getPayrollData>>,
           TError,
-          Awaited<ReturnType<typeof getApiSalary>>
+          Awaited<ReturnType<typeof getPayrollData>>
         >,
         'initialData'
       >;
@@ -85,19 +85,19 @@ export function useGetApiSalary<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiSalary<
-  TData = Awaited<ReturnType<typeof getApiSalary>>,
+export function useGetPayrollData<
+  TData = Awaited<ReturnType<typeof getPayrollData>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiSalary>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getPayrollData>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiSalary>>,
+          Awaited<ReturnType<typeof getPayrollData>>,
           TError,
-          Awaited<ReturnType<typeof getApiSalary>>
+          Awaited<ReturnType<typeof getPayrollData>>
         >,
         'initialData'
       >;
@@ -106,13 +106,13 @@ export function useGetApiSalary<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiSalary<
-  TData = Awaited<ReturnType<typeof getApiSalary>>,
+export function useGetPayrollData<
+  TData = Awaited<ReturnType<typeof getPayrollData>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiSalary>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getPayrollData>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -123,20 +123,20 @@ export function useGetApiSalary<
  * @summary получение всех заплат рабочих
  */
 
-export function useGetApiSalary<
-  TData = Awaited<ReturnType<typeof getApiSalary>>,
+export function useGetPayrollData<
+  TData = Awaited<ReturnType<typeof getPayrollData>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiSalary>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getPayrollData>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiSalaryQueryOptions(options);
+  const queryOptions = getGetPayrollDataQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

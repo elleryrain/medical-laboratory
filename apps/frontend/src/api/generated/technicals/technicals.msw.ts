@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { Technical } from '.././model';
 
-export const getGetApiKnowledgeTechnicalsResponseMock = (): Technical[] =>
+export const getGetTechniciansResponseMock = (): Technical[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -22,7 +22,7 @@ export const getGetApiKnowledgeTechnicalsResponseMock = (): Technical[] =>
     avatype: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
   }));
 
-export const getGetApiKnowledgeTechnicalsMockHandler = (
+export const getGetTechniciansMockHandler = (
   overrideResponse?:
     | Technical[]
     | ((
@@ -38,12 +38,10 @@ export const getGetApiKnowledgeTechnicalsMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiKnowledgeTechnicalsResponseMock(),
+          : getGetTechniciansResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getTechnicalsMock = () => [
-  getGetApiKnowledgeTechnicalsMockHandler(),
-];
+export const getTechnicalsMock = () => [getGetTechniciansMockHandler()];

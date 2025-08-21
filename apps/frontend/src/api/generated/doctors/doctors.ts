@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение информации о докторах
  */
-export const getApiKnowledgeDoctors = (signal?: AbortSignal) => {
+export const getDoctors = (signal?: AbortSignal) => {
   return baseApiRequest<Doctor[]>({
     url: `/api/knowledge/doctors`,
     method: 'GET',
@@ -32,60 +32,51 @@ export const getApiKnowledgeDoctors = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiKnowledgeDoctorsQueryKey = () => {
+export const getGetDoctorsQueryKey = () => {
   return [`/api/knowledge/doctors`] as const;
 };
 
-export const getGetApiKnowledgeDoctorsQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+export const getGetDoctorsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getDoctors>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDoctors>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetApiKnowledgeDoctorsQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetDoctorsQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiKnowledgeDoctors>>
-  > = ({ signal }) => getApiKnowledgeDoctors(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDoctors>>> = ({
+    signal,
+  }) => getDoctors(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+    Awaited<ReturnType<typeof getDoctors>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiKnowledgeDoctorsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiKnowledgeDoctors>>
+export type GetDoctorsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getDoctors>>
 >;
-export type GetApiKnowledgeDoctorsQueryError = unknown;
+export type GetDoctorsQueryError = unknown;
 
-export function useGetApiKnowledgeDoctors<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+export function useGetDoctors<
+  TData = Awaited<ReturnType<typeof getDoctors>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDoctors>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+          Awaited<ReturnType<typeof getDoctors>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeDoctors>>
+          Awaited<ReturnType<typeof getDoctors>>
         >,
         'initialData'
       >;
@@ -94,23 +85,19 @@ export function useGetApiKnowledgeDoctors<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeDoctors<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+export function useGetDoctors<
+  TData = Awaited<ReturnType<typeof getDoctors>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDoctors>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+          Awaited<ReturnType<typeof getDoctors>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeDoctors>>
+          Awaited<ReturnType<typeof getDoctors>>
         >,
         'initialData'
       >;
@@ -119,17 +106,13 @@ export function useGetApiKnowledgeDoctors<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeDoctors<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+export function useGetDoctors<
+  TData = Awaited<ReturnType<typeof getDoctors>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDoctors>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -140,24 +123,20 @@ export function useGetApiKnowledgeDoctors<
  * @summary получение информации о докторах
  */
 
-export function useGetApiKnowledgeDoctors<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
+export function useGetDoctors<
+  TData = Awaited<ReturnType<typeof getDoctors>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeDoctors>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDoctors>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiKnowledgeDoctorsQueryOptions(options);
+  const queryOptions = getGetDoctorsQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

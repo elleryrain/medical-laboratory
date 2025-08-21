@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { Doctor } from '.././model';
 
-export const getGetApiKnowledgeDoctorsResponseMock = (): Doctor[] =>
+export const getGetDoctorsResponseMock = (): Doctor[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -23,7 +23,7 @@ export const getGetApiKnowledgeDoctorsResponseMock = (): Doctor[] =>
     address: faker.string.alpha(20),
   }));
 
-export const getGetApiKnowledgeDoctorsMockHandler = (
+export const getGetDoctorsMockHandler = (
   overrideResponse?:
     | Doctor[]
     | ((
@@ -39,10 +39,10 @@ export const getGetApiKnowledgeDoctorsMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiKnowledgeDoctorsResponseMock(),
+          : getGetDoctorsResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getDoctorsMock = () => [getGetApiKnowledgeDoctorsMockHandler()];
+export const getDoctorsMock = () => [getGetDoctorsMockHandler()];

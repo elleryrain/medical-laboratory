@@ -5,10 +5,11 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type PostApiLogin403Message =
-  (typeof PostApiLogin403Message)[keyof typeof PostApiLogin403Message];
+export type GetShortUser200Role =
+  (typeof GetShortUser200Role)[keyof typeof GetShortUser200Role];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const PostApiLogin403Message = {
-  access_denied: 'access denied',
+export const GetShortUser200Role = {
+  admin: 'admin',
+  technician: 'technician',
 } as const;

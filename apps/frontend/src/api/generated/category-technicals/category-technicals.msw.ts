@@ -10,53 +10,49 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { CategoryTechnicals } from '.././model';
 
-export const getGetApiKnowledgeCategoryTechnicalsResponseMock =
-  (): CategoryTechnicals[] =>
-    Array.from(
+export const getGetCategoryTechnicalsResponseMock = (): CategoryTechnicals[] =>
+  Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    id: faker.number.int({ min: undefined, max: undefined }),
+    categoryNumber: faker.number.int({ min: undefined, max: undefined }),
+    technicians: Array.from(
       { length: faker.number.int({ min: 1, max: 10 }) },
       (_, i) => i + 1,
     ).map(() => ({
       id: faker.number.int({ min: undefined, max: undefined }),
-      categoryNumber: faker.number.int({ min: undefined, max: undefined }),
-      technicians: Array.from(
+      name: faker.string.alpha(20),
+      surname: faker.string.alpha(20),
+      middleName: faker.string.alpha(20),
+      avatype: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+    })),
+    typesWork: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      id: faker.number.int({ min: undefined, max: undefined }),
+      typeProsthetics: faker.helpers.arrayElement([
+        'removable',
+        'non-removable',
+      ] as const),
+      steps: Array.from(
         { length: faker.number.int({ min: 1, max: 10 }) },
         (_, i) => i + 1,
       ).map(() => ({
-        id: faker.number.int({ min: undefined, max: undefined }),
-        name: faker.string.alpha(20),
-        surname: faker.string.alpha(20),
-        middleName: faker.string.alpha(20),
-        avatype: faker.helpers.arrayElement([
-          faker.string.alpha(20),
-          undefined,
-        ]),
+        ...{
+          id: faker.number.int({ min: undefined, max: undefined }),
+          name: faker.string.alpha(20),
+          material: faker.string.alpha(20),
+          materialCost: faker.string.alpha(20),
+          fullCost: faker.number.int({ min: undefined, max: undefined }),
+        },
       })),
-      typesWork: Array.from(
-        { length: faker.number.int({ min: 1, max: 10 }) },
-        (_, i) => i + 1,
-      ).map(() => ({
-        id: faker.number.int({ min: undefined, max: undefined }),
-        typeProsthetics: faker.helpers.arrayElement([
-          'removable',
-          'non-removable',
-        ] as const),
-        steps: Array.from(
-          { length: faker.number.int({ min: 1, max: 10 }) },
-          (_, i) => i + 1,
-        ).map(() => ({
-          ...{
-            id: faker.number.int({ min: undefined, max: undefined }),
-            name: faker.string.alpha(20),
-            material: faker.string.alpha(20),
-            materialCost: faker.string.alpha(20),
-            fullCost: faker.number.int({ min: undefined, max: undefined }),
-          },
-        })),
-        photo: faker.string.alpha(20),
-      })),
-    }));
+      photo: faker.string.alpha(20),
+    })),
+  }));
 
-export const getGetApiKnowledgeCategoryTechnicalsMockHandler = (
+export const getGetCategoryTechnicalsMockHandler = (
   overrideResponse?:
     | CategoryTechnicals[]
     | ((
@@ -72,12 +68,12 @@ export const getGetApiKnowledgeCategoryTechnicalsMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiKnowledgeCategoryTechnicalsResponseMock(),
+          : getGetCategoryTechnicalsResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
 export const getCategoryTechnicalsMock = () => [
-  getGetApiKnowledgeCategoryTechnicalsMockHandler(),
+  getGetCategoryTechnicalsMockHandler(),
 ];

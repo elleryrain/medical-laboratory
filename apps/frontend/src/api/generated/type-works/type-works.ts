@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получние информации о всех типах работы
  */
-export const getApiKnowledgeTypeWorks = (signal?: AbortSignal) => {
+export const getTypeWorks = (signal?: AbortSignal) => {
   return baseApiRequest<TypeWork[]>({
     url: `/api/knowledge/type-works`,
     method: 'GET',
@@ -32,60 +32,51 @@ export const getApiKnowledgeTypeWorks = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiKnowledgeTypeWorksQueryKey = () => {
+export const getGetTypeWorksQueryKey = () => {
   return [`/api/knowledge/type-works`] as const;
 };
 
-export const getGetApiKnowledgeTypeWorksQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+export const getGetTypeWorksQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTypeWorks>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getTypeWorks>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetApiKnowledgeTypeWorksQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetTypeWorksQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>
-  > = ({ signal }) => getApiKnowledgeTypeWorks(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypeWorks>>> = ({
+    signal,
+  }) => getTypeWorks(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+    Awaited<ReturnType<typeof getTypeWorks>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiKnowledgeTypeWorksQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>
+export type GetTypeWorksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTypeWorks>>
 >;
-export type GetApiKnowledgeTypeWorksQueryError = unknown;
+export type GetTypeWorksQueryError = unknown;
 
-export function useGetApiKnowledgeTypeWorks<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+export function useGetTypeWorks<
+  TData = Awaited<ReturnType<typeof getTypeWorks>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTypeWorks>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+          Awaited<ReturnType<typeof getTypeWorks>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>
+          Awaited<ReturnType<typeof getTypeWorks>>
         >,
         'initialData'
       >;
@@ -94,23 +85,19 @@ export function useGetApiKnowledgeTypeWorks<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeTypeWorks<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+export function useGetTypeWorks<
+  TData = Awaited<ReturnType<typeof getTypeWorks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTypeWorks>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+          Awaited<ReturnType<typeof getTypeWorks>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>
+          Awaited<ReturnType<typeof getTypeWorks>>
         >,
         'initialData'
       >;
@@ -119,17 +106,13 @@ export function useGetApiKnowledgeTypeWorks<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeTypeWorks<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+export function useGetTypeWorks<
+  TData = Awaited<ReturnType<typeof getTypeWorks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTypeWorks>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -140,24 +123,20 @@ export function useGetApiKnowledgeTypeWorks<
  * @summary получние информации о всех типах работы
  */
 
-export function useGetApiKnowledgeTypeWorks<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
+export function useGetTypeWorks<
+  TData = Awaited<ReturnType<typeof getTypeWorks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTypeWorks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTypeWorks>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiKnowledgeTypeWorksQueryOptions(options);
+  const queryOptions = getGetTypeWorksQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

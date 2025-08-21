@@ -8,11 +8,11 @@ import { faker } from '@faker-js/faker';
 
 import { HttpResponse, delay, http } from 'msw';
 
-import type { GetApiKnowledge200 } from '.././model';
+import type { GetKnowledgeSummary200 } from '.././model';
 
-export const getGetApiKnowledgeResponseMock = (
-  overrideResponse: Partial<GetApiKnowledge200> = {},
-): GetApiKnowledge200 => ({
+export const getGetKnowledgeSummaryResponseMock = (
+  overrideResponse: Partial<GetKnowledgeSummary200> = {},
+): GetKnowledgeSummary200 => ({
   doctorsCount: faker.helpers.arrayElement([
     faker.number.int({ min: undefined, max: undefined }),
     undefined,
@@ -32,12 +32,12 @@ export const getGetApiKnowledgeResponseMock = (
   ...overrideResponse,
 });
 
-export const getGetApiKnowledgeMockHandler = (
+export const getGetKnowledgeSummaryMockHandler = (
   overrideResponse?:
-    | GetApiKnowledge200
+    | GetKnowledgeSummary200
     | ((
         info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<GetApiKnowledge200> | GetApiKnowledge200),
+      ) => Promise<GetKnowledgeSummary200> | GetKnowledgeSummary200),
 ) => {
   return http.get('*/api/knowledge', async (info) => {
     await delay(1000);
@@ -48,10 +48,10 @@ export const getGetApiKnowledgeMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiKnowledgeResponseMock(),
+          : getGetKnowledgeSummaryResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getKnowledgeMock = () => [getGetApiKnowledgeMockHandler()];
+export const getKnowledgeMock = () => [getGetKnowledgeSummaryMockHandler()];

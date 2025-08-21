@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { TypeWork } from '.././model';
 
-export const getGetApiKnowledgeTypeWorksResponseMock = (): TypeWork[] =>
+export const getGetTypeWorksResponseMock = (): TypeWork[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -35,7 +35,7 @@ export const getGetApiKnowledgeTypeWorksResponseMock = (): TypeWork[] =>
     photo: faker.string.alpha(20),
   }));
 
-export const getGetApiKnowledgeTypeWorksMockHandler = (
+export const getGetTypeWorksMockHandler = (
   overrideResponse?:
     | TypeWork[]
     | ((
@@ -51,12 +51,10 @@ export const getGetApiKnowledgeTypeWorksMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiKnowledgeTypeWorksResponseMock(),
+          : getGetTypeWorksResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getTypeWorksMock = () => [
-  getGetApiKnowledgeTypeWorksMockHandler(),
-];
+export const getTypeWorksMock = () => [getGetTypeWorksMockHandler()];

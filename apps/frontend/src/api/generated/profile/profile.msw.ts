@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { Profile } from '.././model';
 
-export const getGetApiProfileResponseMock = (
+export const getGetProfileResponseMock = (
   overrideResponse: Partial<Profile> = {},
 ): Profile => ({
   id: faker.number.int({ min: undefined, max: undefined }),
@@ -20,7 +20,7 @@ export const getGetApiProfileResponseMock = (
   ...overrideResponse,
 });
 
-export const getGetApiProfileMockHandler = (
+export const getGetProfileMockHandler = (
   overrideResponse?:
     | Profile
     | ((
@@ -36,10 +36,10 @@ export const getGetApiProfileMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiProfileResponseMock(),
+          : getGetProfileResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getProfileMock = () => [getGetApiProfileMockHandler()];
+export const getProfileMock = () => [getGetProfileMockHandler()];

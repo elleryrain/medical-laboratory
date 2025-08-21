@@ -8,23 +8,23 @@ import { faker } from '@faker-js/faker';
 
 import { HttpResponse, delay, http } from 'msw';
 
-import type { PostApiLogin200 } from '.././model';
+import type { LoginUser200 } from '.././model';
 
-export const getPostApiLoginResponseMock = (
-  overrideResponse: Partial<PostApiLogin200> = {},
-): PostApiLogin200 => ({
-  token: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+export const getLoginUserResponseMock = (
+  overrideResponse: Partial<LoginUser200> = {},
+): LoginUser200 => ({
+  accessToken: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
   ...overrideResponse,
 });
 
-export const getPostApiLoginMockHandler = (
+export const getLoginUserMockHandler = (
   overrideResponse?:
-    | PostApiLogin200
+    | LoginUser200
     | ((
         info: Parameters<Parameters<typeof http.post>[1]>[0],
-      ) => Promise<PostApiLogin200> | PostApiLogin200),
+      ) => Promise<LoginUser200> | LoginUser200),
 ) => {
-  return http.post('*/api/login', async (info) => {
+  return http.post('*/api/auth/login', async (info) => {
     await delay(1000);
 
     return new HttpResponse(
@@ -33,10 +33,10 @@ export const getPostApiLoginMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getPostApiLoginResponseMock(),
+          : getLoginUserResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getLoginMock = () => [getPostApiLoginMockHandler()];
+export const getLoginMock = () => [getLoginUserMockHandler()];

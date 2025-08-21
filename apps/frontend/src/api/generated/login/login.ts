@@ -12,17 +12,17 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query';
 
-import type { LoginData, PostApiLogin200, PostApiLogin403 } from '.././model';
+import type { LoginData, LoginUser200, LoginUser403 } from '.././model';
 
 import { baseApiRequest } from '../../baseApiRequest';
 
 /**
  * вход в личный кабинет
- * @summary вход в личный кабинет
+ * @summary получение токена для входа в личный кабинет
  */
-export const postApiLogin = (loginData: LoginData, signal?: AbortSignal) => {
-  return baseApiRequest<PostApiLogin200>({
-    url: `/api/login`,
+export const loginUser = (loginData: LoginData, signal?: AbortSignal) => {
+  return baseApiRequest<LoginUser200>({
+    url: `/api/auth/login`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     data: loginData,
@@ -30,23 +30,23 @@ export const postApiLogin = (loginData: LoginData, signal?: AbortSignal) => {
   });
 };
 
-export const getPostApiLoginMutationOptions = <
-  TError = PostApiLogin403,
+export const getLoginUserMutationOptions = <
+  TError = LoginUser403,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiLogin>>,
+    Awaited<ReturnType<typeof loginUser>>,
     TError,
     { data: LoginData },
     TContext
   >;
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiLogin>>,
+  Awaited<ReturnType<typeof loginUser>>,
   TError,
   { data: LoginData },
   TContext
 > => {
-  const mutationKey = ['postApiLogin'];
+  const mutationKey = ['loginUser'];
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -56,30 +56,30 @@ export const getPostApiLoginMutationOptions = <
     : { mutation: { mutationKey } };
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiLogin>>,
+    Awaited<ReturnType<typeof loginUser>>,
     { data: LoginData }
   > = (props) => {
     const { data } = props ?? {};
 
-    return postApiLogin(data);
+    return loginUser(data);
   };
 
   return { mutationFn, ...mutationOptions };
 };
 
-export type PostApiLoginMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiLogin>>
+export type LoginUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof loginUser>>
 >;
-export type PostApiLoginMutationBody = LoginData;
-export type PostApiLoginMutationError = PostApiLogin403;
+export type LoginUserMutationBody = LoginData;
+export type LoginUserMutationError = LoginUser403;
 
 /**
- * @summary вход в личный кабинет
+ * @summary получение токена для входа в личный кабинет
  */
-export const usePostApiLogin = <TError = PostApiLogin403, TContext = unknown>(
+export const useLoginUser = <TError = LoginUser403, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiLogin>>,
+      Awaited<ReturnType<typeof loginUser>>,
       TError,
       { data: LoginData },
       TContext
@@ -87,12 +87,12 @@ export const usePostApiLogin = <TError = PostApiLogin403, TContext = unknown>(
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiLogin>>,
+  Awaited<ReturnType<typeof loginUser>>,
   TError,
   { data: LoginData },
   TContext
 > => {
-  const mutationOptions = getPostApiLoginMutationOptions(options);
+  const mutationOptions = getLoginUserMutationOptions(options);
 
   return useMutation(mutationOptions, queryClient);
 };

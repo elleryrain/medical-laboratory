@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { PayrollData } from '.././model';
 
-export const getGetApiSalaryResponseMock = (): PayrollData[] =>
+export const getGetPayrollDataResponseMock = (): PayrollData[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -65,7 +65,7 @@ export const getGetApiSalaryResponseMock = (): PayrollData[] =>
     },
   }));
 
-export const getGetApiSalaryMockHandler = (
+export const getGetPayrollDataMockHandler = (
   overrideResponse?:
     | PayrollData[]
     | ((
@@ -81,10 +81,10 @@ export const getGetApiSalaryMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiSalaryResponseMock(),
+          : getGetPayrollDataResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getSalaryMock = () => [getGetApiSalaryMockHandler()];
+export const getSalaryMock = () => [getGetPayrollDataMockHandler()];

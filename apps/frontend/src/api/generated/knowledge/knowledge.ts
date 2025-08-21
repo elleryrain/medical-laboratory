@@ -17,70 +17,74 @@ import type {
   UseQueryResult,
 } from '@tanstack/react-query';
 
-import type { GetApiKnowledge200 } from '.././model';
+import type { GetKnowledgeSummary200 } from '.././model';
 
 import { baseApiRequest } from '../../baseApiRequest';
 
 /**
  * @summary получение всей базовой информации о базе знаний
  */
-export const getApiKnowledge = (signal?: AbortSignal) => {
-  return baseApiRequest<GetApiKnowledge200>({
+export const getKnowledgeSummary = (signal?: AbortSignal) => {
+  return baseApiRequest<GetKnowledgeSummary200>({
     url: `/api/knowledge`,
     method: 'GET',
     signal,
   });
 };
 
-export const getGetApiKnowledgeQueryKey = () => {
+export const getGetKnowledgeSummaryQueryKey = () => {
   return [`/api/knowledge`] as const;
 };
 
-export const getGetApiKnowledgeQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiKnowledge>>,
+export const getGetKnowledgeSummaryQueryOptions = <
+  TData = Awaited<ReturnType<typeof getKnowledgeSummary>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiKnowledge>>, TError, TData>
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getKnowledgeSummary>>,
+      TError,
+      TData
+    >
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiKnowledgeQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetKnowledgeSummaryQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiKnowledge>>> = ({
-    signal,
-  }) => getApiKnowledge(signal);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getKnowledgeSummary>>
+  > = ({ signal }) => getKnowledgeSummary(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiKnowledge>>,
+    Awaited<ReturnType<typeof getKnowledgeSummary>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiKnowledgeQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiKnowledge>>
+export type GetKnowledgeSummaryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getKnowledgeSummary>>
 >;
-export type GetApiKnowledgeQueryError = unknown;
+export type GetKnowledgeSummaryQueryError = unknown;
 
-export function useGetApiKnowledge<
-  TData = Awaited<ReturnType<typeof getApiKnowledge>>,
+export function useGetKnowledgeSummary<
+  TData = Awaited<ReturnType<typeof getKnowledgeSummary>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledge>>,
+        Awaited<ReturnType<typeof getKnowledgeSummary>>,
         TError,
         TData
       >
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledge>>,
+          Awaited<ReturnType<typeof getKnowledgeSummary>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledge>>
+          Awaited<ReturnType<typeof getKnowledgeSummary>>
         >,
         'initialData'
       >;
@@ -89,23 +93,23 @@ export function useGetApiKnowledge<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledge<
-  TData = Awaited<ReturnType<typeof getApiKnowledge>>,
+export function useGetKnowledgeSummary<
+  TData = Awaited<ReturnType<typeof getKnowledgeSummary>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledge>>,
+        Awaited<ReturnType<typeof getKnowledgeSummary>>,
         TError,
         TData
       >
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledge>>,
+          Awaited<ReturnType<typeof getKnowledgeSummary>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledge>>
+          Awaited<ReturnType<typeof getKnowledgeSummary>>
         >,
         'initialData'
       >;
@@ -114,14 +118,14 @@ export function useGetApiKnowledge<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledge<
-  TData = Awaited<ReturnType<typeof getApiKnowledge>>,
+export function useGetKnowledgeSummary<
+  TData = Awaited<ReturnType<typeof getKnowledgeSummary>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledge>>,
+        Awaited<ReturnType<typeof getKnowledgeSummary>>,
         TError,
         TData
       >
@@ -135,14 +139,14 @@ export function useGetApiKnowledge<
  * @summary получение всей базовой информации о базе знаний
  */
 
-export function useGetApiKnowledge<
-  TData = Awaited<ReturnType<typeof getApiKnowledge>>,
+export function useGetKnowledgeSummary<
+  TData = Awaited<ReturnType<typeof getKnowledgeSummary>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
       UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledge>>,
+        Awaited<ReturnType<typeof getKnowledgeSummary>>,
         TError,
         TData
       >
@@ -152,7 +156,7 @@ export function useGetApiKnowledge<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiKnowledgeQueryOptions(options);
+  const queryOptions = getGetKnowledgeSummaryQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

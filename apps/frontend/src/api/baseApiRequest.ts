@@ -22,6 +22,7 @@ export const baseApiRequest = async <T>({
     ...addedHeaders,
   }
   const response = await axios({
+    baseURL: import.meta.env.VITE_API_URL,
     method,
     url,
     params: urlParams,

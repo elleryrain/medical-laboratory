@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение информации о техниках
  */
-export const getApiKnowledgeTechnicals = (signal?: AbortSignal) => {
+export const getTechnicians = (signal?: AbortSignal) => {
   return baseApiRequest<Technical[]>({
     url: `/api/knowledge/technicals`,
     method: 'GET',
@@ -32,60 +32,51 @@ export const getApiKnowledgeTechnicals = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiKnowledgeTechnicalsQueryKey = () => {
+export const getGetTechniciansQueryKey = () => {
   return [`/api/knowledge/technicals`] as const;
 };
 
-export const getGetApiKnowledgeTechnicalsQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+export const getGetTechniciansQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTechnicians>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getTechnicians>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetApiKnowledgeTechnicalsQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetTechniciansQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>
-  > = ({ signal }) => getApiKnowledgeTechnicals(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getTechnicians>>> = ({
+    signal,
+  }) => getTechnicians(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+    Awaited<ReturnType<typeof getTechnicians>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiKnowledgeTechnicalsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>
+export type GetTechniciansQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTechnicians>>
 >;
-export type GetApiKnowledgeTechnicalsQueryError = unknown;
+export type GetTechniciansQueryError = unknown;
 
-export function useGetApiKnowledgeTechnicals<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+export function useGetTechnicians<
+  TData = Awaited<ReturnType<typeof getTechnicians>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTechnicians>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+          Awaited<ReturnType<typeof getTechnicians>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>
+          Awaited<ReturnType<typeof getTechnicians>>
         >,
         'initialData'
       >;
@@ -94,23 +85,19 @@ export function useGetApiKnowledgeTechnicals<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeTechnicals<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+export function useGetTechnicians<
+  TData = Awaited<ReturnType<typeof getTechnicians>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTechnicians>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+          Awaited<ReturnType<typeof getTechnicians>>,
           TError,
-          Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>
+          Awaited<ReturnType<typeof getTechnicians>>
         >,
         'initialData'
       >;
@@ -119,17 +106,13 @@ export function useGetApiKnowledgeTechnicals<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiKnowledgeTechnicals<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+export function useGetTechnicians<
+  TData = Awaited<ReturnType<typeof getTechnicians>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTechnicians>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -140,24 +123,20 @@ export function useGetApiKnowledgeTechnicals<
  * @summary получение информации о техниках
  */
 
-export function useGetApiKnowledgeTechnicals<
-  TData = Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
+export function useGetTechnicians<
+  TData = Awaited<ReturnType<typeof getTechnicians>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiKnowledgeTechnicals>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getTechnicians>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiKnowledgeTechnicalsQueryOptions(options);
+  const queryOptions = getGetTechniciansQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

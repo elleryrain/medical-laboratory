@@ -12,33 +12,47 @@ import type {
   UseMutationResult,
 } from '@tanstack/react-query';
 
+import type {
+  GetShortUser200,
+  RegisterUser200,
+  RegisterUserBody,
+} from '.././model';
+
 import { baseApiRequest } from '../../baseApiRequest';
 
-export const postApiKnowledgeTypeWorks = (signal?: AbortSignal) => {
-  return baseApiRequest<void>({
-    url: `/api/knowledge/type-works`,
+/**
+ * @summary регистрация
+ */
+export const registerUser = (
+  registerUserBody: RegisterUserBody,
+  signal?: AbortSignal,
+) => {
+  return baseApiRequest<RegisterUser200>({
+    url: `/api/auth/register`,
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: registerUserBody,
     signal,
   });
 };
 
-export const getPostApiKnowledgeTypeWorksMutationOptions = <
+export const getRegisterUserMutationOptions = <
   TError = unknown,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>,
+    Awaited<ReturnType<typeof registerUser>>,
     TError,
-    void,
+    { data: RegisterUserBody },
     TContext
   >;
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>,
+  Awaited<ReturnType<typeof registerUser>>,
   TError,
-  void,
+  { data: RegisterUserBody },
   TContext
 > => {
-  const mutationKey = ['postApiKnowledgeTypeWorks'];
+  const mutationKey = ['registerUser'];
   const { mutation: mutationOptions } = options
     ? options.mutation &&
       'mutationKey' in options.mutation &&
@@ -48,28 +62,105 @@ export const getPostApiKnowledgeTypeWorksMutationOptions = <
     : { mutation: { mutationKey } };
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>,
-    void
-  > = () => {
-    return postApiKnowledgeTypeWorks();
+    Awaited<ReturnType<typeof registerUser>>,
+    { data: RegisterUserBody }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return registerUser(data);
   };
 
   return { mutationFn, ...mutationOptions };
 };
 
-export type PostApiKnowledgeTypeWorksMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>
+export type RegisterUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof registerUser>>
 >;
+export type RegisterUserMutationBody = RegisterUserBody;
+export type RegisterUserMutationError = unknown;
 
-export type PostApiKnowledgeTypeWorksMutationError = unknown;
-
-export const usePostApiKnowledgeTypeWorks = <
-  TError = unknown,
-  TContext = unknown,
->(
+/**
+ * @summary регистрация
+ */
+export const useRegisterUser = <TError = unknown, TContext = unknown>(
   options?: {
     mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>,
+      Awaited<ReturnType<typeof registerUser>>,
+      TError,
+      { data: RegisterUserBody },
+      TContext
+    >;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof registerUser>>,
+  TError,
+  { data: RegisterUserBody },
+  TContext
+> => {
+  const mutationOptions = getRegisterUserMutationOptions(options);
+
+  return useMutation(mutationOptions, queryClient);
+};
+/**
+ * @summary получение короткой информации о пользователе
+ */
+export const getShortUser = (signal?: AbortSignal) => {
+  return baseApiRequest<GetShortUser200>({
+    url: `/api/user/short`,
+    method: 'POST',
+    signal,
+  });
+};
+
+export const getGetShortUserMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof getShortUser>>,
+    TError,
+    void,
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof getShortUser>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = ['getShortUser'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof getShortUser>>,
+    void
+  > = () => {
+    return getShortUser();
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GetShortUserMutationResult = NonNullable<
+  Awaited<ReturnType<typeof getShortUser>>
+>;
+
+export type GetShortUserMutationError = unknown;
+
+/**
+ * @summary получение короткой информации о пользователе
+ */
+export const useGetShortUser = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof getShortUser>>,
       TError,
       void,
       TContext
@@ -77,12 +168,81 @@ export const usePostApiKnowledgeTypeWorks = <
   },
   queryClient?: QueryClient,
 ): UseMutationResult<
-  Awaited<ReturnType<typeof postApiKnowledgeTypeWorks>>,
+  Awaited<ReturnType<typeof getShortUser>>,
   TError,
   void,
   TContext
 > => {
-  const mutationOptions = getPostApiKnowledgeTypeWorksMutationOptions(options);
+  const mutationOptions = getGetShortUserMutationOptions(options);
+
+  return useMutation(mutationOptions, queryClient);
+};
+export const createTypeWork = (signal?: AbortSignal) => {
+  return baseApiRequest<void>({
+    url: `/api/knowledge/type-works`,
+    method: 'POST',
+    signal,
+  });
+};
+
+export const getCreateTypeWorkMutationOptions = <
+  TError = unknown,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createTypeWork>>,
+    TError,
+    void,
+    TContext
+  >;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createTypeWork>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = ['createTypeWork'];
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createTypeWork>>,
+    void
+  > = () => {
+    return createTypeWork();
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type CreateTypeWorkMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createTypeWork>>
+>;
+
+export type CreateTypeWorkMutationError = unknown;
+
+export const useCreateTypeWork = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createTypeWork>>,
+      TError,
+      void,
+      TContext
+    >;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createTypeWork>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationOptions = getCreateTypeWorkMutationOptions(options);
 
   return useMutation(mutationOptions, queryClient);
 };

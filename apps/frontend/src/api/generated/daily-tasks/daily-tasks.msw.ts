@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { DailyTask } from '.././model';
 
-export const getGetApiProfileDailyTasksResponseMock = (): DailyTask[] =>
+export const getGetDailyTasksResponseMock = (): DailyTask[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -20,7 +20,7 @@ export const getGetApiProfileDailyTasksResponseMock = (): DailyTask[] =>
     name: faker.string.alpha(20),
   }));
 
-export const getGetApiProfileDailyTasksMockHandler = (
+export const getGetDailyTasksMockHandler = (
   overrideResponse?:
     | DailyTask[]
     | ((
@@ -36,12 +36,10 @@ export const getGetApiProfileDailyTasksMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiProfileDailyTasksResponseMock(),
+          : getGetDailyTasksResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getDailyTasksMock = () => [
-  getGetApiProfileDailyTasksMockHandler(),
-];
+export const getDailyTasksMock = () => [getGetDailyTasksMockHandler()];

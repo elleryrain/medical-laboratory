@@ -10,7 +10,7 @@ import { HttpResponse, delay, http } from 'msw';
 
 import type { StorageItem } from '.././model';
 
-export const getGetApiStorageResponseMock = (): StorageItem[] =>
+export const getGetStorageInfoResponseMock = (): StorageItem[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
@@ -38,7 +38,7 @@ export const getGetApiStorageResponseMock = (): StorageItem[] =>
     ]),
   }));
 
-export const getGetApiStorageMockHandler = (
+export const getGetStorageInfoMockHandler = (
   overrideResponse?:
     | StorageItem[]
     | ((
@@ -54,10 +54,10 @@ export const getGetApiStorageMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetApiStorageResponseMock(),
+          : getGetStorageInfoResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getStorageMock = () => [getGetApiStorageMockHandler()];
+export const getStorageMock = () => [getGetStorageInfoMockHandler()];

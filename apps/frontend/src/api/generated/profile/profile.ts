@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение основной информации о профиле
  */
-export const getApiProfile = (signal?: AbortSignal) => {
+export const getProfile = (signal?: AbortSignal) => {
   return baseApiRequest<Profile>({
     url: `/api/profile`,
     method: 'GET',
@@ -32,51 +32,51 @@ export const getApiProfile = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiProfileQueryKey = () => {
+export const getGetProfileQueryKey = () => {
   return [`/api/profile`] as const;
 };
 
-export const getGetApiProfileQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiProfile>>,
+export const getGetProfileQueryOptions = <
+  TData = Awaited<ReturnType<typeof getProfile>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getApiProfile>>, TError, TData>
+    UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetApiProfileQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetProfileQueryKey();
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiProfile>>> = ({
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfile>>> = ({
     signal,
-  }) => getApiProfile(signal);
+  }) => getProfile(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiProfile>>,
+    Awaited<ReturnType<typeof getProfile>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiProfileQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiProfile>>
+export type GetProfileQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getProfile>>
 >;
-export type GetApiProfileQueryError = unknown;
+export type GetProfileQueryError = unknown;
 
-export function useGetApiProfile<
-  TData = Awaited<ReturnType<typeof getApiProfile>>,
+export function useGetProfile<
+  TData = Awaited<ReturnType<typeof getProfile>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiProfile>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiProfile>>,
+          Awaited<ReturnType<typeof getProfile>>,
           TError,
-          Awaited<ReturnType<typeof getApiProfile>>
+          Awaited<ReturnType<typeof getProfile>>
         >,
         'initialData'
       >;
@@ -85,19 +85,19 @@ export function useGetApiProfile<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiProfile<
-  TData = Awaited<ReturnType<typeof getApiProfile>>,
+export function useGetProfile<
+  TData = Awaited<ReturnType<typeof getProfile>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiProfile>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiProfile>>,
+          Awaited<ReturnType<typeof getProfile>>,
           TError,
-          Awaited<ReturnType<typeof getApiProfile>>
+          Awaited<ReturnType<typeof getProfile>>
         >,
         'initialData'
       >;
@@ -106,13 +106,13 @@ export function useGetApiProfile<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiProfile<
-  TData = Awaited<ReturnType<typeof getApiProfile>>,
+export function useGetProfile<
+  TData = Awaited<ReturnType<typeof getProfile>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiProfile>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -123,20 +123,20 @@ export function useGetApiProfile<
  * @summary получение основной информации о профиле
  */
 
-export function useGetApiProfile<
-  TData = Awaited<ReturnType<typeof getApiProfile>>,
+export function useGetProfile<
+  TData = Awaited<ReturnType<typeof getProfile>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getApiProfile>>, TError, TData>
+      UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiProfileQueryOptions(options);
+  const queryOptions = getGetProfileQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

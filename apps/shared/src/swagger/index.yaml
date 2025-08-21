@@ -29,7 +29,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  accessToken:
                     type: string
         403:
           description: 'нахуй пошёл'

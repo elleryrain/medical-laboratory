@@ -6,5 +6,5 @@
  */
 
 export type LoginUser200 = {
-  token?: string;
+  accessToken?: string;
 };

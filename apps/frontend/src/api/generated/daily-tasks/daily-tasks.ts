@@ -24,7 +24,7 @@ import { baseApiRequest } from '../../baseApiRequest';
 /**
  * @summary получение всех задач на день
  */
-export const getApiProfileDailyTasks = (signal?: AbortSignal) => {
+export const getDailyTasks = (signal?: AbortSignal) => {
   return baseApiRequest<DailyTask[]>({
     url: `/api/profile/daily-tasks`,
     method: 'GET',
@@ -32,60 +32,51 @@ export const getApiProfileDailyTasks = (signal?: AbortSignal) => {
   });
 };
 
-export const getGetApiProfileDailyTasksQueryKey = () => {
+export const getGetDailyTasksQueryKey = () => {
   return [`/api/profile/daily-tasks`] as const;
 };
 
-export const getGetApiProfileDailyTasksQueryOptions = <
-  TData = Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+export const getGetDailyTasksQueryOptions = <
+  TData = Awaited<ReturnType<typeof getDailyTasks>>,
   TError = unknown,
 >(options?: {
   query?: Partial<
-    UseQueryOptions<
-      Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
-      TError,
-      TData
-    >
+    UseQueryOptions<Awaited<ReturnType<typeof getDailyTasks>>, TError, TData>
   >;
 }) => {
   const { query: queryOptions } = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetApiProfileDailyTasksQueryKey();
+  const queryKey = queryOptions?.queryKey ?? getGetDailyTasksQueryKey();
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getApiProfileDailyTasks>>
-  > = ({ signal }) => getApiProfileDailyTasks(signal);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getDailyTasks>>> = ({
+    signal,
+  }) => getDailyTasks(signal);
 
   return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+    Awaited<ReturnType<typeof getDailyTasks>>,
     TError,
     TData
   > & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApiProfileDailyTasksQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getApiProfileDailyTasks>>
+export type GetDailyTasksQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getDailyTasks>>
 >;
-export type GetApiProfileDailyTasksQueryError = unknown;
+export type GetDailyTasksQueryError = unknown;
 
-export function useGetApiProfileDailyTasks<
-  TData = Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+export function useGetDailyTasks<
+  TData = Awaited<ReturnType<typeof getDailyTasks>>,
   TError = unknown,
 >(
   options: {
     query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDailyTasks>>, TError, TData>
     > &
       Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+          Awaited<ReturnType<typeof getDailyTasks>>,
           TError,
-          Awaited<ReturnType<typeof getApiProfileDailyTasks>>
+          Awaited<ReturnType<typeof getDailyTasks>>
         >,
         'initialData'
       >;
@@ -94,23 +85,19 @@ export function useGetApiProfileDailyTasks<
 ): DefinedUseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiProfileDailyTasks<
-  TData = Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+export function useGetDailyTasks<
+  TData = Awaited<ReturnType<typeof getDailyTasks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDailyTasks>>, TError, TData>
     > &
       Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+          Awaited<ReturnType<typeof getDailyTasks>>,
           TError,
-          Awaited<ReturnType<typeof getApiProfileDailyTasks>>
+          Awaited<ReturnType<typeof getDailyTasks>>
         >,
         'initialData'
       >;
@@ -119,17 +106,13 @@ export function useGetApiProfileDailyTasks<
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 };
-export function useGetApiProfileDailyTasks<
-  TData = Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+export function useGetDailyTasks<
+  TData = Awaited<ReturnType<typeof getDailyTasks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDailyTasks>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
@@ -140,24 +123,20 @@ export function useGetApiProfileDailyTasks<
  * @summary получение всех задач на день
  */
 
-export function useGetApiProfileDailyTasks<
-  TData = Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
+export function useGetDailyTasks<
+  TData = Awaited<ReturnType<typeof getDailyTasks>>,
   TError = unknown,
 >(
   options?: {
     query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getApiProfileDailyTasks>>,
-        TError,
-        TData
-      >
+      UseQueryOptions<Awaited<ReturnType<typeof getDailyTasks>>, TError, TData>
     >;
   },
   queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
   queryKey: DataTag<QueryKey, TData, TError>;
 } {
-  const queryOptions = getGetApiProfileDailyTasksQueryOptions(options);
+  const queryOptions = getGetDailyTasksQueryOptions(options);
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

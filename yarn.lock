@@ -3261,7 +3261,8 @@ __metadata:
     "@swc/plugin-emotion": "npm:^2.5.67"
     "@tailwindcss/postcss": "npm:^4.1.11"
     "@tailwindcss/vite": "npm:^4.1.11"
-    "@tanstack/react-query": "npm:^5.80.5"
+    "@tanstack/react-query": "npm:^5.84.2"
+    "@tanstack/react-query-devtools": "npm:^5.84.2"
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20.0.0"
     "@types/pg": "npm:^8.15.5"
@@ -6061,21 +6062,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.80.5":
-  version: 5.80.5
-  resolution: "@tanstack/query-core@npm:5.80.5"
-  checksum: 10c0/72709abf3934584ab8a957f01e20d3df99224f6d9b20a9889288218e8cc4798314966c1ce84f3cb02fed1ede500fa3bf355618a164b7197c4d44a35154d4a2be
+"@tanstack/query-core@npm:5.83.1":
+  version: 5.83.1
+  resolution: "@tanstack/query-core@npm:5.83.1"
+  checksum: 10c0/3eeacf678fcf9803585f1be74979548a33c7f659b8d5f33c1e3b3834ef3b9f3401070b2e2d38bbaa9c6e5a3c359baaa3828078e38007b7c99fb8c9f1e3911142
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.80.5":
-  version: 5.80.5
-  resolution: "@tanstack/react-query@npm:5.80.5"
+"@tanstack/query-devtools@npm:5.84.0":
+  version: 5.84.0
+  resolution: "@tanstack/query-devtools@npm:5.84.0"
+  checksum: 10c0/8257bebbf648e850f0186175a6e17aa6ac50e2dbb9413953927a698a2f73db8009693980f4c6b0f928a703be353a0b1bd1316031029818be7672db98c1b42cde
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.84.2":
+  version: 5.84.2
+  resolution: "@tanstack/react-query-devtools@npm:5.84.2"
   dependencies:
-    "@tanstack/query-core": "npm:5.80.5"
+    "@tanstack/query-devtools": "npm:5.84.0"
+  peerDependencies:
+    "@tanstack/react-query": ^5.84.2
+    react: ^18 || ^19
+  checksum: 10c0/00bff863148de16ad3a6924dbdf0c30ab5cdf8a93d29087bc5117b73db2de83f0f8c5174902e945c416a86021d5266233fc57eb2695ece1046eb3b12af8a2a86
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.84.2":
+  version: 5.84.2
+  resolution: "@tanstack/react-query@npm:5.84.2"
+  dependencies:
+    "@tanstack/query-core": "npm:5.83.1"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/64316564a90898f30799cb84a2284540cb9b2ee4a93c35161151868ef879ada69b28e6655df87015fa3dcc0cf675d12b9cc6d2ad1560cc2ff360326f4054e2fe
+  checksum: 10c0/491914f8c61c5bb83e1eece53b33552d0d490ba9f122add35ae3078f10f675a6b0786c2e1d5940ccb9acf490d28c525d56893576c237090c22bfc70ef2ee0f3f
   languageName: node
   linkType: hard
 

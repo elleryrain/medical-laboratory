@@ -1,12 +1,18 @@
-import { ReactNode, StrictMode } from 'react';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './components/router/Router';
-import ReactDOM from 'react-dom/client';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(
+const queryClient = new QueryClient()
+
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} future={{ v7_startTransition: true }} />
-  </StrictMode> as ReactNode
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </StrictMode>,
 );
