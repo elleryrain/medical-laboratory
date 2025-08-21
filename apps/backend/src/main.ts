@@ -24,11 +24,7 @@ async function bootstrap() {
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Access-Control-Allow-Origin',
-    ],
+    allowedHeaders: '*',
   });
   app.useGlobalFilters(new AllExceptionsFilter());
   app.setGlobalPrefix(globalPrefix);
