@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCourierTaskDTO } from './dto/create';
 import { CourierTaskRepository } from './courier-task.repository';
 import { parse } from 'date-fns';
+import { ECourierDeliveryType } from './courier-tast.types';
 
 @Injectable()
 export class CourierTaskService {
@@ -34,5 +35,22 @@ export class CourierTaskService {
     }
   }
 
-  async getCourierTasksByDateAndType(startDate: Date, finishDate: Date) {}
+  async getCourierTasksByDateAndType(
+    type: ECourierDeliveryType,
+    startDate: Date,
+    finishDate?: Date,
+  ) {
+    const tasks = await this.courierTaskRepository.getCourierDeliveryTasks(
+      type,
+      startDate,
+      finishDate,
+    );
+    return tasks;
+  }
+
+  async togglePaidStateDeliveryTask(id: number) {
+    const newDeliveryTask =
+      await this.courierTaskRepository.togglePaidStateDeliveryTask(id);
+    return newDeliveryTask;
+  }
 }

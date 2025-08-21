@@ -1,4 +1,11 @@
-import { IsNumber, IsOptional, IsString, Matches } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
+import { ECourierDeliveryType } from '../courier-tast.types';
 
 export class CreateCourierTaskDTO {
   @IsNumber()

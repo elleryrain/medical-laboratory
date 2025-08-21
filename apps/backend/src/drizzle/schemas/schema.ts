@@ -9,6 +9,7 @@ import {
   timestamp,
   pgEnum,
 } from 'drizzle-orm/pg-core';
+import { ECourierDeliveryType } from '../../courier-task/courier-tast.types';
 
 export const roleEnum = pgEnum('role', ['admin', 'technician']);
 
@@ -65,6 +66,11 @@ export const doctorsTable = pgTable('doctors', {
   address: text('address').notNull(),
   avatar: text('avatar').notNull(),
 });
+
+export const courierDeliveryTypesEnum = pgEnum(
+  'courier_delivery_type_enum',
+  ECourierDeliveryType,
+);
 
 export const courierDeliveryTasksTable = pgTable('courier_delivery_tasks', {
   id: serial('id').primaryKey(),

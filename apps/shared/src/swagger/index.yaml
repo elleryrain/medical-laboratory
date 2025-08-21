@@ -257,6 +257,96 @@ paths:
                 items:
                   $ref: '#/components/schemas/PayrollData'
 
+  # НОВЫЕ МАРШРУТЫ ДЛЯ COURIER TASK
+  /api/courierTask:
+    post:
+      operationId: createCourierTask
+      summary: 'Создание новой задачи для курьера'
+      tags:
+        - courier-tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCourierTaskDTO'
+      responses:
+        201:
+          description: 'Задача успешно создана'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourierTask'
+        400:
+          description: 'Некорректные данные'
+    get:
+      operationId: getCourierTasks
+      summary: 'Получение задач для курьера по дате и типу'
+      tags:
+        - courier-tasks
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: '01-01-2023:14:30'
+          description: 'Начальная дата в формате dd-MM-yyyy:HH:mm'
+        - name: finishDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: '31-12-2023:14:30'
+          description: 'Конечная дата в формате dd-MM-yyyy:HH:mm (опционально)'
+        - name: type
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/ECourierDeliveryType'
+          description: 'Тип доставки'
+      responses:
+        200:
+          description: 'Список задач курьера'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourierTask'
+        400:
+          description: 'Некорректные параметры запроса'
+
+  /api/courierTask/togglePaid:
+    put:
+      operationId: togglePaidState
+      summary: 'Переключение статуса оплаты задачи курьера'
+      tags:
+        - courier-tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  description: 'ID задачи курьера'
+              required:
+                - id
+      responses:
+        200:
+          description: 'Статус оплаты успешно изменен'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourierTask'
+        404:
+          description: 'Задача не найдена'
+
 components:
   schemas:
     LoginData:
@@ -286,6 +376,7 @@ components:
         - name
         - surname
         - role
+
     MedicalService:
       type: object
       properties:
@@ -310,34 +401,6 @@ components:
         - typeWork
         - fittingTimesArray
         - deadlineTime
-    CourierService:
-      type: object
-      properties:
-        id:
-          type: string
-        typeService:
-          type: string
-          enum:
-            - bring
-            - take
-        courierName:
-          type: string
-        deliveryPoint:
-          type: string
-        datetime:
-          type: string
-        price:
-          type: string
-        paymentStatus:
-          type: boolean
-      required:
-        - id
-        - typeService
-        - courierName
-        - deliveryPoint
-        - datetime
-        - price
-        - paymentStatus
 
     DailyTask:
       type: object
@@ -474,6 +537,7 @@ components:
           type: number
         usedCount:
           type: number
+
     WorkDay:
       type: object
       properties:
@@ -481,9 +545,11 @@ components:
           type: number
         earnings:
           type: number
+
     ExtendedWorkDay:
       allOf:
         - $ref: '#/components/schemas/WorkDay'
+
     PayrollData:
       allOf:
         - $ref: '#/components/schemas/Profile'
@@ -505,3 +571,44 @@ components:
               type: number
             salary:
               type: number
+
+    # НОВЫЕ СХЕМЫ ДЛЯ COURIER TASK
+    ECourierDeliveryType:
+      type: string
+      enum:
+        - delivery
+        - pickup
+
+    CreateCourierTaskDTO:
+      type: object
+      properties:
+        startPlaceId:
+          type: integer
+          description: 'ID начального места'
+        finishPlaceId:
+          type: integer
+          description: 'ID конечного места'
+        courierName:
+          type: string
+          description: 'Имя курьера'
+        serviceId:
+          type: integer
+          description: 'ID сервиса (опционально)'
+        finishDate:
+          type: string
+
+    CourierTask:
+      type: object
+      properties:
+        id:
+          type: number
+        startPlaceId:
+          type: number
+        finishPlaceId:
+          type: number
+        finishDate:
+          type: string
+        courierName:
+          type: string
+        paid:
+          type: boolean

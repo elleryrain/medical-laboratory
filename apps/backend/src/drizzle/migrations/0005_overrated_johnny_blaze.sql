@@ -1,0 +1,1 @@
+ALTER TABLE "courier_delivery_tasks" DROP COLUMN "deliveryType";

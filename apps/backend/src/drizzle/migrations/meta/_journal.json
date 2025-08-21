@@ -29,6 +29,20 @@
       "when": 1755794450976,
       "tag": "0003_stiff_dakota_north",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755806684631,
+      "tag": "0004_hard_starjammers",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755807164863,
+      "tag": "0005_overrated_johnny_blaze",
+      "breakpoints": true
     }
   ]
 }
