@@ -3,7 +3,7 @@ import { DB_PROVIDER } from '../db/db.provider';
 import { DB_TYPE } from '../db/db.type';
 import {
   courierDeliveryTasksTable,
-  deliveryPlacesTable,
+  placesTable,
 } from '../drizzle/schemas/schema';
 import { ECourierDeliveryType } from './courier-tast.types';
 import { and, eq, gte, lte, or } from 'drizzle-orm';
