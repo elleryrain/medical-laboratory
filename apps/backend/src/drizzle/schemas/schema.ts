@@ -68,10 +68,21 @@ export const doctorsTable = pgTable('doctors', {
 
 export const courierDeliveryTasksTable = pgTable('courier_delivery_tasks', {
   id: serial('id').primaryKey(),
-  startPlace: text('start_place').notNull(),
-  finishPlace: text('finish_place').notNull(),
+  startPlaceId: integer('start_place_id')
+    .notNull()
+    .references(() => deliveryPlacesTable.id),
+  finishPlaceId: integer('finish_place_id')
+    .notNull()
+    .references(() => deliveryPlacesTable.id),
   finishDate: timestamp('finish_date').notNull(),
+  serviceId: integer('service_id').references(() => servicesTable.id),
+  courierName: varchar('courier_name', { length: 100 }).notNull(),
   paid: boolean('paid').notNull(),
+});
+
+export const deliveryPlacesTable = pgTable('delivery_place', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
 });
 
 export const servicesTable = pgTable('services', {

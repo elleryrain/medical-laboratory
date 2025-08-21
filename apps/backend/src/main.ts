@@ -20,7 +20,12 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
   app.useGlobalFilters(new AllExceptionsFilter());
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 4500;
