@@ -29,4 +29,17 @@ export class UserService {
     const { email, middleName, name, role, surname } = user;
     return { id, email, middleName, name, role, surname };
   }
+
+  async getAllTechnicals() {
+    const users = (await this.userRepository.getAllTechnicals()).map(
+      (technical) => ({
+        id: technical.id,
+        name: technical.name,
+        surname: technical.surname,
+        middleName: technical.middleName,
+        avatar: technical.avatar,
+      }),
+    );
+    return users;
+  }
 }

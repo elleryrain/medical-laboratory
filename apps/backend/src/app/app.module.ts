@@ -5,6 +5,7 @@ import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CourierTaskModule } from '../courier-task/courier-task.module';
 import { PlacesModule } from '../places/places.module';
+import { KnowledgeModule } from '../knowledge/knowledge.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PlacesModule } from '../places/places.module';
     }),
     CourierTaskModule,
     PlacesModule,
+    KnowledgeModule,
   ],
 })
 export class AppModule {}

@@ -41,6 +41,15 @@ export const userCategoryTechniciansTable = pgTable(
   },
 );
 
+export const dailyTasksTable = pgTable('daily_task', {
+  id: serial('id').primaryKey(),
+  name: varchar({ length: 120 }).notNull(),
+  color: varchar({ length: 30 }).notNull(),
+  startTaskDateTime: timestamp('finish_date_time').notNull(),
+  isCompleted: boolean().notNull().default(false),
+  adminId: integer('admin_id').notNull(),
+});
+
 export const typeWorksTable = pgTable('type_works', {
   id: serial('id').primaryKey(),
   image: text('image').notNull(),
@@ -76,17 +85,17 @@ export const courierDeliveryTasksTable = pgTable('courier_delivery_tasks', {
   id: serial('id').primaryKey(),
   startPlaceId: integer('start_place_id')
     .notNull()
-    .references(() => deliveryPlacesTable.id),
+    .references(() => placesTable.id),
   finishPlaceId: integer('finish_place_id')
     .notNull()
-    .references(() => deliveryPlacesTable.id),
+    .references(() => placesTable.id),
   finishDate: timestamp('finish_date').notNull(),
   serviceId: integer('service_id').references(() => servicesTable.id),
   courierName: varchar('courier_name', { length: 100 }).notNull(),
   paid: boolean('paid').notNull(),
 });
 
-export const deliveryPlacesTable = pgTable('delivery_place', {
+export const placesTable = pgTable('place', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });

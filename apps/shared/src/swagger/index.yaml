@@ -474,7 +474,7 @@ components:
           type: string
         middleName:
           type: string
-        avatype:
+        avatar:
           type: string
       required:
         - id

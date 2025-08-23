@@ -34,4 +34,12 @@ export class UserRepository {
     const [user] = await this.db.insert(usersTable).values(newUser).returning();
     return user;
   }
+
+  async getAllTechnicals() {
+    const technicians = await this.db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.role, 'technician'));
+    return technicians;
+  }
 }
