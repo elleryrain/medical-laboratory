@@ -1,3 +1,5 @@
+import ArrowLink from '@svg/ArrowLinkStaff.svg?react';
+
 export function InWorkCardItems() {
   return (
     <div className="flex flex-col gap-[30px]">
@@ -85,12 +87,12 @@ export function InWorkCardItems() {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="flex gap-[15px]">
-          <button className="flex items-center justify-center bg-[#333333] border-none h-[50px] w-[60px] rounded-full cursor-pointer">
-            <img src="/src/assets/img/ArrowDown.svg" alt="" />
-          </button>
+        <div className="flex gap-[12px]">
           <button className="bg-[#BDFF67] text-black text-[20px] font-medium border-none px-[33px] py-[13px] rounded-full cursor-pointer">
             Закрыть наряд
+          </button>
+          <button className="flex items-center justify-center bg-[#333333] border-none h-[50px] w-[50px] rounded-full cursor-pointer">
+            <ArrowLink className="h-[50px] w-[50px]" />
           </button>
         </div>
       </div>
