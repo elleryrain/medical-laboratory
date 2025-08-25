@@ -12,7 +12,6 @@ export const useAuth = () => {
         window.location.href = '/';
       },
       onError: (err: any) => {
-        // Проверяем, является ли ошибка 403
         if (err?.status === 403 || err?.response?.status === 403) {
           setError({ message: 'Неправильный логин или пароль' });
         } else {
