@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getShortUser } from '@/api/generated/default/default';
+import { getShortUser } from '@/api/generated/user/user';
 import { useNavigate } from 'react-router-dom';
 import { GetShortUser200 } from '@/api/generated/model';
 
-// Define the return type for the hook
 interface CheckAuthResult {
   isAuthenticated: boolean | null;
   isLoading: boolean;

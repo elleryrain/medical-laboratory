@@ -8,28 +8,28 @@ import { faker } from '@faker-js/faker';
 
 import { HttpResponse, delay, http } from 'msw';
 
-import type { Technical } from '.././model';
+import type { GetAllPlaces200Item } from '.././model';
 
-export const getGetTechniciansResponseMock = (): Technical[] =>
+export const getGetAllPlacesResponseMock = (): GetAllPlaces200Item[] =>
   Array.from(
     { length: faker.number.int({ min: 1, max: 10 }) },
     (_, i) => i + 1,
   ).map(() => ({
-    id: faker.number.int({ min: undefined, max: undefined }),
-    name: faker.string.alpha(20),
-    surname: faker.string.alpha(20),
-    middleName: faker.string.alpha(20),
-    avatar: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+    id: faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      undefined,
+    ]),
+    name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
   }));
 
-export const getGetTechniciansMockHandler = (
+export const getGetAllPlacesMockHandler = (
   overrideResponse?:
-    | Technical[]
+    | GetAllPlaces200Item[]
     | ((
         info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) => Promise<Technical[]> | Technical[]),
+      ) => Promise<GetAllPlaces200Item[]> | GetAllPlaces200Item[]),
 ) => {
-  return http.get('*/api/knowledge/technicals', async (info) => {
+  return http.get('*/api/places', async (info) => {
     await delay(1000);
 
     return new HttpResponse(
@@ -38,10 +38,10 @@ export const getGetTechniciansMockHandler = (
           ? typeof overrideResponse === 'function'
             ? await overrideResponse(info)
             : overrideResponse
-          : getGetTechniciansResponseMock(),
+          : getGetAllPlacesResponseMock(),
       ),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
     );
   });
 };
-export const getTechnicalsMock = () => [getGetTechniciansMockHandler()];
+export const getPlaceMock = () => [getGetAllPlacesMockHandler()];

@@ -4,82 +4,7 @@
  * medical laboratory docs
  * OpenAPI spec version: 1.0.0
  */
-import { faker } from '@faker-js/faker';
-
 import { HttpResponse, delay, http } from 'msw';
-
-import type { GetShortUser200, RegisterUser200 } from '.././model';
-
-export const getRegisterUserResponseMock = (
-  overrideResponse: Partial<RegisterUser200> = {},
-): RegisterUser200 => ({
-  token: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
-  ...overrideResponse,
-});
-
-export const getGetShortUserResponseMock = (
-  overrideResponse: Partial<GetShortUser200> = {},
-): GetShortUser200 => ({
-  id: faker.helpers.arrayElement([
-    faker.number.int({ min: undefined, max: undefined }),
-    undefined,
-  ]),
-  email: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
-  middleName: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
-  name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
-  role: faker.helpers.arrayElement([
-    faker.helpers.arrayElement(['admin', 'technician'] as const),
-    undefined,
-  ]),
-  surname: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
-  ...overrideResponse,
-});
-
-export const getRegisterUserMockHandler = (
-  overrideResponse?:
-    | RegisterUser200
-    | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
-      ) => Promise<RegisterUser200> | RegisterUser200),
-) => {
-  return http.post('*/api/auth/register', async (info) => {
-    await delay(1000);
-
-    return new HttpResponse(
-      JSON.stringify(
-        overrideResponse !== undefined
-          ? typeof overrideResponse === 'function'
-            ? await overrideResponse(info)
-            : overrideResponse
-          : getRegisterUserResponseMock(),
-      ),
-      { status: 200, headers: { 'Content-Type': 'application/json' } },
-    );
-  });
-};
-
-export const getGetShortUserMockHandler = (
-  overrideResponse?:
-    | GetShortUser200
-    | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
-      ) => Promise<GetShortUser200> | GetShortUser200),
-) => {
-  return http.post('*/api/user/short', async (info) => {
-    await delay(1000);
-
-    return new HttpResponse(
-      JSON.stringify(
-        overrideResponse !== undefined
-          ? typeof overrideResponse === 'function'
-            ? await overrideResponse(info)
-            : overrideResponse
-          : getGetShortUserResponseMock(),
-      ),
-      { status: 200, headers: { 'Content-Type': 'application/json' } },
-    );
-  });
-};
 
 export const getCreateTypeWorkMockHandler = (
   overrideResponse?:
@@ -96,8 +21,4 @@ export const getCreateTypeWorkMockHandler = (
     return new HttpResponse(null, { status: 200 });
   });
 };
-export const getDefaultMock = () => [
-  getRegisterUserMockHandler(),
-  getGetShortUserMockHandler(),
-  getCreateTypeWorkMockHandler(),
-];
+export const getDefaultMock = () => [getCreateTypeWorkMockHandler()];

@@ -5,10 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface Technical {
-  id: number;
-  name: string;
-  surname: string;
-  middleName: string;
-  avatar?: string;
-}
+export type GetAllPlaces200Item = {
+  id?: number;
+  name?: string;
+};

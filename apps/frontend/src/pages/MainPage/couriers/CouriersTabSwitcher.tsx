@@ -1,50 +1,26 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 
-const CouriersTabSwitcherStyled = styled.div`
-  display: flex;
-  background: #292929;
-  border-radius: 15px;
-  justify-content: space-between;
-`;
-
-const CouriersTabSwitcherButton = styled.button<{ $isActive: boolean }>`
-  background: ${({ $isActive }) => ($isActive ? '#E8E8E8' : 'transparent')};
-  color: ${({ $isActive }) => ($isActive ? 'black' : 'white')};
-  border-radius: 12px;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 29.26px;
-  outline: none;
-  border: none;
-  width: 309px;
-  height: 63px;
-  text-align: center;
-  margin: 4px 0;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-export function CouriersTabSwitcher() {
+export const CouriersTabSwitcher = () => {
   const [isBring, setIsBring] = useState(true);
 
   return (
-    <CouriersTabSwitcherStyled>
-      <CouriersTabSwitcherButton
-        $isActive={isBring}
+    <div className="flex bg-[#292929] rounded-[15px] justify-between">
+      <button
+        className={`w-[309px] h-[63px] rounded-[12px] text-[24px] font-medium leading-[29.26px] text-center m-1 cursor-pointer focus:outline-none ${
+          isBring ? 'bg-[#E8E8E8] text-black' : 'bg-transparent text-white'
+        }`}
         onClick={() => setIsBring(true)}
       >
         Привез
-      </CouriersTabSwitcherButton>
-      <CouriersTabSwitcherButton
-        $isActive={!isBring}
+      </button>
+      <button
+        className={`w-[309px] h-[63px] rounded-[12px] text-[24px] font-medium leading-[29.26px] text-center m-1 cursor-pointer focus:outline-none ${
+          !isBring ? 'bg-[#E8E8E8] text-black' : 'bg-transparent text-white'
+        }`}
         onClick={() => setIsBring(false)}
       >
         Отвез
-      </CouriersTabSwitcherButton>
-    </CouriersTabSwitcherStyled>
+      </button>
+    </div>
   );
 }

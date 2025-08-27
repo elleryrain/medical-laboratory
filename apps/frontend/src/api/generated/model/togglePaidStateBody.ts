@@ -5,10 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface Technical {
+export type TogglePaidStateBody = {
+  /** ID задачи курьера */
   id: number;
-  name: string;
-  surname: string;
-  middleName: string;
-  avatar?: string;
-}
+};

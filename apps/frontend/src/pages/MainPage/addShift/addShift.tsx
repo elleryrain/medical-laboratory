@@ -1,174 +1,51 @@
-import styled from '@emotion/styled';
-import Delete from '@svg/Delete.svg?react';
 import Plus from '@svg/plus.svg?react';
 import CustomSelect from '../../../components/select/CustomSelect';
 import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 
-const ToothImageWrapper = styled.div<{ $isActive: boolean }>`
-  cursor: pointer;
-  fill: ${(props) => (props.$isActive ? 'white' : 'none')};
-  transition: fill 0.3s ease;
-`;
+interface Tooth {
+  id: number;
+  svgUrl: string;
+}
 
-const ToothImage = ({
-  src,
-  $isActive,
-  onClick,
-}: {
+interface ToothImageProps {
   src: string;
-  $isActive: boolean;
+  isActive: boolean;
   onClick: () => void;
-}) => (
-  <ToothImageWrapper $isActive={$isActive} onClick={onClick}>
+}
+
+interface AddShiftProps {
+  toggleModal: () => void;
+}
+
+const ToothImage = ({ src, isActive, onClick }: ToothImageProps) => (
+  <div
+    className={`cursor-pointer select-none ${isActive ? 'fill-white' : 'fill-transparent'} transition-[fill] duration-300 ease-in-out`}
+    onClick={onClick}
+  >
     <ReactSVG src={src} />
-  </ToothImageWrapper>
+  </div>
 );
 
-const AddShiftStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #1c1c1c;
-  width: fit-content;
-  padding: 35px 30px 30px 30px;
-  border-radius: 30px;
-  width: 820px;
-  gap: 30px;
-`;
-
-const Header = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const HeaderTitle = styled.h1`
-  color: white;
-  font-size: 32px;
-  font-weight: 500;
-`;
-
-const CloseButton = styled(Delete)`
-  height: 32px;
-  width: 32px;
-  position: absolute;
-  right: 0px;
-  top: 8px;
-  cursor: pointer;
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 71px;
-  border-radius: 15px;
-  background: #333333;
-  border: none;
-  padding: 0 24px;
-  font-size: 24px;
-  font-weight: 500;
-  color: white;
-  outline: none;
-
-  &::placeholder {
-    color: #b9b9b9;
-  }
-`;
-
-const AddTypeOfWork = styled.div`
-  width: 100%;
-  height: 71px;
-  border-radius: 15px;
-  border: 2px dashed #d2d2d2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 17px;
-  color: white;
-  font-size: 24px;
-  font-weight: 500;
-  cursor: pointer;
-
-  &:hover {
-    background: #2a2a2a;
-  }
-`;
-
-const InputToothContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 730px;
-  padding-top: 35px;
-`;
-
-const ToothContainer = styled.div`
-  display: flex;
-  gap: 5px;
-`;
-
-const TopToothContainer = styled.div`
-  display: flex;
-  gap: 18px;
-`;
-
-const ToothBottomContainer = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 7px;
-`;
-
-const BottomToothContainer = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 16px;
-`;
-
-const Tooth = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-`;
-
-const ToothNumber = styled.span`
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-`;
-
-const SubmitButton = styled.div`
-  width: 100%;
-  height: 71px;
-  border-radius: 15px;
-  background: #bdff67;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-  font-size: 24px;
-  font-weight: 500;
-  cursor: pointer;
-`;
-
-export function AddShift({ toggleModal }: { toggleModal: () => void }) {
-  const [workTypeCount, setWorkTypeCount] = useState(1);
+export function AddShift({ toggleModal }: AddShiftProps) {
+  const [workTypeCount, setWorkTypeCount] = useState<number>(1);
+  const [activeTeeth, setActiveTeeth] = useState<number[]>([]);
 
   const addWorkType = () => {
     setWorkTypeCount(workTypeCount + 1);
   };
 
-  const tooth = [
+  const handleToothClick = (id: number) => {
+    setActiveTeeth((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((toothId) => toothId !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  const tooth: Tooth[] = [
     { id: 1, svgUrl: '/src/assets/img/Tooth/1.svg' },
     { id: 2, svgUrl: '/src/assets/img/Tooth/2.svg' },
     { id: 3, svgUrl: '/src/assets/img/Tooth/3.svg' },
@@ -203,27 +80,14 @@ export function AddShift({ toggleModal }: { toggleModal: () => void }) {
     { id: 32, svgUrl: '/src/assets/img/Tooth/32.svg' },
   ];
 
-  const [activeTeeth, setActiveTeeth] = useState<number[]>([]);
-
-  const handleToothClick = (id: number) => {
-    setActiveTeeth((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((toothId) => toothId !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
   return (
-    <AddShiftStyled>
-      <Header>
-        <HeaderTitle>Новый наряд</HeaderTitle>
-        <CloseButton onClick={toggleModal} />
-      </Header>
-      <InputContainer>
+    <div className="flex flex-col items-center bg-[#1c1c1c] w-fit p-[30px 30px 30px 35px] mr-[30px] rounded-[30px] gap-[30px]">
+      <div className="flex flex-col gap-5 w-full">
         <CustomSelect placeholder="Врач" options={['Врач 1', 'Врач 2']} />
-        <Input placeholder="Пациент" />
+        <input
+          className="w-full h-[71px] rounded-[15px] bg-[#333333] border-none px-6 text-[24px] font-medium text-white outline-none placeholder:text-[#b9b9b9]"
+          placeholder="Пациент"
+        />
         {[...Array(workTypeCount)].map((_, index) => (
           <CustomSelect
             key={index}
@@ -231,73 +95,102 @@ export function AddShift({ toggleModal }: { toggleModal: () => void }) {
             options={['1', '2']}
           />
         ))}
-        <AddTypeOfWork onClick={addWorkType}>
+        <div
+          className="w-full h-[71px] rounded-[15px] border-2 border-dashed border-[#d2d2d2] flex items-center justify-center gap-[17px] text-white text-[24px] font-medium cursor-pointer hover:bg-[#2a2a2a]"
+          onClick={addWorkType}
+        >
           <Plus stroke="white" />
           Добавить вид работы
-        </AddTypeOfWork>
-        <Input placeholder="Цвет работы" />
-      </InputContainer>
-      <InputToothContainer>
-        <TopToothContainer>
-          <ToothContainer>
+        </div>
+        <input
+          className="w-full h-[71px] rounded-[15px] bg-[#333333] border-none px-6 text-[24px] font-medium text-white outline-none placeholder:text-[#b9b9b9]"
+          placeholder="Цвет работы"
+        />
+      </div>
+      <div className="flex flex-col items-center gap-[10px] w-[730px] pt-[35px]">
+        <div className="flex gap-[18px]">
+          <div className="flex gap-[5px]">
             {tooth.slice(0, 8).map((tooth, index) => (
-              <Tooth key={tooth.id} style={{ marginTop: `${index * 5}px` }}>
+              <div
+                key={tooth.id}
+                className="flex flex-col items-center gap-[5px]"
+                style={{ marginTop: `${index * 5}px` }}
+              >
                 <ToothImage
                   src={tooth.svgUrl}
-                  $isActive={activeTeeth.includes(tooth.id)}
+                  isActive={activeTeeth.includes(tooth.id)}
                   onClick={() => handleToothClick(tooth.id)}
                 />
-                <ToothNumber>{tooth.id}</ToothNumber>
-              </Tooth>
+                <span className="text-white text-[16px] font-medium">
+                  {tooth.id}
+                </span>
+              </div>
             ))}
-          </ToothContainer>
-          <ToothContainer>
+          </div>
+          <div className="flex gap-[5px]">
             {tooth.slice(8, 16).map((tooth, index) => (
-              <Tooth
+              <div
                 key={tooth.id}
+                className="flex flex-col items-center gap-[5px]"
                 style={{ marginTop: `${(7 - index) * 5}px` }}
               >
                 <ToothImage
                   src={tooth.svgUrl}
-                  $isActive={activeTeeth.includes(tooth.id)}
+                  isActive={activeTeeth.includes(tooth.id)}
                   onClick={() => handleToothClick(tooth.id)}
                 />
-                <ToothNumber>{tooth.id}</ToothNumber>
-              </Tooth>
+                <span className="text-white text-[16px] font-medium">
+                  {tooth.id}
+                </span>
+              </div>
             ))}
-          </ToothContainer>
-        </TopToothContainer>
-        <BottomToothContainer>
-          <ToothBottomContainer>
+          </div>
+        </div>
+        <div className="flex flex-row-reverse gap-[16px]">
+          <div className="flex flex-row-reverse gap-[7px]">
             {tooth.slice(16, 24).map((tooth, index) => (
-              <Tooth
+              <div
                 key={tooth.id}
+                className="flex flex-col items-center gap-[5px]"
                 style={{ marginTop: `${(7 - index) * 5}px` }}
               >
                 <ToothImage
                   src={tooth.svgUrl}
-                  $isActive={activeTeeth.includes(tooth.id)}
+                  isActive={activeTeeth.includes(tooth.id)}
                   onClick={() => handleToothClick(tooth.id)}
                 />
-                <ToothNumber>{tooth.id}</ToothNumber>
-              </Tooth>
+                <span className="text-white text-[16px] font-medium">
+                  {tooth.id}
+                </span>
+              </div>
             ))}
-          </ToothBottomContainer>
-          <ToothBottomContainer>
+          </div>
+          <div className="flex flex-row-reverse gap-[7px]">
             {tooth.slice(24, 32).map((tooth, index) => (
-              <Tooth key={tooth.id} style={{ marginTop: `${index * 5}px` }}>
+              <div
+                key={tooth.id}
+                className="flex flex-col items-center gap-[5px]"
+                style={{ marginTop: `${index * 5}px` }}
+              >
                 <ToothImage
                   src={tooth.svgUrl}
-                  $isActive={activeTeeth.includes(tooth.id)}
+                  isActive={activeTeeth.includes(tooth.id)}
                   onClick={() => handleToothClick(tooth.id)}
                 />
-                <ToothNumber>{tooth.id}</ToothNumber>
-              </Tooth>
+                <span className="text-white text-[16px] font-medium">
+                  {tooth.id}
+                </span>
+              </div>
             ))}
-          </ToothBottomContainer>
-        </BottomToothContainer>
-      </InputToothContainer>
-      <SubmitButton>Сохранить</SubmitButton>
-    </AddShiftStyled>
+          </div>
+        </div>
+      </div>
+      <div
+        className="w-full h-[71px] rounded-[15px] bg-[#bdff67] text-black flex items-center justify-center mt-[50px] text-[24px] font-medium cursor-pointer"
+        onClick={toggleModal}
+      >
+        Сохранить
+      </div>
+    </div>
   );
 }

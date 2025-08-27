@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getShortUser } from '@/api/generated/default/default';
+import { getShortUser } from '@/api/generated/user/user';
 import { useNavigate } from 'react-router-dom';
 
 export const useCheckAuth = () => {

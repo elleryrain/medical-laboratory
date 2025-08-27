@@ -1,142 +1,95 @@
-import styled from '@emotion/styled';
 import Ellipse from '@svg/CouriersCardEllipse.svg?react';
 import Clipboard from '@svg/Clipboard.svg?react';
 import Check from '@svg/CheckArrow.svg?react';
-import { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { CourierTask, TogglePaidStateBody } from '@/api/generated/model';
 
-const CouriersOrderCardStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-radius: 30px;
-  border: 2px solid #2e2e2e;
-  background: #292929;
-  padding: 25px 20px;
-  max-width: 314px;
-`;
+interface CouriersOrderCardProps extends CourierTask {
+  togglePaid: (
+    data: TogglePaidStateBody,
+  ) => Promise<CourierTask | void> | undefined;
+}
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
+export const CouriersOrderCard: FC<CouriersOrderCardProps> = ({
+  courierName,
+  finishDate,
+  finishPlaceId,
+  id = 0,
+  paid = false,
+  startPlaceId,
+  togglePaid,
+}) => {
+  const [optimisticPaid, setOptimisticPaid] = useState(paid); // Локальное состояние для оптимистичного обновления
+  const [isToggling, setIsToggling] = useState(false); // Состояние для блокировки кнопки во время запроса
 
-const HeaderNameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-`;
+  const handleTogglePaid = async () => {
+    if (!togglePaid || isToggling) return; // Предотвращаем повторные клики
 
-const HeaderName = styled.span`
-  font-size: 24px;
-  font-weight: 500;
-  white-space: nowrap;
-  color: white;
-`;
+    // Оптимистично обновляем UI
+    setOptimisticPaid(!optimisticPaid);
+    setIsToggling(true);
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  padding: 0 5px;
-`;
+    try {
+      await togglePaid({ id });
+      console.log('Статус оплаты обновлён');
+    } catch (error) {
+      // Откатываем UI в случае ошибки
+      setOptimisticPaid(paid);
+      console.error('Ошибка при обновлении статуса:', error);
+    } finally {
+      setIsToggling(false);
+    }
+  };
 
-const MainName = styled.span`
-  color: white;
-  font-size: 24px;
-  font-weight: 500;
-`;
-
-const MainDateContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  color: #cacaca;
-`;
-
-const MainDate = styled.span`
-  font-size: 20px;
-  font-weight: 400;
-`;
-
-const MainNumber = styled.span`
-  font-size: 20px;
-  font-weight: 400;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  gap: 15px;
-  padding: 0 5px;
-  height: 44px;
-`;
-
-const FooterPrice = styled.span<{ $isPay: boolean }>`
-  display: flex;
-  align-items: center;
-  border: 2px solid #5d5d5d;
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: 500;
-  padding: 10px 15px;
-  color: white;
-  white-space: nowrap;
-  text-decoration: ${(props) => (props.$isPay ? 'line-through' : '')};
-`;
-
-const FooterPaymentButton = styled.div<{ $isPay: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${(props) => (props.$isPay ? 'transparent' : '#BDFF67')};
-  border: ${(props) => (props.$isPay ? '1px solid #BDFF67' : '')};
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: 500;
-  width: 100%;
-  cursor: pointer;
-  user-select: none;
-`;
-
-const FooterInfoButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #5d5d5d;
-  border-radius: 10px;
-  min-width: 46px;
-  cursor: pointer;
-`;
-
-export function CouriersOrderCard() {
-  const [isPay, setIsPay] = useState(false);
+  useEffect(() => {
+    setOptimisticPaid(paid);
+  }, [paid]);
 
   return (
-    <CouriersOrderCardStyled>
-      <Header>
-        <HeaderNameContainer>
-          <HeaderName>Смирнова Екатерина</HeaderName>
+    <div className="flex flex-col gap-5 rounded-[30px] border-2 border-[#2e2e2e] bg-[#292929] p-5 max-w-[314px]">
+      <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col items-center gap-[15px]">
+          <span className="text-[24px] font-medium whitespace-nowrap text-white">
+            {courierName || 'Без имени'} {startPlaceId || 'N/A'}
+          </span>
           <Ellipse />
-        </HeaderNameContainer>
-        <MainContainer>
-          <MainName>Бьютимед</MainName>
-          <MainDateContainer>
-            <MainDate>22.07 | 11:20</MainDate>
-            <MainNumber>205641</MainNumber>
-          </MainDateContainer>
-        </MainContainer>
-      </Header>
-      <Footer>
-        <FooterPrice $isPay={isPay}>267 ₽</FooterPrice>
-        <FooterPaymentButton onClick={() => setIsPay(!isPay)} $isPay={isPay}>
-          {!isPay ? 'Оплата' : <Check stroke="#BDFF67" />}
-        </FooterPaymentButton>
-        <FooterInfoButton>
+        </div>
+        <div className="flex flex-col gap-2.5 items-center px-1.5">
+          <span className="text-[24px] font-medium text-white">
+            {finishPlaceId || 'N/A'}
+          </span>
+          <div className="flex w-full justify-between text-[#cacaca]">
+            <span className="text-[20px] font-normal">
+              {finishDate || 'N/A'}
+            </span>
+            <span className="text-[20px] font-normal">{id}</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-[15px] px-1.5 h-11">
+        <span
+          className={`flex items-center border-2 border-[#5d5d5d] rounded-[10px] text-[20px] font-medium px-[15px] py-2.5 text-white whitespace-nowrap ${
+            optimisticPaid ? 'line-through' : ''
+          }`}
+        >
+          267 ₽
+        </span>
+        <div
+          className={`flex justify-center items-center rounded-[10px] text-[20px] font-medium w-full cursor-pointer select-none ${
+            isToggling
+              ? 'bg-gray-400 cursor-not-allowed'
+              : optimisticPaid
+                ? 'bg-transparent border border-[#BDFF67]'
+                : 'bg-[#BDFF67] text-black'
+          }`}
+          onClick={handleTogglePaid}
+        >
+          {optimisticPaid ? <Check stroke="#BDFF67" /> : 'Оплата'}
+        </div>
+        <div className="flex justify-center items-center border-2 border-[#5d5d5d] rounded-[10px] min-w-[46px] cursor-pointer">
           <Clipboard />
-        </FooterInfoButton>
-      </Footer>
-    </CouriersOrderCardStyled>
+        </div>
+      </div>
+    </div>
   );
-}
+};
