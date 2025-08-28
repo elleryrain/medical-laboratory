@@ -6,7 +6,7 @@ import {
   placesTable,
 } from '../drizzle/schemas/schema';
 import { ECourierDeliveryType } from './courier-tast.types';
-import { and, eq, gte, lte, or } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, lte, or } from 'drizzle-orm';
 import { LABORATORY_PLACE_ID } from '../consts/consts';
 import { endOfDay, startOfDay } from 'date-fns';
 
@@ -72,7 +72,8 @@ export class CourierTaskRepository {
     const deliveryTasks = await this.db
       .select()
       .from(courierDeliveryTasksTable)
-      .where(and(dateCondition, conditionDeliveryType));
+      .where(and(dateCondition, conditionDeliveryType))
+      .orderBy(asc(courierDeliveryTasksTable.finishDate));
 
     return deliveryTasks;
   }

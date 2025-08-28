@@ -41,7 +41,7 @@ export class CourierTaskController {
     const convertedFinishDate = finishDate
       ? parse(finishDate, 'dd-MM-yyyy:HH:mm', new Date())
       : undefined;
-
+    console.log(finishDate);
     console.log('convertedStartDate', convertedStartDate);
     console.log('convertedFinishDate', convertedFinishDate);
     const tasks = await this.courierTaskService.getCourierTasksByDateAndType(
