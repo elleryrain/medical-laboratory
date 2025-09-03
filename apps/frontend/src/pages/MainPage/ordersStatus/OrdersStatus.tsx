@@ -17,7 +17,7 @@ export const OrdersStatus: FC<OrdersStatusProps> = ({ toggleModal }) => {
           <div className="flex items-center justify-center h-[50px] w-[50px] bg-[#dcdcdc] rounded-full">
             <Plus stroke="black" className="h-8 w-8 bg-transparent" />
           </div>
-          <h1 className="text-[24px] font-medium">Добавить наряд</h1>
+          <h1 className="text-[24px] font-medium text-black">Добавить наряд</h1>
         </div>
         <div className="flex gap-[65px]">
           <StatusItem

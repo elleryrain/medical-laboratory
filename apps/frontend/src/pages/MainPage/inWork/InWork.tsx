@@ -3,7 +3,7 @@ import { CardViewSwitcher } from '@/components/cardViewSwitcher/CardViewSwitcher
 import { InWorkCard } from './InWorkCard';
 import { InWorkFilter } from './InWorkFilter';
 
-export function InWork() {
+export const InWork = () => {
   const [isGridView, setIsGridView] = useState(() => {
     const savedView = localStorage.getItem('isGridView');
     return savedView ? JSON.parse(savedView) : false;
