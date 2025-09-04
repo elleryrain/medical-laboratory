@@ -1,0 +1,1 @@
+ALTER TABLE "daily_task" RENAME COLUMN "finish_date_time" TO "start_task_date_time";
