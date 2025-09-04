@@ -45,7 +45,7 @@ export const dailyTasksTable = pgTable('daily_task', {
   id: serial('id').primaryKey(),
   name: varchar({ length: 120 }).notNull(),
   color: varchar({ length: 30 }).notNull(),
-  startTaskDateTime: timestamp('finish_date_time').notNull(),
+  startTaskDateTime: timestamp('start_task_date_time').notNull(),
   isCompleted: boolean().notNull().default(false),
   adminId: integer('admin_id').notNull(),
 });
