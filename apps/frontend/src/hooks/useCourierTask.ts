@@ -84,7 +84,6 @@ export const useCourierTasks = () => {
   };
 
   return {
-    isAuthenticated,
     isLoading: authLoading,
     getTasks: getTasksQuery,
     createTask,

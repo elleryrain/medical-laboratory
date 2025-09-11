@@ -1,49 +1,66 @@
-import React, { useState } from "react"
-import ArrowDown from "@svg/ArrowDown.svg?react"
+import { FC, useState, useRef } from 'react';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
+import ArrowDown from '@svg/ArrowDown.svg?react';
 
 interface ICustomSelectProps {
-    options: string[]
-    placeholder?: string
-    onSelect?: (option: string) => void
+  options: string[];
+  placeholder?: string;
+  onSelect?: (option: string) => void;
+  className?: string;
+  height?: number;
+  value?: string;
 }
 
-const CustomSelect: React.FC<ICustomSelectProps> = ({ options, placeholder = "Выберите", onSelect }) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedOption, setSelectedOption] = useState<string>("")
+const CustomSelect: FC<ICustomSelectProps> = ({
+  options,
+  placeholder = 'Выберите',
+  onSelect,
+  className,
+  height = 71,
+  value = '',
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
 
-    const toggleDropdown = () => setIsOpen(!isOpen)
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
-    const handleOptionSelect = (option: string) => {
-        setSelectedOption(option)
-        setIsOpen(false)
-        if (onSelect) onSelect(option)
-    }
+  const handleOptionSelect = (option: string) => {
+    setIsOpen(false);
+    if (onSelect) onSelect(option);
+  };
 
-    return (
-        <div className="relative w-full">
-            <div
-                className={`flex items-center justify-between text-2xl px-6 h-[71px] bg-[#333333] rounded-[15px] cursor-pointer select-none 
-                    ${selectedOption ? "text-white" : "text-[#B9B9B9]"}`}
-                onClick={toggleDropdown}
+  useOutsideClick(selectRef, () => setIsOpen(false), isOpen);
+
+  return (
+    <div className="relative w-full" ref={selectRef}>
+      <div
+        className={`flex items-center justify-between text-2xl px-6 ${className} bg-[#333333] rounded-[15px] cursor-pointer select-none 
+            ${value ? 'text-white' : 'text-[#B9B9B9]'}`}
+        style={{ height: `${height}px` }}
+        onClick={toggleDropdown}
+      >
+        <span>{value || placeholder}</span>
+        <ArrowDown className="w-12 h-9.5" />
+      </div>
+      {isOpen && (
+        <ul
+          className={`absolute w-full bg-[#292929]/85 backdrop-blur-[4px] rounded-[25px] 
+            list-none max-h-[200px] overflow-y-auto z-[1] p-2.5 border-[#393939] border-solid border`}
+          style={{ top: `${height + 10}px` }}
+        >
+          {options.map((option, index) => (
+            <li
+              key={index}
+              className="px-6 py-4 text-white text-xl cursor-pointer hover:bg-[#3A3A3A] hover:rounded-[19px]"
+              onClick={() => handleOptionSelect(option)}
             >
-                <span>{selectedOption || placeholder}</span>
-                <ArrowDown className="w-6 h-6" />
-            </div>
-            {isOpen && (
-                <ul className="absolute top-full w-full bg-[#333333] rounded-[15px] list-none p-0 m-0 max-h-[200px] overflow-y-auto z-[1]">
-                    {options.map((option, index) => (
-                        <li
-                            key={index}
-                            className="px-6 py-4 text-white text-2xl cursor-pointer hover:bg-[#444444]"
-                            onClick={() => handleOptionSelect(option)}
-                        >
-                            {option}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    )
-}
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
-export default CustomSelect
+export default CustomSelect;

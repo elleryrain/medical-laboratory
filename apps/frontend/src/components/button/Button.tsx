@@ -3,10 +3,11 @@ import React, { FC } from 'react';
 
 interface IButtonProps {
   title: string;
-  theme?: string;
+  theme?: 'saveButtonModal' | 'salaryNotPaid' | 'salaryPaid' | 'addButton' | 'lineButton' | 'liquidGlass' | 'default';
   onClick?: () => void;
   className?: string;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export const Button: FC<IButtonProps> = ({
@@ -15,6 +16,7 @@ export const Button: FC<IButtonProps> = ({
   onClick,
   className,
   children,
+  disabled = false,
 }) => {
   const getThemeStyles = () => {
     const baseStyles = {
@@ -36,6 +38,18 @@ export const Button: FC<IButtonProps> = ({
     };
 
     switch (theme) {
+      case 'saveButtonModal':
+        return {
+          ...baseStyles,
+          showIcon: false,
+          text: {
+            color: 'black',
+            fontWeight: '500',
+          },
+          button: {
+            backgroundColor: '#BDFF67',
+          },
+        };
       case 'salaryNotPaid':
         return {
           ...baseStyles,
@@ -109,7 +123,6 @@ export const Button: FC<IButtonProps> = ({
           ...baseStyles,
           showIcon: false,
           text: {
-            
             fontWeight: '400',
             fontSize: '20px',
           },
@@ -130,13 +143,16 @@ export const Button: FC<IButtonProps> = ({
   const themeStyles = getThemeStyles();
 
   return (
-    <div
-      className={`flex items-center justify-center cursor-pointer w-fit ${className || ''}`}
+    <button
+      className={`flex items-center justify-center w-fit ${className || ''}`}
       style={{
         ...themeStyles.button,
         transition: 'all 0.3s ease',
+        opacity: disabled ? 0.5 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
       }}
       onClick={onClick}
+      disabled={disabled}
     >
       {themeStyles.showIcon && (
         <div
@@ -144,6 +160,7 @@ export const Button: FC<IButtonProps> = ({
           style={{
             backgroundColor: themeStyles.icon?.plusBackground,
             transition: 'all 0.3s ease',
+            opacity: disabled ? 0.5 : 1,
           }}
         >
           <Plus
@@ -168,6 +185,6 @@ export const Button: FC<IButtonProps> = ({
         </h1>
         {children && <div>{children}</div>}
       </div>
-    </div>
+    </button>
   );
 };
