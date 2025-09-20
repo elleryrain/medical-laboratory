@@ -15,7 +15,7 @@ export const InWork = () => {
 
   return (
     <div className="flex flex-col gap-[40px] text-white w-full">
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between items-center w-full">
         <InWorkFilter title={'В работе'} />
         <CardViewSwitcher
           isGridView={isGridView}

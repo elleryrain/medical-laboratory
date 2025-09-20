@@ -1,16 +1,9 @@
-import styled from '@emotion/styled';
 import { StaffPageCard } from './StaffPageCard';
-
-const StaffPageStyled = styled.div`
-  width: 100%;
-  margin-right: 50px;
-  margin-top: 12px;
-`;
 
 export function StaffPage() {
   return (
-    <StaffPageStyled>
+    <div className='w-full pr-12.5 mt-3'>
       <StaffPageCard />
-    </StaffPageStyled>
+    </div>
   );
 }

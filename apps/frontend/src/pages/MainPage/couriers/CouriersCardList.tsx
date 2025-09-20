@@ -4,13 +4,22 @@ import { CourierTask, TogglePaidStateBody } from '@/api/generated/model';
 
 interface ICouriersCardListProps {
   data: CourierTask[];
-  togglePaid: (data: TogglePaidStateBody) => Promise<CourierTask | void> | undefined;
+  togglePaid: (
+    data: TogglePaidStateBody,
+  ) => Promise<CourierTask | void> | undefined;
+  tasksLoading: boolean;
 }
 
-export const CouriersCardList: FC<ICouriersCardListProps> = ({ data, togglePaid }) => {
+export const CouriersCardList: FC<ICouriersCardListProps> = ({
+  data,
+  togglePaid,
+  tasksLoading,
+}) => {
   return (
     <div className="grid grid-cols-2 gap-5 mt-[5px]">
-      {data.length ? (
+      {tasksLoading ? (
+        <div className="text-center text-white">Loading...</div>
+      ) : data.length ? (
         data.map((task) => (
           <CouriersOrderCard key={task.id} {...task} togglePaid={togglePaid} />
         ))

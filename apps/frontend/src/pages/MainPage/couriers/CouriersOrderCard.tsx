@@ -3,6 +3,8 @@ import Clipboard from '@svg/Clipboard.svg?react';
 import Check from '@svg/CheckArrow.svg?react';
 import { FC, useEffect, useState } from 'react';
 import { CourierTask, TogglePaidStateBody } from '@/api/generated/model';
+import { format } from 'date-fns';
+import { useGetAllPlaces } from '@/hooks/useGetAllPlaces';
 
 interface CouriersOrderCardProps extends CourierTask {
   togglePaid: (
@@ -19,13 +21,13 @@ export const CouriersOrderCard: FC<CouriersOrderCardProps> = ({
   startPlaceId,
   togglePaid,
 }) => {
-  const [optimisticPaid, setOptimisticPaid] = useState(paid); // Локальное состояние для оптимистичного обновления
-  const [isToggling, setIsToggling] = useState(false); // Состояние для блокировки кнопки во время запроса
+  const [optimisticPaid, setOptimisticPaid] = useState(paid);
+  const [isToggling, setIsToggling] = useState(false);
+  const { isAuthenticated, isLoading, places } = useGetAllPlaces();
 
   const handleTogglePaid = async () => {
-    if (!togglePaid || isToggling) return; // Предотвращаем повторные клики
+    if (!togglePaid || isToggling) return;
 
-    // Оптимистично обновляем UI
     setOptimisticPaid(!optimisticPaid);
     setIsToggling(true);
 
@@ -33,7 +35,6 @@ export const CouriersOrderCard: FC<CouriersOrderCardProps> = ({
       await togglePaid({ id });
       console.log('Статус оплаты обновлён');
     } catch (error) {
-      // Откатываем UI в случае ошибки
       setOptimisticPaid(paid);
       console.error('Ошибка при обновлении статуса:', error);
     } finally {
@@ -45,22 +46,29 @@ export const CouriersOrderCard: FC<CouriersOrderCardProps> = ({
     setOptimisticPaid(paid);
   }, [paid]);
 
+  const startPlace = places?.find((place) => place.id === startPlaceId)?.name || 'Unknown';
+  const finishPlace = places?.find((place) => place.id === finishPlaceId)?.name || 'Unknown';
+
+  const formattedDate = finishDate
+    ? format(new Date(finishDate), 'dd.MM | HH:mm')
+    : 'N/A';
+
   return (
     <div className="flex flex-col gap-5 rounded-[30px] border-2 border-[#2e2e2e] bg-[#292929] p-5 max-w-[314px]">
       <div className="flex flex-col gap-2.5">
         <div className="flex flex-col items-center gap-[15px]">
           <span className="text-[24px] font-medium whitespace-nowrap text-white">
-            {courierName || 'Без имени'} {startPlaceId || 'N/A'}
+            {courierName || 'Unknown Courier'}
           </span>
           <Ellipse />
         </div>
         <div className="flex flex-col gap-2.5 items-center px-1.5">
           <span className="text-[24px] font-medium text-white">
-            {finishPlaceId || 'N/A'}
+            {finishPlace}
           </span>
           <div className="flex w-full justify-between text-[#cacaca]">
             <span className="text-[20px] font-normal">
-              {finishDate || 'N/A'}
+              {formattedDate}
             </span>
             <span className="text-[20px] font-normal">{id}</span>
           </div>

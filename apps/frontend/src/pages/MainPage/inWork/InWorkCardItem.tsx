@@ -6,7 +6,7 @@ import './styles/InWorkCardItem.css';
 
 export function InWorkCardItem() {
   return (
-    <div className="relative w-full pt-4.5">
+    <div className="relative max-w-[546px] pt-4.5">
       <div className="absolute right-0 top-0 flex gap-2.5 mr-[25px] items-end z-[4]">
         <InWorkButton />
         <InWorkButton />

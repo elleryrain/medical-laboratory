@@ -9,7 +9,7 @@ interface InWorkCardProps {
 export const InWorkCard = ({ isGridView }: InWorkCardProps) => {
   if (isGridView) {
     return (
-      <div className="grid grid-cols-3 gap-x-[21px] gap-y-7.5 pt-[15px] w-full">
+      <div className="flex flex-wrap gap-x-[21px] gap-y-7.5 pt-[15px] w-full">
         <InWorkCardItem />
         <InWorkCardItem />
         <InWorkCardItem />

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useInWorkCardStore } from "@/store/InWorkCardStore";
-import ArrowLeft from "@svg/ArrowLeftNoTail.svg?react";
+import React, { useState, useEffect } from 'react';
+import { useInWorkCardStore } from '@/store/InWorkCardStore';
+import ArrowLeft from '@svg/ArrowLeftNoTail.svg?react';
 
 // Тип для данных по дню
 interface DayData {
@@ -22,14 +22,15 @@ interface DateRange {
 
 const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
   // Состояние с типами
-  const [currentDate, setCurrentDate] = useState<Date>(new Date("2025-07-07"));
-  const [viewMode, setViewMode] = useState<"week" | "month">("week");
+  const [currentDate, setCurrentDate] = useState<Date>(new Date('2025-07-07'));
+  const [viewMode, setViewMode] = useState<'week' | 'month'>('week');
   const { cards } = useInWorkCardStore();
 
   // Получаем начало недели (понедельник)
   const getWeekStart = (date: Date): Date => {
     const start = new Date(date);
-    const day = start.getDate() - start.getDay() + (start.getDay() === 0 ? -6 : 1);
+    const day =
+      start.getDate() - start.getDay() + (start.getDay() === 0 ? -6 : 1);
     start.setDate(day);
     start.setHours(0, 0, 0, 0);
     return start;
@@ -39,8 +40,10 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
   const getPeriodDates = (): (Date | DateRange)[] => {
     const dates: (Date | DateRange)[] = [];
     const start = new Date(currentDate);
-    if (viewMode === "week") {
-      start.setDate(start.getDate() - start.getDay() + (start.getDay() === 0 ? -6 : 1));
+    if (viewMode === 'week') {
+      start.setDate(
+        start.getDate() - start.getDay() + (start.getDay() === 0 ? -6 : 1),
+      );
       for (let i = 0; i < 7; i++) {
         const date = new Date(start);
         date.setDate(start.getDate() + i);
@@ -52,7 +55,11 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
       let current = new Date(firstDay);
       while (current <= lastDay) {
         const weekStart = new Date(current);
-        weekStart.setDate(current.getDate() - current.getDay() + (current.getDay() === 0 ? -6 : 1));
+        weekStart.setDate(
+          current.getDate() -
+            current.getDay() +
+            (current.getDay() === 0 ? -6 : 1),
+        );
         const weekEnd = new Date(weekStart);
         weekEnd.setDate(weekStart.getDate() + 6);
         if (weekEnd > lastDay) weekEnd.setDate(lastDay.getDate());
@@ -66,13 +73,13 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
   const periodDates = getPeriodDates();
 
   // Навигация по периодам
-  const navigate = (direction: "prev" | "next"): void => {
+  const navigate = (direction: 'prev' | 'next'): void => {
     setCurrentDate((prev) => {
       const newDate = new Date(prev);
-      if (viewMode === "week") {
-        newDate.setDate(prev.getDate() + (direction === "next" ? 7 : -7));
+      if (viewMode === 'week') {
+        newDate.setDate(prev.getDate() + (direction === 'next' ? 7 : -7));
       } else {
-        newDate.setMonth(prev.getMonth() + (direction === "next" ? 1 : -1));
+        newDate.setMonth(prev.getMonth() + (direction === 'next' ? 1 : -1));
       }
       return newDate;
     });
@@ -80,32 +87,75 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
 
   // Агрегация данных по дням
   const getDayData = (dateOrRange: Date | DateRange): DayData => {
-    if ("start" in dateOrRange) {
-      const startStr = dateOrRange.start.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" }).split(".").reverse().join(".");
-      const endStr = dateOrRange.end.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" }).split(".").reverse().join(".");
+    if ('start' in dateOrRange) {
+      const startStr = dateOrRange.start
+        .toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .split('.')
+        .reverse()
+        .join('.');
+      const endStr = dateOrRange.end
+        .toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .split('.')
+        .reverse()
+        .join('.');
       const weekCards = cards.filter(
-        (card: { techniqueId: number; date: string }) => card.techniqueId === techniqueId && (card.date >= startStr && card.date <= endStr)
+        (card: { techniqueId: number; date: string }) =>
+          card.techniqueId === techniqueId &&
+          card.date >= startStr &&
+          card.date <= endStr,
       );
       return {
         totalOrders: weekCards.length,
-        completedOrders: weekCards.filter((card: { workStatus: string }) => card.workStatus === "Завершено").length,
-        earnings: weekCards.reduce((sum: number, card: { numberCard: number }) => sum + (card.numberCard * 100 || 0), 0),
+        completedOrders: weekCards.filter(
+          (card: { workStatus: string }) => card.workStatus === 'Завершено',
+        ).length,
+        earnings: weekCards.reduce(
+          (sum: number, card: { numberCard: number }) =>
+            sum + (card.numberCard * 100 || 0),
+          0,
+        ),
       };
     } else {
-      const dateStr = dateOrRange.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" }).split(".").reverse().join(".");
+      const dateStr = dateOrRange
+        .toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .split('.')
+        .reverse()
+        .join('.');
       const dayCards = cards.filter(
-        (card: { date: string; techniqueId: number }) => card.date === dateStr && card.techniqueId === techniqueId
+        (card: { date: string; techniqueId: number }) =>
+          card.date === dateStr && card.techniqueId === techniqueId,
       );
       return {
         totalOrders: dayCards.length,
-        completedOrders: dayCards.filter((card: { workStatus: string }) => card.workStatus === "Завершено").length,
-        earnings: dayCards.reduce((sum: number, card: { numberCard: number }) => sum + (card.numberCard * 100 || 0), 0),
+        completedOrders: dayCards.filter(
+          (card: { workStatus: string }) => card.workStatus === 'Завершено',
+        ).length,
+        earnings: dayCards.reduce(
+          (sum: number, card: { numberCard: number }) =>
+            sum + (card.numberCard * 100 || 0),
+          0,
+        ),
       };
     }
   };
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [tooltipPosition, setTooltipPosition] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
 
   // Обработчик движения мыши для обновления позиции подсказки
@@ -129,7 +179,7 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
   }, [hoveredIndex, tooltipPosition]);
 
   const formatNumber = (num: number) => {
-    return num.toLocaleString("ru-RU");
+    return num.toLocaleString('ru-RU');
   };
 
   return (
@@ -137,29 +187,29 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
       <div className="flex w-full justify-between items-center">
         <div className="flex items-start gap-5">
           <button
-            onClick={() => setViewMode("week")}
+            onClick={() => setViewMode('week')}
             className={`cursor-pointer text-[20px] font-normal bg-transparent 
-            ${viewMode === "week" ? "text-white after:content-[''] after:block after:border after:border-white after:mt-1" : "text-[#B5B5B5]"} hover:text-white transition-colors`}
+            ${viewMode === 'week' ? "text-white after:content-[''] after:block after:border after:border-white after:mt-1" : 'text-[#B5B5B5]'} hover:text-white transition-colors`}
           >
             Неделя
           </button>
           <button
-            onClick={() => setViewMode("month")}
+            onClick={() => setViewMode('month')}
             className={`cursor-pointer text-[20px] font-normal bg-transparent
-            ${viewMode === "month" ? "text-white after:content-[''] after:block after:border after:border-white after:mt-1" : "text-[#B5B5B5]"} hover:text-white transition-colors`}
+            ${viewMode === 'month' ? "text-white after:content-[''] after:block after:border after:border-white after:mt-1" : 'text-[#B5B5B5]'} hover:text-white transition-colors`}
           >
             Месяц
           </button>
         </div>
         <div className="flex gap-2">
           <button
-            onClick={() => navigate("prev")}
+            onClick={() => navigate('prev')}
             className="rounded-full border-2 border-[#616161] flex items-center justify-center cursor-pointer"
           >
             <ArrowLeft className="h-[34px] w-[34px] pr-0.5" />
           </button>
           <button
-            onClick={() => navigate("next")}
+            onClick={() => navigate('next')}
             className="rounded-full border-2 border-[#616161] flex items-center justify-center cursor-pointer"
           >
             <ArrowLeft className="rotate-180 h-[34px] w-[34px] pr-0.5" />
@@ -171,29 +221,35 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
           <div className="flex justify-between h-[130px]">
             {periodDates.map((date, index) => {
               const dayData = getDayData(date);
-              const completionPercentage = dayData.totalOrders > 0 ? (dayData.completedOrders / dayData.totalOrders) * 100 : 0;
-              const barHeight = Math.min((completionPercentage / 100) * 122, 122);
+              const completionPercentage =
+                dayData.totalOrders > 0
+                  ? (dayData.completedOrders / dayData.totalOrders) * 100
+                  : 0;
+              const barHeight = Math.min(
+                (completionPercentage / 100) * 122,
+                122,
+              );
 
-              let barClass = "bg-gradient-to-b from-[#732A35] to-[#732A35/0]";
-              let barClassStatic = "bg-[#ED4C66]";
+              let barClass = 'bg-gradient-to-b from-[#732A35] to-[#732A35/0]';
+              let barClassStatic = 'bg-[#ED4C66]';
 
               if (dayData.totalOrders === 0) {
-                barClass = "bg-gradient-to-b from-[#323232] to-[#323232/0]";
-                barClassStatic = "bg-[#424242]";
+                barClass = 'bg-gradient-to-b from-[#323232] to-[#323232/0]';
+                barClassStatic = 'bg-[#424242]';
               } else {
                 if (completionPercentage >= 70) {
-                  barClass = "bg-gradient-to-b from-[#366B4A] to-[#366B4A/0]";
-                  barClassStatic = "bg-[#65D691]";
+                  barClass = 'bg-gradient-to-b from-[#366B4A] to-[#366B4A/0]';
+                  barClassStatic = 'bg-[#65D691]';
                 } else if (completionPercentage > 30) {
-                  barClass = "bg-gradient-to-b from-[#915442] to-[#915442/0]";
-                  barClassStatic = "bg-[#FD9474]";
+                  barClass = 'bg-gradient-to-b from-[#915442] to-[#915442/0]';
+                  barClassStatic = 'bg-[#FD9474]';
                 }
               }
 
               // Извлекаем цвет из barClassStatic для текста
               const getColorFromClass = (className: string) => {
                 const colorMatch = className.match(/#([0-9A-Fa-f]{6})/);
-                return colorMatch ? `#${colorMatch[1]}` : "#FFFFFF"; // Значение по умолчанию белый, если цвет не найден
+                return colorMatch ? `#${colorMatch[1]}` : '#FFFFFF'; // Значение по умолчанию белый, если цвет не найден
               };
               const textColor = getColorFromClass(barClassStatic);
 
@@ -222,9 +278,14 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
                     </div>
                   </div>
                   <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-base font-medium text-[#B5B5B5] text-nowrap">
-                    {viewMode === "week"
-                      ? (date as Date).toLocaleDateString("ru-RU", { day: "numeric", month: "short" }).replace(".", "")
-                      : `${(date as DateRange).start.toLocaleDateString("ru-RU", { day: "numeric", month: "short" }).replace(".", "")} - ${(date as DateRange).end.toLocaleDateString("ru-RU", { day: "numeric", month: "short" }).replace(".", "")}`}
+                    {viewMode === 'week'
+                      ? (date as Date)
+                          .toLocaleDateString('ru-RU', {
+                            day: 'numeric',
+                            month: 'short',
+                          })
+                          .replace('.', '')
+                      : `${(date as DateRange).start.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace('.', '')} - ${(date as DateRange).end.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }).replace('.', '')}`}
                   </span>
                   {hoveredIndex === index && showTooltip && (
                     <span
@@ -232,7 +293,7 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
                       style={{
                         top: `${tooltipPosition.y - 110}px`,
                         left: `${tooltipPosition.x - 75}px`,
-                        transform: "translateX(-50%)"
+                        transform: 'translateX(-50%)',
                       }}
                     >
                       <div className="flex flex-col gap-2 text-base font-normal w-[230px]">
@@ -243,14 +304,20 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
                         <div className="flex justify-between">
                           <span>План</span>
                           <div>
-                            <span style={{ color: textColor }}>{dayData.completedOrders}</span>
+                            <span style={{ color: textColor }}>
+                              {dayData.completedOrders}
+                            </span>
                             <span>/</span>
-                            <span className="text-[#B5B5B5]">{dayData.totalOrders}</span>
+                            <span className="text-[#B5B5B5]">
+                              {dayData.totalOrders}
+                            </span>
                           </div>
                         </div>
                         <div className="flex justify-between">
                           <span>Заработано</span>
-                          <span className="text-base font-medium">{formatNumber(dayData.earnings)} ₽</span>
+                          <span className="text-base font-medium">
+                            {formatNumber(dayData.earnings)} ₽
+                          </span>
                         </div>
                       </div>
                     </span>
@@ -262,13 +329,16 @@ const WeeklyProgress = ({ techniqueId }: WeeklyProgressProps) => {
         </div>
         <div className="flex gap-6 text-xl font-normal">
           <span className="flex items-center gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#65D691] inline-block"></span> План выполнен
+            <span className="w-5 h-5 rounded-full bg-[#65D691] inline-block"></span>{' '}
+            План выполнен
           </span>
           <span className="flex items-center gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#FD9474] inline-block"></span> Частично выполнен
+            <span className="w-5 h-5 rounded-full bg-[#FD9474] inline-block"></span>{' '}
+            Частично выполнен
           </span>
           <span className="flex items-center gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#ED4C66] inline-block"></span> Не выполнен
+            <span className="w-5 h-5 rounded-full bg-[#ED4C66] inline-block"></span>{' '}
+            Не выполнен
           </span>
         </div>
       </div>

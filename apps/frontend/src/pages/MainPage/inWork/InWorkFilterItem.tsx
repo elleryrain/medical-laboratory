@@ -5,11 +5,11 @@ export function InWorkFilterItem() {
   const lastName = 'Иванов';
 
   return (
-    <div className="flex items-center justify-center gap-5 bg-[#2D2D2D] rounded-full px-5 py-2.5 [&>svg]:cursor-pointer">
+    <div className="flex items-center justify-center gap-2 bg-[#2D2D2D] rounded-full px-5 py-2.5 [&>svg]:cursor-pointer">
       <span className="text-[24px] font-normal text-white">
         {firstName} {lastName}
       </span>
-      <Delete strokeWidth={3} />
+      <Delete />
     </div>
   );
 }

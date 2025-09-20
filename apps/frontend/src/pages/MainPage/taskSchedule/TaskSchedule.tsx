@@ -3,7 +3,7 @@ import { TaskScheduleList } from './TaskScheduleList';
 
 export function TaskSchedule() {
   return (
-    <div className="flex flex-col gap-[30px] max-w-[944px] w-full bg-[#1c1c1c] p-[35px] rounded-[45px]">
+    <div className="flex flex-col gap-[30px] max-w-[944px] w-full h-fit bg-[#1c1c1c] p-[35px] rounded-[45px]">
       <div className="flex justify-between items-end">
         <div className="flex gap-[25px]">
           <h1 className="text-[40px] font-medium leading-[48.76px] text-white">

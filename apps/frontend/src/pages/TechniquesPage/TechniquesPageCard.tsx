@@ -1,93 +1,13 @@
-import styled from '@emotion/styled';
-import { useStaffStore } from '@/store/StaffPageStore';
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import Edit from '@svg/Edit.svg?react';
 import DeleteTrash from '@svg/DeleteTrash.svg?react';
 import CheckArrow from '@svg/CheckArrow.svg?react';
-
-const TechniquesPageCardStyled = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-`;
-
-const TechniquesCardContainer = styled.div<{ $isEdit: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${(props) => (props.$isEdit ? '25px 30px' : '12px 30px 13px 30px')};
-  background: #1c1c1c;
-  border-radius: 25px;
-  height: fit-content;
-`;
-
-const TechniquesCardNameContainer = styled.div<{ $isEdit: boolean }>`
-  display: flex;
-  align-items: center;
-  width: 85%;
-  gap: 35px;
-`;
-
-const TechniquesImg = styled.img`
-  height: 75px;
-  width: 75px;
-  min-width: 75px;
-  border-radius: 1000px;
-  object-fit: cover;
-`;
-
-const TechniquesName = styled.span`
-  color: white;
-  font-size: 24px;
-  font-weight: 500;
-`;
-
-const TechniquesNameInput = styled.input`
-  width: 100%;
-  border: none;
-  outline: none;
-  background: #333333;
-  color: white;
-  font-family: Montserrat;
-  font-size: 24px;
-  font-weight: 500;
-  padding: 10px 8px;
-  border-radius: 9px;
-`;
-
-const TechniquesButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const EditSuccessButton = styled.div`
-  height: 50px;
-  width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #333333;
-  border-radius: 1000px;
-  cursor: pointer;
-`;
-
-const DeleteButton = styled.div`
-  height: 50px;
-  width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #d20000;
-  border-radius: 1000px;
-  cursor: pointer;
-`;
+import { useGetTechnicians } from '@/hooks/useGetTechnicians';
 
 export function TechniquesPageCard() {
-  const Techniques = useStaffStore((state) => state.techniques);
-  const updateTechnique = useStaffStore((state) => state.updateTechnique);
-  const removeTechnique = useStaffStore((state) => state.removeTechnique);
-
+  const { technicians, isLoading, isAuthenticated } = useGetTechnicians();
+  const queryClient = useQueryClient();
   const [editStates, setEditStates] = useState<{ [key: number]: boolean }>({});
 
   const toggleEditState = (id: number) => {
@@ -97,64 +17,113 @@ export function TechniquesPageCard() {
     }));
   };
 
-  const updateTechniqueNameHandler = (id: number, techniqueName: string) => {
-    const [lastName, firstName, middleName] = techniqueName.split(' ');
-    const technique = Techniques.find((d) => d.id === id);
+  const updateTechniqueNameHandler = async (
+    id: number,
+    techniqueName: string,
+  ) => {
+    const [name, surname, middleName] = techniqueName
+      .split(' ')
+      .filter(Boolean);
+    const technician = technicians?.find((d) => d.id === id);
 
     if (
-      technique &&
-      (technique.firstName !== firstName ||
-        technique.lastName !== lastName ||
-        technique.middleName !== middleName)
+      technician &&
+      (technician.name !== name ||
+        technician.surname !== surname ||
+        technician.middleName !== middleName)
     ) {
-      updateTechnique({
-        ...technique,
-        firstName,
-        lastName,
-        middleName,
-      });
+      try {
+        // await updateTechnician(id, {
+        //   name: name || technician.name,
+        //   surname: surname || technician.surname,
+        //   middleName: middleName || technician.middleName,
+        // });
+        // Invalidate the technicians query to refetch the updated data
+        // await queryClient.invalidateQueries({ queryKey: ['technicians'] });
+        // toggleEditState(id); // Exit edit mode after successful update
+      } catch (error) {
+        console.error('Failed to update technician:', error);
+      }
     }
   };
 
+  const removeTechniqueHandler = async (id: number) => {
+    try {
+      // await removeTechnician(id);
+      // // Invalidate the technicians query to refetch the updated list
+      // await queryClient.invalidateQueries({ queryKey: ['technicians'] });
+    } catch (error) {
+      console.error('Failed to remove technician:', error);
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  if (!technicians || technicians.length === 0) {
+    return <div>No technicians found.</div>;
+  }
+
   return (
-    <TechniquesPageCardStyled>
-      {Techniques.map((technique) => (
-        <TechniquesCardContainer
-          key={technique.id}
-          $isEdit={!!editStates[technique.id]}
+    <div className="grid grid-cols-2 gap-[30px]">
+      {technicians.map((technician) => (
+        <div
+          key={technician.id}
+          className={`flex justify-between items-center bg-[#1c1c1c] rounded-[25px] h-fit ${
+            editStates[technician.id]
+              ? 'p-[25px_30px]'
+              : 'p-[12px_30px_13px_30px]'
+          }`}
         >
-          <TechniquesCardNameContainer $isEdit={!!editStates[technique.id]}>
-            <TechniquesImg src={technique.imgUrl} />
-            {editStates[technique.id] ? (
-              <TechniquesNameInput
+          <div
+            className={`flex items-center w-[85%] gap-[35px] ${editStates[technician.id] ? 'h-fit' : ''}`}
+          >
+            <img
+              src={technician.avatar || '/default-avatar.png'}
+              className="h-[75px] w-[75px] min-w-[75px] rounded-full object-cover"
+            />
+            {editStates[technician.id] ? (
+              <input
                 onChange={(e) =>
-                  updateTechniqueNameHandler(technique.id, e.target.value)
+                  updateTechniqueNameHandler(technician.id, e.target.value)
                 }
-                defaultValue={`${technique.firstName} ${technique.lastName} ${technique.middleName}`}
+                defaultValue={`${technician.name} ${technician.surname} ${technician.middleName || ''}`}
+                className="w-full border-none outline-none bg-[#333333] text-white font-montserrat text-2xl font-medium p-[10px_8px] rounded-[9px]"
               />
             ) : (
-              <TechniquesName>
-                {technique.firstName} {technique.lastName}{' '}
-                {technique.middleName}
-              </TechniquesName>
+              <span className="text-white text-2xl font-medium">
+                {technician.name} {technician.surname}{' '}
+                {technician.middleName || ''}
+              </span>
             )}
-          </TechniquesCardNameContainer>
-          <TechniquesButtonContainer>
-            <EditSuccessButton onClick={() => toggleEditState(technique.id)}>
-              {editStates[technique.id] ? (
-                <CheckArrow stroke="#BDFF67" height="28px" width="32px" />
+          </div>
+          <div className="flex flex-col gap-5">
+            <div
+              onClick={() => toggleEditState(technician.id)}
+              className="h-[50px] w-[60px] flex items-center justify-center bg-[#333333] rounded-full cursor-pointer"
+            >
+              {editStates[technician.id] ? (
+                <CheckArrow stroke="#BDFF67" className="h-7 w-8" />
               ) : (
                 <Edit />
               )}
-            </EditSuccessButton>
-            {editStates[technique.id] && (
-              <DeleteButton onClick={() => removeTechnique(technique.id)}>
+            </div>
+            {editStates[technician.id] && (
+              <div
+                onClick={() => removeTechniqueHandler(technician.id)}
+                className="h-[50px] w-[60px] flex items-center justify-center bg-[#d20000] rounded-full cursor-pointer"
+              >
                 <DeleteTrash />
-              </DeleteButton>
+              </div>
             )}
-          </TechniquesButtonContainer>
-        </TechniquesCardContainer>
+          </div>
+        </div>
       ))}
-    </TechniquesPageCardStyled>
+    </div>
   );
 }

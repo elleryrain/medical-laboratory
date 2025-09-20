@@ -75,7 +75,7 @@ export const Couriers = () => {
           <CouriersTimeFilter onDateRangeChange={setDateRange} />
         </div>
         <CouriersTabSwitcher onTypeDeliveryChange={setTypeDelivery} />
-        <CouriersCardList data={tasks || []} togglePaid={togglePaid} />
+        <CouriersCardList data={tasks || []} togglePaid={togglePaid} tasksLoading={tasksLoading} />
       </div>
       <Modal isOpen={isOpen} onClose={closeModal} title='Новая доставка курьера' size='s'>
         <AddCouriersModal toggleModal={closeModal}/>

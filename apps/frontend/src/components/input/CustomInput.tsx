@@ -25,7 +25,7 @@ export const CustomInput = ({
   height = 71,
 }: ICustomInputProps) => {
   const [isTyping, setIsTyping] = useState(false);
-  const [hasClicked, setHasClicked] = useState(false); 
+  const [hasClicked, setHasClicked] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(
     value ? new Date() : undefined,
@@ -115,11 +115,7 @@ export const CustomInput = ({
       case 'currency':
         return {
           typeInput: 'number',
-          style: `${baseStyle} ${
-            isTyping || (typeof value === 'string' && value.length > 0)
-              ? 'text-white'
-              : 'text-[#B9B9B9]'
-          }`,
+          style: `${baseStyle} `,
         };
       case 'date':
         return {
