@@ -1,73 +1,33 @@
-import styled from '@emotion/styled';
 import { useStaffStore } from '@/store/StaffPageStore';
 import ArrowLink from '@svg/ArrowLinkStaff.svg?react';
 import { useNavigate } from 'react-router-dom';
-
-const StaffPageCardStyled = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const StaffPageCardContainerStyled = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 17px 17px 17px 30px;
-  width: 397px;
-  max-height: 120px;
-  background: #1c1c1c;
-  border-radius: 20px;
-`;
-
-const StaffPageCardNameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 220px;
-  gap: 5px;
-`;
-
-const StaffPageCardName = styled.span`
-  color: white;
-  font-size: 32px;
-  font-weight: 500;
-`;
-
-const StaffPageCardCount = styled.span`
-  color: #c5c5c5;
-  font-size: 20px;
-  font-weight: 400;
-`;
-
-const StaffPageButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 86px;
-  width: 86px;
-  background: #333333;
-  border-radius: 10px;
-  cursor: pointer;
-`;
 
 export function StaffPageCard() {
   const categoryStaffPage = useStaffStore((state) => state.categoryStaffPage);
   const navigate = useNavigate();
   return (
-    <StaffPageCardStyled>
+    <div className="flex w-full justify-between flex-wrap gap-8">
       {categoryStaffPage.map((category) => (
-        <StaffPageCardContainerStyled key={category.id}>
-          <StaffPageCardNameContainer>
-            <StaffPageCardName>{category.nameCategory}</StaffPageCardName>
-            <StaffPageCardCount>
+        <div
+          key={category.id}
+          className="flex justify-between items-center p-4 pl-7 w-[397px] max-h-[120px] bg-[#1c1c1c] rounded-[20px]"
+        >
+          <div className="flex flex-col max-w-[220px] gap-1">
+            <span className="text-white text-[32px] font-medium">
+              {category.nameCategory}
+            </span>
+            <span className="text-[#c5c5c5] text-xl font-normal">
               {category.counterCategory} {category.nameSubcategory}
-            </StaffPageCardCount>
-          </StaffPageCardNameContainer>
-          <StaffPageButton onClick={() => navigate(category.route)}>
+            </span>
+          </div>
+          <div
+            className="flex justify-center items-center h-[86px] w-[86px] bg-[#333333] rounded-[10px] cursor-pointer"
+            onClick={() => navigate(category.route)}
+          >
             <ArrowLink />
-          </StaffPageButton>
-        </StaffPageCardContainerStyled>
+          </div>
+        </div>
       ))}
-    </StaffPageCardStyled>
+    </div>
   );
 }

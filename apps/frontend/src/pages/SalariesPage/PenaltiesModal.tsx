@@ -138,7 +138,7 @@ export const PenaltiesModal = ({
       ) : (
         <div className="flex flex-col items-center mt-[70px] gap-5">
           <img
-            src="/public/image/NoPenalty.png"
+            src="/image/NoPenalty.png"
             alt="No Penalties"
             className="h-[275px] w-[276px]"
           />

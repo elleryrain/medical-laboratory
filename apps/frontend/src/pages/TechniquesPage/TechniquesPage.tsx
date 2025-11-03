@@ -1,90 +1,22 @@
 import { routes } from '../../config/routes';
 import ArrowLeft from '@svg/ArrowLeft.svg?react';
-import Plus from '@svg/plus.svg?react';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { TechniquesPageCard } from './TechniquesPageCard';
-
-const TechniquesPageStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  margin-top: 2px;
-  width: 100%;
-  margin-right: 50px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const BackButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 54px;
-`;
-
-const TitleText = styled.span`
-  color: white;
-  font-size: 40px;
-  font-weight: 500;
-`;
-
-const AddButton = styled.div`
-  display: flex;
-  padding: 10px 20px 10px 10px;
-  background-color: white;
-  border-radius: 1000px;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  height: 70px;
-`;
-
-const AddButtonSvgContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  width: 50px;
-  background-color: #dcdcdc;
-  border-radius: 1000px;
-  cursor: pointer;
-
-  > svg {
-    height: 32px;
-    width: 32px;
-    background: transparent;
-  }
-`;
-
-const AddButtonText = styled.h1`
-  font-size: 24px;
-  font-weight: 500;
-`;
+import { Button } from '@/components/button/Button';
 
 export function TechniquesPage() {
   const navigate = useNavigate();
 
   return (
-    <TechniquesPageStyled>
-      <Header>
-        <BackButtonContainer>
-          <ArrowLeft onClick={() => navigate(routes.staff)} cursor="pointer" />
-          <TitleText>Техники</TitleText>
-        </BackButtonContainer>
-        <AddButton onClick={() => navigate(routes.addTechnique)}>
-          <AddButtonSvgContainer>
-            <Plus stroke="black" />
-          </AddButtonSvgContainer>
-          <AddButtonText>Добавить техника</AddButtonText>
-        </AddButton>
-      </Header>
+    <div className="flex flex-col gap-10 mt-[2px] w-full mr-[50px]">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-5 h-[54px]">
+          <ArrowLeft onClick={() => navigate(routes.staff)} className="cursor-pointer" />
+          <span className="text-white text-[40px] font-medium">Техники</span>
+        </div>
+        <Button title='Добавить техника' theme='addButton'/>
+      </div>
       <TechniquesPageCard />
-    </TechniquesPageStyled>
+    </div>
   );
 }

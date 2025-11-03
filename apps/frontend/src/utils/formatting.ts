@@ -3,7 +3,6 @@ export const formatCurrency = (value: number): string => {
     return `${formattedValue} ₽`;
 };
 
-
 export const formatDate = (date: string): string => {
     const formattedDate = date.split('.').reverse().join('-');
     return formattedDate

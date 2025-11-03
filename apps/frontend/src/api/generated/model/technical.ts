@@ -10,5 +10,5 @@ export interface Technical {
   name: string;
   surname: string;
   middleName: string;
-  avatype?: string;
+  avatar?: string;
 }

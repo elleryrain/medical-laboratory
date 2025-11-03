@@ -1,50 +1,43 @@
-import { useState } from 'react';
-import styled from '@emotion/styled';
+import { FC, useState } from 'react';
 
-const CouriersTabSwitcherStyled = styled.div`
-  display: flex;
-  background: #292929;
-  border-radius: 15px;
-  justify-content: space-between;
-`;
+interface CouriersTabSwitcherProps {
+  onTypeDeliveryChange: (typeDelivery: 'pickup' | 'delivery') => void;
+}
 
-const CouriersTabSwitcherButton = styled.button<{ $isActive: boolean }>`
-  background: ${({ $isActive }) => ($isActive ? '#E8E8E8' : 'transparent')};
-  color: ${({ $isActive }) => ($isActive ? 'black' : 'white')};
-  border-radius: 12px;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 29.26px;
-  outline: none;
-  border: none;
-  width: 309px;
-  height: 63px;
-  text-align: center;
-  margin: 4px 0;
-  cursor: pointer;
+export const CouriersTabSwitcher: FC<CouriersTabSwitcherProps> = ({
+  onTypeDeliveryChange,
+}) => {
+  const [typeDelivery, setTypeDelivery] = useState<'pickup' | 'delivery'>(
+    'delivery',
+  );
 
-  &:focus {
-    outline: none;
-  }
-`;
-
-export function CouriersTabSwitcher() {
-  const [isBring, setIsBring] = useState(true);
+  const handleTypeChange = (newType: 'pickup' | 'delivery') => {
+    setTypeDelivery(newType);
+    onTypeDeliveryChange(newType);
+  };
 
   return (
-    <CouriersTabSwitcherStyled>
-      <CouriersTabSwitcherButton
-        $isActive={isBring}
-        onClick={() => setIsBring(true)}
+    <div className="flex bg-[#292929] rounded-[15px] justify-between">
+      <button
+        className={`w-[309px] h-[63px] rounded-[12px] text-[24px] font-medium leading-[29.26px] text-center m-1 cursor-pointer focus:outline-none ${
+          typeDelivery === 'delivery'
+            ? 'bg-[#E8E8E8] text-black'
+            : 'bg-transparent text-white'
+        }`}
+        onClick={() => handleTypeChange('delivery')}
       >
         Привез
-      </CouriersTabSwitcherButton>
-      <CouriersTabSwitcherButton
-        $isActive={!isBring}
-        onClick={() => setIsBring(false)}
+      </button>
+      <button
+        className={`w-[309px] h-[63px] rounded-[12px] text-[24px] font-medium leading-[29.26px] text-center m-1 cursor-pointer focus:outline-none ${
+          typeDelivery === 'pickup'
+            ? 'bg-[#E8E8E8] text-black'
+            : 'bg-transparent text-white'
+        }`}
+        onClick={() => handleTypeChange('pickup')}
       >
         Отвез
-      </CouriersTabSwitcherButton>
-    </CouriersTabSwitcherStyled>
+      </button>
+    </div>
   );
-}
+};
