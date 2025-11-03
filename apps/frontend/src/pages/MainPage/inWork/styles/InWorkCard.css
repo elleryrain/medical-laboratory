@@ -1,0 +1,15 @@
+.no-scrollbar {
+    overflow-x: auto;
+    cursor: grab;
+    user-select: none;
+}
+.no-scrollbar:active {
+    cursor: grabbing;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}

@@ -8,14 +8,14 @@ export const MainLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen text-white">
         Загрузка...
       </div>
     );
   }
 
   if (!isAuthenticated) {
-    return null; // Перенаправление уже выполнено в useCheckAuth
+    return null;
   }
 
   return (

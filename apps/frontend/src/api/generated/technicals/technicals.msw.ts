@@ -19,7 +19,7 @@ export const getGetTechniciansResponseMock = (): Technical[] =>
     name: faker.string.alpha(20),
     surname: faker.string.alpha(20),
     middleName: faker.string.alpha(20),
-    avatype: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+    avatar: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
   }));
 
 export const getGetTechniciansMockHandler = (

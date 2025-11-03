@@ -10,6 +10,13 @@ export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/apps/frontend',
   server: {
+    proxy: {
+      '/api': {
+        target: `http://localhost:${Number(process.env.PORT)}`,
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     port: 4200,
     host: 'localhost',
   },

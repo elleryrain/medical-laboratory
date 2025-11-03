@@ -1,71 +1,23 @@
 import Plus from '@svg/plus.svg?react';
-import styled from '@emotion/styled';
 import { TaskScheduleList } from './TaskScheduleList';
-
-const TaskScheduleStyled = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 944px;
-  width: 100%;
-  background: #1c1c1c;
-  padding: 35px;
-  border-radius: 45px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-const HeaderTitle = styled.h1`
-  font-size: 40px;
-  font-weight: 500;
-  line-height: 48.76px;
-  color: white;
-`;
-
-const HeaderButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 49px;
-  height: 49px;
-  border: 2px solid #dddddd;
-  border-radius: 1000px;
-  cursor: pointer;
-  background: transparent;
-`;
-
-const AddTasksContainer = styled.div`
-  display: flex;
-  gap: 25px;
-`;
-
-const EditButton = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 24px;
-  font-weight: 500;
-  cursor: pointer;
-  padding-bottom: 5px;
-`;
 
 export function TaskSchedule() {
   return (
-    <TaskScheduleStyled>
-      <Header>
-        <AddTasksContainer>
-          <HeaderTitle>Задачи на день</HeaderTitle>
-          <HeaderButton>
+    <div className="flex flex-col gap-[30px] max-w-[944px] w-full h-fit bg-[#1c1c1c] p-[35px] rounded-[45px]">
+      <div className="flex justify-between items-end">
+        <div className="flex gap-[25px]">
+          <h1 className="text-[40px] font-medium leading-[48.76px] text-white">
+            Задачи на день
+          </h1>
+          <div className="flex items-center justify-center w-[49px] h-[49px] border-2 border-[#dddddd] rounded-full cursor-pointer bg-transparent">
             <Plus stroke="#DDDDDD" />
-          </HeaderButton>
-        </AddTasksContainer>
-        <EditButton>Править</EditButton>
-      </Header>
+          </div>
+        </div>
+        <button className="bg-transparent border-none text-white text-[24px] font-medium cursor-pointer pb-[5px]">
+          Править
+        </button>
+      </div>
       <TaskScheduleList />
-    </TaskScheduleStyled>
+    </div>
   );
 }

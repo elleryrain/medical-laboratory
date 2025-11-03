@@ -38,6 +38,7 @@ const StatusItemToDayContainerStyled = styled.div`
 const StatusItemToDayNumberStyled = styled.span`
   font-size: 20px;
   font-weight: 500;
+  color: black;
 `;
 
 const StatusItemTextStyled = styled.span`

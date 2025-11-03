@@ -1,66 +1,25 @@
-import styled from '@emotion/styled';
 import Plus from '@svg/plus.svg?react';
 import { StatusItem } from './StatusItem';
+import { FC } from 'react';
 
-const OrdersStatusStyled = styled.div`
-  margin-right: 50px;
-`;
+interface OrdersStatusProps {
+  toggleModal: () => void;
+}
 
-const OrdersStatusStyledContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const AddButton = styled.div`
-  display: flex;
-  padding: 10px 20px 10px 20px;
-  background-color: white;
-  border-radius: 1000px;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  height: 70px;
-`;
-
-const AddButtonSvgContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  width: 50px;
-  background-color: #dcdcdc;
-  border-radius: 1000px;
-
-  > svg {
-    height: 32px;
-    width: 32px;
-    background: transparent;
-  }
-`;
-
-const AddButtonText = styled.h1`
-  font-size: 24px;
-  font-weight: 500;
-`;
-
-const StatusItemContainer = styled.div`
-  display: flex;
-  gap: 65px;
-`;
-
-export function OrdersStatus({ toggleModal }: { toggleModal: () => void }) {
+export const OrdersStatus: FC<OrdersStatusProps> = ({ toggleModal }) => {
   return (
-    <OrdersStatusStyled>
-      <OrdersStatusStyledContainer>
-        <AddButton onClick={() => toggleModal()}>
-          <AddButtonSvgContainer>
-            <Plus stroke="black" />
-          </AddButtonSvgContainer>
-          <AddButtonText>Добавить наряд</AddButtonText>
-        </AddButton>
-        <StatusItemContainer>
+    <div className="mr-[50px]">
+      <div className="flex justify-between items-center w-full">
+        <div
+          className="flex px-5 py-2.5 bg-white rounded-full gap-5 items-center justify-center cursor-pointer h-[70px]"
+          onClick={() => toggleModal()}
+        >
+          <div className="flex items-center justify-center h-[50px] w-[50px] bg-[#dcdcdc] rounded-full">
+            <Plus stroke="black" className="h-8 w-8 bg-transparent" />
+          </div>
+          <h1 className="text-[24px] font-medium text-black">Добавить наряд</h1>
+        </div>
+        <div className="flex gap-[65px]">
           <StatusItem
             color={'#BDFF67'}
             currentNumber={23}
@@ -79,8 +38,8 @@ export function OrdersStatus({ toggleModal }: { toggleModal: () => void }) {
             todayNumber={2}
             text={'дедлайн'}
           />
-        </StatusItemContainer>
-      </OrdersStatusStyledContainer>
-    </OrdersStatusStyled>
+        </div>
+      </div>
+    </div>
   );
-}
+};
