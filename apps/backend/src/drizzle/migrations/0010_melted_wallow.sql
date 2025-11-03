@@ -1,0 +1,1 @@
+ALTER TABLE "material_types" ADD CONSTRAINT "material_types_name_unique" UNIQUE("name");

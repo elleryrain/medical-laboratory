@@ -9,7 +9,7 @@ import {
   timestamp,
   pgEnum,
 } from 'drizzle-orm/pg-core';
-import { ECourierDeliveryType } from '../../courier-task/courier-tast.types';
+import { ECourierDeliveryType } from '../../systems/courier-task/courier-tast.types';
 
 export const roleEnum = pgEnum('role', ['admin', 'technician']);
 
@@ -47,7 +47,9 @@ export const dailyTasksTable = pgTable('daily_task', {
   color: varchar({ length: 30 }).notNull(),
   startTaskDateTime: timestamp('start_task_date_time').notNull(),
   isCompleted: boolean().notNull().default(false),
-  adminId: integer('admin_id').notNull(),
+  adminId: integer('admin_id')
+    .notNull()
+    .references(() => usersTable.id),
 });
 
 export const typeWorksTable = pgTable('type_works', {
@@ -122,4 +124,19 @@ export const fittingStepsTable = pgTable('fitting_steps', {
     .references(() => servicesTable.id)
     .notNull(),
   name: varchar('name', { length: 255 }).notNull(),
+});
+
+export const materialTypesTable = pgTable('material_types', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 255 }).notNull().unique(),
+});
+
+export const materialTypeInstancesTable = pgTable('material_types_instances', {
+  id: serial().primaryKey(),
+  name: varchar({ length: 255 }),
+  strenth: integer().notNull(),
+  currentStrenth: integer().notNull(),
+  materialTypeId: integer()
+    .notNull()
+    .references(() => materialTypesTable.id),
 });

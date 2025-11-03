@@ -110,72 +110,175 @@ paths:
                   surname:
                     type: string
 
-  /api/profile/daily-tasks:
+  /api/profile/daily-task:
     get:
       operationId: getDailyTasks
-      summary: 'получение всех задач на день'
+      summary: Получение всех задач пользователя на день
       tags:
         - daily-tasks
       responses:
         200:
-          description: ''
+          description: Список задач
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/DailyTask'
-  /api/profile:
-    get:
-      operationId: getProfile
-      summary: 'получение основной информации о профиле'
-      tags:
-        - profile
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Profile'
 
-  /api/knowledge:
-    get:
-      operationId: getKnowledgeSummary
-      summary: 'получение всей базовой информации о базе знаний'
+    post:
+      operationId: createDailyTask
+      summary: Создание новой задачи на день
       tags:
-        - knowledge
+        - daily-tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBodyCreateDailyTask'
       responses:
         200:
-          description: ''
+          description: Новая задача
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  doctorsCount:
-                    type: number
-                  technicalCount:
-                    type: number
-                  typeWorkCount:
-                    type: number
-                  categoryTechnicalscount:
-                    type: number
-  /api/knowledge/doctors:
-    get:
-      operationId: getDoctors
-      summary: 'получение информации о докторах'
+                $ref: '#/components/schemas/DailyTask'
+
+  /api/profile/daily-task/toggle-status:
+    post:
+      operationId: toggleDailyTaskStatus
+      summary: Переключение состояния задачи
       tags:
-        - doctors
+        - daily-tasks
+      parameters:
+        - in: query
+          name: taskId
+          schema:
+            type: integer
+          required: true
+          description: Идентификатор задачи
       responses:
         200:
-          description: ''
+          description: Обновлённая сущность задачи
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyTask'
+  /api/material-type:
+    post:
+      operationId: createMaterialType
+      summary: Создать новый тип материала
+      tags:
+        - material-types
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBodyCreateMaterialType'
+      responses:
+        200:
+          description: Тип материала создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaterialType'
+
+    get:
+      operationId: getMaterialTypesWithCount
+      summary: Получить все типы материалов с количеством экземпляров
+      tags:
+        - material-types
+      responses:
+        200:
+          description: Массив типов материалов с их количеством экземпляров
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Doctor'
+                  $ref: '#/components/schemas/MaterialTypeWithCount'
+
+  /api/material-types-instance:
+    post:
+      operationId: createMaterialTypeInstance
+      summary: Создать экземпляр типа материала
+      tags:
+        - material-type-instances
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBodyCreateMaterialTypeInstance'
+      responses:
+        200:
+          description: Экземпляр типа материала создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaterialTypeInstance'
+
+    get:
+      operationId: getMaterialTypeInstancesByMaterialTypeId
+      summary: Получить экземпляры типа материала по id типа
+      tags:
+        - material-type-instances
+      parameters:
+        - in: query
+          name: materialTypeId
+          required: true
+          schema:
+            type: integer
+          description: Идентификатор типа материала
+      responses:
+        200:
+          description: Массив экземпляров типа материала
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaterialTypeInstance'
+
+  # /api/knowledge:
+  #   get:
+  #     operationId: getKnowledgeSummary
+  #     summary: 'получение всей базовой информации о базе знаний'
+  #     tags:
+  #       - knowledge
+  #     responses:
+  #       200:
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 doctorsCount:
+  #                   type: number
+  #                 technicalCount:
+  #                   type: number
+  #                 typeWorkCount:
+  #                   type: number
+  #                 categoryTechnicalscount:
+  #                   type: number
+  # /api/knowledge/doctors:
+  #   get:
+  #     operationId: getDoctors
+  #     summary: 'получение информации о докторах'
+  #     tags:
+  #       - doctors
+  #     responses:
+  #       200:
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/Doctor'
 
   /api/knowledge/technicals:
     get:
@@ -193,73 +296,58 @@ paths:
                 items:
                   $ref: '#/components/schemas/Technical'
 
-  /api/knowledge/type-works:
-    get:
-      operationId: getTypeWorks
-      summary: 'получние информации о всех типах работы'
-      tags:
-        - type-works
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TypeWork'
-    post:
-      operationId: createTypeWork
-      responses:
-        200:
-          description: ''
+  # /api/knowledge/type-works:
+  #   get:
+  #     operationId: getTypeWorks
+  #     summary: 'получние информации о всех типах работы'
+  #     tags:
+  #       - type-works
+  #     responses:
+  #       200:
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/TypeWork'
+  #   post:
+  #     operationId: createTypeWork
+  #     responses:
+  #       200:
+  #         description: ''
 
-  /api/knowledge/category-technicals:
-    get:
-      operationId: getCategoryTechnicals
-      summary: 'получение все информации о категориях техников'
-      tags:
-        - category-technicals
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CategoryTechnicals'
+  # /api/knowledge/category-technicals:
+  #   get:
+  #     operationId: getCategoryTechnicals
+  #     summary: 'получение все информации о категориях техников'
+  #     tags:
+  #       - category-technicals
+  #     responses:
+  #       200:
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/CategoryTechnicals'
 
-  /api/storage:
-    get:
-      operationId: getStorageInfo
-      summary: получение всей информации о складе
-      tags:
-        - storage
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/StorageItem'
-  /api/salary:
-    get:
-      operationId: getPayrollData
-      summary: 'получение всех заплат рабочих'
-      tags:
-        - salary
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PayrollData'
+  # /api/salary:
+  #   get:
+  #     operationId: getPayrollData
+  #     summary: 'получение всех заплат рабочих'
+  #     tags:
+  #       - salary
+  #     responses:
+  #       200:
+  #         description: ''
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/PayrollData'
 
   # НОВЫЕ МАРШРУТЫ ДЛЯ COURIER TASK
   /api/courierTask:
@@ -354,23 +442,61 @@ paths:
   /api/places:
     get:
       operationId: getAllPlaces
-      summary: 'получение всех мест'
+      summary: Получить все места
       tags:
-        - place
+        - places
       responses:
         200:
-          description: 'успешное получение всех мест'
+          description: Список мест
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                    name:
-                      type: string
+                  $ref: '#/components/schemas/Place'
+
+    post:
+      operationId: addPlace
+      summary: Добавить место
+      tags:
+        - places
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostBodyAddPlace'
+      responses:
+        200:
+          description: Новое место
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+
+    delete:
+      operationId: deletePlace
+      summary: Удалить место
+      tags:
+        - places
+      parameters:
+        - in: query
+          name: placeId
+          required: true
+          schema:
+            type: integer
+          description: Идентификатор места
+      responses:
+        200:
+          description: Статус удаления
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
 components:
   schemas:
     LoginData:
@@ -426,19 +552,35 @@ components:
         - fittingTimesArray
         - deadlineTime
 
+    PostBodyCreateDailyTask:
+      type: object
+      properties:
+        startTaskDateTime:
+          type: string
+          format: custom-date
+          description: 'Дата начала задачи в формате dd-mm-yyyy:HH:MM'
+        name:
+          type: string
+          description: 'Название задачи'
+      required:
+        - name
+
     DailyTask:
       type: object
       properties:
         id:
-          type: number
-        time:
-          type: string
+          type: integer
         name:
           type: string
-      required:
-        - id
-        - time
-        - name
+        color:
+          type: string
+        startTaskDateTime:
+          type: string
+          format: date-time
+        isCompleted:
+          type: boolean
+        adminId:
+          type: integer
 
     Doctor:
       type: object
@@ -636,3 +778,75 @@ components:
           type: string
         paid:
           type: boolean
+    PostBodyCreateMaterialType:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Имя типа материала
+      required:
+        - name
+
+    MaterialType:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    MaterialTypeWithCount:
+      allOf:
+        - $ref: '#/components/schemas/MaterialType'
+        - type: object
+          properties:
+            instancesCount:
+              type: integer
+              description: Количество экземпляров данного типа материала
+
+    PostBodyCreateMaterialTypeInstance:
+      type: object
+      properties:
+        materialTypeId:
+          type: integer
+        name:
+          type: string
+        strength:
+          type: integer
+        currentStrength:
+          type: integer
+      required:
+        - materialTypeId
+        - strength
+        - currentStrength
+
+    MaterialTypeInstance:
+      type: object
+      properties:
+        id:
+          type: integer
+        materialTypeId:
+          type: integer
+        name:
+          type: string
+        strength:
+          type: integer
+        currentStrength:
+          type: integer
+
+    PostBodyAddPlace:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Имя/название места
+      required:
+        - name
+
+    Place:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
